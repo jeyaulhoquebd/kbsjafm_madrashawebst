@@ -4,6 +4,7 @@ import Section, { SectionHeader } from '../components/ui/Section';
 import Card from '../components/ui/Card';
 import Notice from '../components/ui/Notice';
 import Button from '../components/ui/Button';
+import SafeImage from '../components/ui/SafeImage';
 import { Link } from 'react-router-dom';
 import {
   FileText,
@@ -41,7 +42,7 @@ export default function Home() {
       <section className="relative overflow-hidden min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] flex items-center">
         {/* Background Image */}
         <div className="absolute inset-0">
-          <img
+          <SafeImage
             src="https://res.cloudinary.com/dc80xvaid/image/upload/v1792165382/bitushbg.jpg"
             alt={t('মাদ্রাসা ভবন', 'Madrasa Building')}
             className="w-full h-full object-cover"
@@ -222,11 +223,12 @@ export default function Home() {
           <div className="lg:col-span-1 flex justify-center lg:justify-start">
             <div className="relative">
               <div className="w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-2xl overflow-hidden shadow-xl border-4 border-primary-100">
-                <img
+                <SafeImage
                   src="https://res.cloudinary.com/dc80xvaid/image/upload/v1792165301/probasak.jpg"
                   alt={t('অধ্যক্ষের ছবি', "Principal's Photo")}
                   className="w-full h-full object-cover"
                   loading="lazy"
+                  fallbackText={t('ছবি', 'Photo')}
                 />
               </div>
               {/* Decorative accent */}

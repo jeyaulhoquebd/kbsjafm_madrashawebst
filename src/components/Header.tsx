@@ -4,6 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { navigationItems, institutionInfo } from '../data/mockData';
 import { Menu, X, Globe, Search, Phone, Mail, MapPin, ChevronDown } from 'lucide-react';
 import SearchModal from './SearchModal';
+import SafeImage from './ui/SafeImage';
 
 export default function Header() {
   const { language, setLanguage, t } = useLanguage();
@@ -93,11 +94,12 @@ export default function Header() {
           <div className="flex items-center gap-3 sm:gap-4 lg:gap-6">
             {/* Logo */}
             <Link to="/" className="shrink-0">
-              <img
+              <SafeImage
                 src="https://res.cloudinary.com/dc80xvaid/image/upload/v1792165465/madrashalogo.jpg"
                 alt={t(institutionInfo.shortName, institutionInfo.shortNameEn)}
                 className="w-12 h-12 sm:w-14 sm:h-14 lg:w-20 lg:h-20 rounded-full object-cover border-2 border-primary-200 shadow-sm"
                 loading="eager"
+                fallbackText={t('লোগো', 'Logo')}
               />
             </Link>
 
