@@ -23,6 +23,7 @@ import {
   Image as ImageIcon,
   BookOpen,
   Loader2,
+  Users,
 } from 'lucide-react';
 
 const serviceIconMap: Record<string, React.ReactNode> = {
@@ -34,6 +35,9 @@ const serviceIconMap: Record<string, React.ReactNode> = {
   Download: <Download className="w-6 h-6" />,
   CalendarDays: <CalendarDays className="w-6 h-6" />,
   MapPin: <MapPin className="w-6 h-6" />,
+  BookOpen: <BookOpen className="w-6 h-6" />,
+  Users: <Users className="w-6 h-6" />,
+  Image: <ImageIcon className="w-6 h-6" />,
 };
 
 export default function Home() {
@@ -90,11 +94,16 @@ export default function Home() {
               {t(institutionIdentity.mottoBn, institutionIdentity.mottoEn)}
             </p>
 
+            {/* Alternative Tagline */}
+            <p className="text-primary-200 text-xs sm:text-sm lg:text-base mb-2 sm:mb-3 leading-relaxed italic">
+              {t(institutionIdentity.taglineBn, institutionIdentity.taglineEn)}
+            </p>
+
             {/* Short Educational Message */}
             <p className="text-primary-200 text-xs sm:text-sm lg:text-base mb-2 sm:mb-3 leading-relaxed">
               {t(
-                'দ্বীনী শিক্ষা ও আধুনিক জ্ঞানের সমন্বয়ে গড়ে উঠা একটি আদর্শ শিক্ষা প্রতিষ্ঠান',
-                'An ideal educational institution combining Islamic knowledge with modern education'
+                'দ্বীনি ও আধুনিক শিক্ষার সমন্বয়ে জ্ঞান, নৈতিকতা ও মানবিক মূল্যবোধসম্পন্ন প্রজন্ম গড়ে তোলার প্রত্যয়ে।',
+                'With the determination to build a generation with knowledge, ethics and human values through the combination of religious and modern education.'
               )}
             </p>
 
@@ -476,6 +485,73 @@ export default function Home() {
             <Button variant="outline" icon={<ArrowRight className="w-4 h-4" />}>
               {t('সব ছবি দেখুন', 'View All Photos')}
             </Button>
+          </Link>
+        </div>
+      </Section>
+
+      {/* Orphanage & Hifzkhana Section */}
+      <Section background="light">
+        <SectionHeader
+          title={t('সেবা কার্যক্রম', 'Service Activities')}
+          subtitle={t('এতিমখানা ও হেফজখানা', 'Orphanage & Hifzkhana')}
+        />
+        <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          {/* Orphanage Card */}
+          <Link to="/orphanage">
+            <Card hover padding="lg" className="h-full group">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="shrink-0 w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center group-hover:bg-primary-200 transition-colors">
+                  <User className="w-7 h-7 text-primary-700" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-primary-900 font-bengali group-hover:text-primary-700 transition-colors">
+                    {t('এতিমখানা', 'Orphanage')}
+                  </h3>
+                  <p className="text-xs text-neutral-600 mt-1">
+                    {t('খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া এতিমখানা', 'Khagrachhari Baitush Sharaf Jabbaria Orphanage')}
+                  </p>
+                </div>
+              </div>
+              <p className="text-sm text-neutral-700 leading-relaxed mb-4">
+                {t(
+                  '[এতিমখানার পরিচিতি - যাচাই সাপেক্ষে]',
+                  '[Orphanage introduction - Pending verification]'
+                )}
+              </p>
+              <div className="flex items-center text-sm text-primary-600 font-medium">
+                <span>{t('বিস্তারিত দেখুন', 'View Details')}</span>
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </div>
+            </Card>
+          </Link>
+
+          {/* Hifzkhana Card */}
+          <Link to="/hifzkhana">
+            <Card hover padding="lg" className="h-full group">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="shrink-0 w-14 h-14 rounded-xl bg-gold-100 flex items-center justify-center group-hover:bg-gold-200 transition-colors">
+                  <BookOpen className="w-7 h-7 text-gold-700" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-primary-900 font-bengali group-hover:text-primary-700 transition-colors">
+                    {t('হেফজখানা', 'Hifzkhana')}
+                  </h3>
+                  <p className="text-xs text-neutral-600 mt-1">
+                    {t('জব্বারিয়া হেফজখানা', 'Jabbaria Hifzkhana')}
+                  </p>
+                </div>
+              </div>
+              <p className="text-sm text-neutral-700 leading-relaxed mb-4">
+                {t(
+                  '[হেফজখানার পরিচিতি - যাচাই সাপেক্ষে]',
+                  '[Hifzkhana introduction - Pending verification]'
+                )}
+              </p>
+              <div className="flex items-center text-sm text-primary-600 font-medium">
+                <span>{t('বিস্তারিত দেখুন', 'View Details')}</span>
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </div>
+            </Card>
           </Link>
         </div>
       </Section>
