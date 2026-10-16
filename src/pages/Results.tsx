@@ -6,7 +6,8 @@ import Section, { SectionHeader } from '../components/ui/Section';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { examTypes, examYears } from '../data/mockData';
-import { Search, Award, Info } from 'lucide-react';
+import { resultsAndAchievements } from '../data/institution';
+import { Search, Award, Info, AlertCircle } from 'lucide-react';
 
 export default function Results() {
   const { t } = useLanguage();
@@ -36,6 +37,19 @@ export default function Results() {
 
       <Section background="white">
         <div className="max-w-4xl mx-auto">
+          {/* Draft Notice */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3 mb-8">
+            <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm text-amber-900 font-medium mb-1">
+                {t('খসড়া - যাচাই ও অনুমোদন সাপেক্ষে', 'Draft - Subject to verification and approval')}
+              </p>
+              <p className="text-xs text-amber-800 whitespace-pre-line">
+                {t(resultsAndAchievements.notice, resultsAndAchievements.noticeEn)}
+              </p>
+            </div>
+          </div>
+
           {/* Search Form */}
           <Card padding="lg" className="mb-8">
             <SectionHeader title={t('ফলাফল অনুসন্ধান', 'Search Results')} centered={false} className="mb-6" />

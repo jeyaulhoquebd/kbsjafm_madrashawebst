@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { institutionInfo, navigationItems, quickLinks } from '../data/mockData';
+import { institutionIdentity, brandAssets, getContactLinks } from '../data/institution';
 import { MapPin, Phone, Mail, Globe, ExternalLink } from 'lucide-react';
 
 export default function Footer() {
@@ -16,39 +17,50 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
               <img
-                src="https://res.cloudinary.com/dc80xvaid/image/upload/v1792165465/madrashalogo.jpg"
+                src={brandAssets.logo}
                 alt={t(institutionInfo.shortName, institutionInfo.shortNameEn)}
                 className="w-14 h-14 rounded-full object-cover border-2 border-primary-700"
                 loading="lazy"
               />
               <div>
                 <h3 className="text-sm font-bold leading-tight font-bengali">
-                  {t(institutionInfo.shortName, institutionInfo.shortNameEn)}
+                  {t(institutionIdentity.shortNameBn, institutionIdentity.shortNameEn)}
                 </h3>
                 <p className="text-xs text-primary-300 font-latin">
-                  {t(institutionInfo.shortNameEn, institutionInfo.shortNameEn)}
+                  {t(institutionIdentity.shortNameEn, institutionIdentity.shortNameEn)}
                 </p>
               </div>
             </div>
-            <p className="text-sm text-primary-200 leading-relaxed mb-4">
+            <p className="text-sm text-primary-200 leading-relaxed mb-2">
               {t(
                 'একটি ইসলামী শিক্ষা প্রতিষ্ঠান যা দ্বীনী ও আধুনিক শিক্ষার সমন্বয়ে শিক্ষার্থীদের গড়ে তুলছে।',
                 'An Islamic educational institution nurturing students with a blend of religious and modern education.'
               )}
             </p>
+            <p className="text-xs text-gold-300 italic mb-4">
+              {t(institutionIdentity.mottoBn, institutionIdentity.mottoEn)}
+            </p>
             {/* Contact Info */}
             <div className="space-y-2.5 text-sm text-primary-300">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary-400" />
-                <span>{t(institutionInfo.address, institutionInfo.addressEn)}</span>
+                <span>{t(institutionIdentity.addressBn, institutionIdentity.addressEn)}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 shrink-0 text-primary-400" />
-                <span>{institutionInfo.phone}</span>
+                <a href={getContactLinks.phone(institutionIdentity.phonePrimary)} className="hover:text-white transition-colors">
+                  {institutionIdentity.phonePrimary}
+                </a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 shrink-0 text-primary-400" />
-                <span>{institutionInfo.email}</span>
+                <a href={getContactLinks.email(institutionIdentity.email)} className="hover:text-white transition-colors">
+                  {institutionIdentity.email}
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Globe className="w-4 h-4 shrink-0 text-primary-400" />
+                <span className="font-mono">EIIN: {institutionIdentity.eiin}</span>
               </div>
             </div>
           </div>
