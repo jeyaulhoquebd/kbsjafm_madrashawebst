@@ -63,6 +63,9 @@ export default function ResourcesManagement() {
     const newErrors: Record<string, string> = {};
     if (!formData.title.trim()) newErrors.title = 'Title is required';
     if (!formData.date) newErrors.date = 'Date is required';
+    if (formData.url && !formData.url.startsWith('http')) {
+      newErrors.url = 'URL must start with http:// or https://';
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -103,13 +106,17 @@ export default function ResourcesManagement() {
           }
         />
 
-        {/* File Upload Placeholder */}
-        <div className="mb-4 p-4 border-2 border-dashed border-neutral-300 rounded-lg bg-neutral-50">
-          <div className="flex items-center gap-3">
-            <Upload className="w-5 h-5 text-neutral-400" />
+        {/* Document Upload Notice */}
+        <div className="mb-4 p-4 border-2 border-dashed border-primary-300 rounded-lg bg-primary-50">
+          <div className="flex items-start gap-3">
+            <Upload className="w-5 h-5 text-primary-600 shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-medium text-neutral-700">File Upload</p>
-              <p className="text-xs text-neutral-500">File upload integration will be available with Firebase Storage</p>
+              <p className="text-sm font-medium text-primary-900 mb-1">Document Management</p>
+              <p className="text-xs text-primary-700">
+                Provide external URLs for documents (PDF, DOC, XLS, etc.). Upload documents to a trusted hosting service 
+                (e.g., Cloudinary, Google Drive, institutional server) and paste the public URL below. 
+                Firebase Storage is not used for document storage.
+              </p>
             </div>
           </div>
         </div>
@@ -224,8 +231,23 @@ export default function ResourcesManagement() {
             </FormField>
           </div>
 
-          <FormField label="File URL">
-            <TextInput value={formData.url} onChange={(e) => setFormData({ ...formData, url: e.target.value })} placeholder="Enter file URL (optional)" />
+          <FormField label="Document URL" error={errors.url}>
+            <TextInput 
+              value={formData.url} 
+              onChange={(e) => {
+                setFormData({ ...formData, url: e.target.value });
+                if (errors.url) {
+                  const newErrors = { ...errors };
+                  delete newErrors.url;
+                  setErrors(newErrors);
+                }
+              }} 
+              placeholder="https://example.com/document.pdf"
+              type="url"
+            />
+            <p className="text-xs text-neutral-500 mt-1">
+              Paste the public URL of your document (hosted on Cloudinary, Google Drive, or your server)
+            </p>
           </FormField>
 
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-neutral-200">

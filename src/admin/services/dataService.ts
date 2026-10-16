@@ -23,6 +23,8 @@ export interface HomepageContent {
   heroSubtitleEn: string;
   heroDescription: string;
   heroDescriptionEn: string;
+  heroBackgroundUrl?: string;
+  heroBackgroundPublicId?: string;
   announcement: string;
   announcementEn: string;
   principalName: string;
@@ -31,6 +33,8 @@ export interface HomepageContent {
   principalDesignationEn: string;
   principalMessage: string;
   principalMessageEn: string;
+  principalPhotoUrl?: string;
+  principalPhotoPublicId?: string;
 }
 
 export interface AcademicResource {

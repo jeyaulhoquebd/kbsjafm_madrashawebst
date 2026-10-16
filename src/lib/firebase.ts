@@ -21,7 +21,7 @@
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, type Auth } from 'firebase/auth';
 import { getFirestore, type Firestore } from 'firebase/firestore';
-import { getStorage, type FirebaseStorage } from 'firebase/storage';
+// Firebase Storage is NOT used - all images are stored in Cloudinary
 
 // ---------------------------------------------------------------------------
 // Configuration
@@ -70,8 +70,8 @@ export const auth: Auth = getAuth(app);
 /** Cloud Firestore service */
 export const db: Firestore = getFirestore(app);
 
-/** Firebase Storage service */
-export const storage: FirebaseStorage = getStorage(app);
+// Firebase Storage is NOT used - all images are stored in Cloudinary
+// All document downloads use external URLs stored in Firestore
 
 // ---------------------------------------------------------------------------
 // Helpers
