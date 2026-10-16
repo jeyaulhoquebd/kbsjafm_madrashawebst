@@ -5,8 +5,10 @@ import AdminModal from '../components/AdminModal';
 import ConfirmDialog from '../components/ConfirmDialog';
 import SuccessToast from '../components/SuccessToast';
 import FormField, { TextInput, TextAreaInput, SelectInput } from '../components/FormField';
+import ImageUpload from '../../components/admin/ImageUpload';
 import { Plus, Edit2, Trash2, Search, User } from 'lucide-react';
 import type { Teacher } from '../../types';
+import { CLOUDINARY_FOLDERS, type UploadResult } from '../../services/cloudinary';
 
 export default function TeachersManagement() {
   const { teachers, addTeacher, updateTeacher, deleteTeacher } = useAdmin();
@@ -24,6 +26,7 @@ export default function TeachersManagement() {
     department: '',
     departmentEn: '',
     image: '',
+    imagePublicId: '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -37,7 +40,7 @@ export default function TeachersManagement() {
 
   const openAddModal = () => {
     setEditingTeacher(null);
-    setFormData({ name: '', nameEn: '', designation: '', designationEn: '', department: '', departmentEn: '', image: '' });
+    setFormData({ name: '', nameEn: '', designation: '', designationEn: '', department: '', departmentEn: '', image: '', imagePublicId: '' });
     setErrors({});
     setIsModalOpen(true);
   };
@@ -52,6 +55,7 @@ export default function TeachersManagement() {
       department: teacher.department,
       departmentEn: teacher.departmentEn,
       image: teacher.image || '',
+      imagePublicId: '', // Will be populated when image is uploaded
     });
     setErrors({});
     setIsModalOpen(true);
@@ -179,9 +183,28 @@ export default function TeachersManagement() {
             </FormField>
           </div>
 
-          <FormField label="Photo URL">
-            <TextInput value={formData.image} onChange={(e) => setFormData({ ...formData, image: e.target.value })} placeholder="Enter image URL (optional)" />
-          </FormField>
+          <ImageUpload
+            folder={CLOUDINARY_FOLDERS.TEACHERS}
+            onUploadComplete={(result: UploadResult) => {
+              setFormData({
+                ...formData,
+                image: result.secureUrl,
+                imagePublicId: result.publicId,
+              });
+            }}
+            currentImage={formData.image}
+            label="শিক্ষকের ছবি (ঐচ্ছিক)"
+          />
+
+          {formData.image && (
+            <div className="p-3 bg-primary-50 border border-primary-200 rounded-lg">
+              <p className="text-xs text-primary-700 font-medium mb-1">আপলোড করা ছবির URL</p>
+              <p className="text-xs text-primary-600 break-all">{formData.image}</p>
+              {formData.imagePublicId && (
+                <p className="text-xs text-primary-500 mt-1">Public ID: {formData.imagePublicId}</p>
+              )}
+            </div>
+          )}
 
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-neutral-200">
             <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 rounded-lg transition-colors">

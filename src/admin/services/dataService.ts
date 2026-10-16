@@ -10,6 +10,7 @@ import type { Teacher } from '../../types';
 export interface GalleryImage {
   id: string;
   src: string;
+  cloudinaryPublicId?: string;
   alt: string;
   altEn: string;
   category: string;
