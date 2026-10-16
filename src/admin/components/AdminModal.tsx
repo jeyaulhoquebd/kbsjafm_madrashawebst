@@ -41,19 +41,19 @@ export default function AdminModal({
 
   return (
     <div
-      className="fixed inset-0 z-[100] bg-black/50 flex items-start justify-center p-4 overflow-y-auto"
+      className="fixed inset-0 z-[100] bg-black/50 flex items-start justify-center p-3 sm:p-4 overflow-y-auto"
       onClick={onClose}
     >
       <div
-        className={`bg-white rounded-lg shadow-xl ${sizeStyles[size]} w-full my-8`}
+        className={`bg-white rounded-lg shadow-xl ${sizeStyles[size]} w-full my-4 sm:my-8`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-neutral-200">
-          <h2 className="text-lg font-semibold text-neutral-900">{title}</h2>
+        <div className="flex items-center justify-between p-3 sm:p-4 border-b border-neutral-200">
+          <h2 className="text-base sm:text-lg font-semibold text-neutral-900">{title}</h2>
           <button
             onClick={onClose}
-            className="p-1 rounded hover:bg-neutral-100 transition-colors"
+            className="p-1.5 rounded hover:bg-neutral-100 transition-colors"
             aria-label="Close"
           >
             <X className="w-5 h-5 text-neutral-500" />
@@ -61,7 +61,7 @@ export default function AdminModal({
         </div>
 
         {/* Content */}
-        <div className="p-4">{children}</div>
+        <div className="p-3 sm:p-4">{children}</div>
       </div>
     </div>
   );

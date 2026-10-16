@@ -58,22 +58,22 @@ export default function AdminOverview() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
             <Link key={stat.title} to={stat.link}>
               <AdminCard padding="md" className="hover:shadow-md transition-shadow cursor-pointer">
-                <div className="flex items-start justify-between mb-3">
-                  <div className={`w-10 h-10 rounded-lg ${stat.color} flex items-center justify-center`}>
-                    <Icon className="w-5 h-5 text-white" />
+                <div className="flex items-start justify-between mb-2 sm:mb-3">
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg ${stat.color} flex items-center justify-center`}>
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                  <TrendingUp className="w-4 h-4 text-neutral-400" />
+                  <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-neutral-400" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-neutral-900">{stat.value}</p>
-                  <p className="text-sm font-medium text-neutral-700 mt-1">{stat.title}</p>
-                  <p className="text-xs text-neutral-500 mt-0.5">{stat.description}</p>
+                  <p className="text-xl sm:text-2xl font-bold text-neutral-900">{stat.value}</p>
+                  <p className="text-xs sm:text-sm font-medium text-neutral-700 mt-1">{stat.title}</p>
+                  <p className="text-xs text-neutral-500 mt-0.5 hidden sm:block">{stat.description}</p>
                 </div>
               </AdminCard>
             </Link>

@@ -133,8 +133,8 @@ export default function NoticesManagement() {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full">
+        <div className="overflow-x-auto -mx-5 sm:mx-0">
+          <table className="w-full min-w-[600px]">
             <thead>
               <tr className="border-b border-neutral-200">
                 <th className="text-left py-3 px-2 text-xs font-semibold text-neutral-600 uppercase">Title</th>
@@ -149,13 +149,13 @@ export default function NoticesManagement() {
                 filteredNotices.map((notice) => (
                   <tr key={notice.id} className="border-b border-neutral-100 hover:bg-neutral-50">
                     <td className="py-3 px-2">
-                      <p className="text-sm font-medium text-neutral-900 truncate max-w-xs">{notice.title}</p>
+                      <p className="text-sm font-medium text-neutral-900 truncate max-w-[200px] sm:max-w-xs">{notice.title}</p>
                     </td>
                     <td className="py-3 px-2">
                       <StatusBadge status={notice.category} />
                     </td>
                     <td className="py-3 px-2">
-                      <p className="text-sm text-neutral-600">{notice.date}</p>
+                      <p className="text-sm text-neutral-600 whitespace-nowrap">{notice.date}</p>
                     </td>
                     <td className="py-3 px-2">
                       {notice.isUrgent && <StatusBadge status="urgent" label="Urgent" />}

@@ -39,11 +39,13 @@ export default function AdminLayout() {
   return (
     <div className="min-h-screen bg-neutral-50">
       {/* Development Notice Banner */}
-      <div className="bg-amber-500 text-white text-xs sm:text-sm py-1.5 px-4 flex items-center justify-center gap-2">
-        <ShieldAlert className="w-4 h-4 shrink-0" />
-        <span>
-          <strong>Development Mode:</strong> This dashboard is not protected by real authentication.
-          All data is stored locally in memory and will reset on refresh.
+      <div className="bg-amber-500 text-white text-xs sm:text-sm py-1.5 px-3 sm:px-4 flex items-center justify-center gap-2">
+        <ShieldAlert className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+        <span className="text-center">
+          <strong className="hidden sm:inline">Development Mode:</strong>
+          <strong className="sm:hidden">Dev:</strong>
+          <span className="hidden sm:inline"> This dashboard is not protected by real authentication. All data is stored locally in memory and will reset on refresh.</span>
+          <span className="sm:hidden"> Demo data only. Resets on refresh.</span>
         </span>
       </div>
 
@@ -60,13 +62,12 @@ export default function AdminLayout() {
         {/* Sidebar */}
         <aside
           className={`
-            fixed lg:sticky top-0 left-0 z-50
-            w-64 h-screen bg-white border-r border-neutral-200
+            fixed lg:sticky top-[28px] left-0 z-50
+            w-64 h-[calc(100vh-28px)] bg-white border-r border-neutral-200
             transform transition-transform duration-200
             ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
             flex flex-col
           `}
-          style={{ marginTop: '28px' }}
         >
           {/* Logo Area */}
           <div className="p-4 border-b border-neutral-200">
@@ -141,7 +142,7 @@ export default function AdminLayout() {
         {/* Main Content */}
         <div className="flex-1 min-w-0 flex flex-col">
           {/* Top Bar */}
-          <header className="sticky top-[28px] z-30 bg-white border-b border-neutral-200 h-14 flex items-center px-4 lg:px-6 gap-4">
+          <header className="sticky top-[28px] z-30 bg-white border-b border-neutral-200 h-12 sm:h-14 flex items-center px-3 sm:px-4 lg:px-6 gap-3 sm:gap-4">
             <button
               onClick={() => setSidebarOpen(true)}
               className="lg:hidden p-2 rounded-lg hover:bg-neutral-100"
@@ -150,26 +151,26 @@ export default function AdminLayout() {
               <Menu className="w-5 h-5" />
             </button>
 
-            <div className="flex-1">
-              <h1 className="text-sm font-semibold text-neutral-800">
+            <div className="flex-1 min-w-0">
+              <h1 className="text-xs sm:text-sm font-semibold text-neutral-800 truncate">
                 {navItems.find((item) => isActive(item.path, item.exact))?.label || 'Dashboard'}
               </h1>
             </div>
 
             {/* User Profile Placeholder */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className="text-right hidden sm:block">
                 <p className="text-xs font-medium text-neutral-800">Administrator</p>
                 <p className="text-xs text-neutral-500">Demo User</p>
               </div>
-              <div className="w-9 h-9 rounded-full bg-primary-700 text-white flex items-center justify-center text-sm font-semibold">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-primary-700 text-white flex items-center justify-center text-xs sm:text-sm font-semibold">
                 A
               </div>
             </div>
           </header>
 
           {/* Page Content */}
-          <main className="flex-1 p-4 lg:p-6 overflow-x-hidden">
+          <main className="flex-1 p-3 sm:p-4 lg:p-6 overflow-x-hidden">
             <Outlet />
           </main>
         </div>

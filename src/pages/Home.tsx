@@ -38,7 +38,7 @@ export default function Home() {
   return (
     <>
       {/* SECTION 4: HERO BANNER */}
-      <section className="relative overflow-hidden min-h-[500px] lg:min-h-[600px] flex items-center">
+      <section className="relative overflow-hidden min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] flex items-center">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
@@ -53,15 +53,15 @@ export default function Home() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 w-full">
           <div className="max-w-2xl">
             {/* Bismillah */}
-            <p className="text-gold-300 text-lg sm:text-xl mb-4 font-bengali-serif opacity-90">
+            <p className="text-gold-300 text-base sm:text-lg lg:text-xl mb-3 sm:mb-4 font-bengali-serif opacity-90">
               بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
             </p>
 
             {/* Short Educational Message */}
-            <p className="text-primary-200 text-sm sm:text-base mb-3 leading-relaxed">
+            <p className="text-primary-200 text-xs sm:text-sm lg:text-base mb-2 sm:mb-3 leading-relaxed">
               {t(
                 'দ্বীনী শিক্ষা ও আধুনিক জ্ঞানের সমন্বয়ে গড়ে উঠা একটি আদর্শ শিক্ষা প্রতিষ্ঠান',
                 'An ideal educational institution combining Islamic knowledge with modern education'
@@ -69,19 +69,19 @@ export default function Home() {
             </p>
 
             {/* Full Institution Name */}
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight font-bengali mb-4">
+            <h1 className="text-xl sm:text-2xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight font-bengali mb-3 sm:mb-4">
               {t(
                 'খাগড়াছড়ি বাইতুশ শরফ জাব্বারিয়া',
                 'Khagrachhari Baitush Sharaf Jabbaria'
               )}
               <br />
-              <span className="text-gold-300 text-xl sm:text-2xl lg:text-3xl xl:text-4xl">
+              <span className="text-gold-300 text-lg sm:text-xl lg:text-3xl xl:text-4xl">
                 {t('আদর্শ ফাজিল (ডিগ্রি) মাদ্রাসা', 'Adarsha Fazil (Degree) Madrasa')}
               </span>
             </h1>
 
             {/* Supporting Description */}
-            <p className="text-primary-100 text-sm sm:text-base lg:text-lg mt-4 mb-8 leading-relaxed max-w-xl">
+            <p className="text-primary-100 text-xs sm:text-sm lg:text-base xl:text-lg mt-3 sm:mt-4 mb-6 sm:mb-8 leading-relaxed max-w-xl">
               {t(
                 'এই প্রতিষ্ঠান কুরআন, হাদীস, ফিকহ ও আধুনিক শিক্ষার সমন্বয়ে শিক্ষার্থীদের জ্ঞানার্জন ও চরিত্র গঠনে নিবেদিত।',
                 'This institution is dedicated to nurturing students through a combination of Quran, Hadith, Fiqh, and modern education.'
@@ -89,27 +89,27 @@ export default function Home() {
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-              <Link to="/about">
-                <Button variant="gold" size="lg" icon={<ArrowRight className="w-5 h-5" />}>
+            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 sm:gap-3">
+              <Link to="/about" className="sm:inline-block">
+                <Button variant="gold" size="lg" icon={<ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />} className="w-full sm:w-auto text-sm sm:text-base">
                   {t('আমাদের সম্পর্কে জানুন', 'Learn About Us')}
                 </Button>
               </Link>
-              <Link to="/admission">
+              <Link to="/admission" className="sm:inline-block">
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-white/30 text-white hover:bg-white/10 hover:border-white/50"
+                  className="w-full sm:w-auto border-white/30 text-white hover:bg-white/10 hover:border-white/50 text-sm sm:text-base"
                 >
                   {t('ভর্তি তথ্য', 'Admission Info')}
                 </Button>
               </Link>
-              <Link to="/notices">
+              <Link to="/notices" className="sm:inline-block">
                 <Button
                   variant="ghost"
                   size="lg"
-                  className="text-primary-100 hover:text-white hover:bg-white/10"
-                  icon={<Bell className="w-5 h-5" />}
+                  className="w-full sm:w-auto text-primary-100 hover:text-white hover:bg-white/10 text-sm sm:text-base"
+                  icon={<Bell className="w-4 h-4 sm:w-5 sm:h-5" />}
                 >
                   {t('সর্বশেষ নোটিশ', 'Latest Notices')}
                 </Button>
@@ -347,18 +347,18 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* Main large image */}
-          <div className="col-span-2 row-span-2 rounded-xl overflow-hidden shadow-md group cursor-pointer">
-            <div className="relative h-full min-h-[280px] sm:min-h-[360px]">
+          <div className="col-span-2 sm:col-span-2 lg:col-span-2 row-span-2 rounded-xl overflow-hidden shadow-md group cursor-pointer">
+            <div className="relative h-full min-h-[200px] sm:min-h-[280px] lg:min-h-[360px]">
               <img
                 src={galleryImages[0].src}
                 alt={t(galleryImages[0].alt, galleryImages[0].altEn)}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                <p className="text-white text-sm font-medium">
+              <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 sm:p-4">
+                <p className="text-white text-xs sm:text-sm font-medium">
                   {t(galleryImages[0].alt, galleryImages[0].altEn)}
                 </p>
               </div>
@@ -396,24 +396,24 @@ export default function Home() {
       </Section>
 
       {/* Stats Banner */}
-      <section className="gradient-emerald py-10 lg:py-14 relative overflow-hidden">
+      <section className="gradient-emerald py-8 sm:py-10 lg:py-14 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pattern-bg" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="relative max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {[
-              { value: '[সংখ্যা]', label: t('শিক্ষার্থী', 'Students'), icon: <User className="w-6 h-6" /> },
-              { value: '[সংখ্যা]', label: t('শিক্ষক', 'Teachers'), icon: <Star className="w-6 h-6" /> },
-              { value: '৫+', label: t('বিভাগ', 'Departments'), icon: <BookOpen className="w-6 h-6" /> },
-              { value: '[বছর]', label: t('বছরের সেবা', 'Years of Service'), icon: <Calendar className="w-6 h-6" /> },
+              { value: '[সংখ্যা]', label: t('শিক্ষার্থী', 'Students'), icon: <User className="w-5 h-5 sm:w-6 sm:h-6" /> },
+              { value: '[সংখ্যা]', label: t('শিক্ষক', 'Teachers'), icon: <Star className="w-5 h-5 sm:w-6 sm:h-6" /> },
+              { value: '৫+', label: t('বিভাগ', 'Departments'), icon: <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" /> },
+              { value: '[বছর]', label: t('বছরের সেবা', 'Years of Service'), icon: <Calendar className="w-5 h-5 sm:w-6 sm:h-6" /> },
             ].map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 text-gold-300 mb-3">
+                <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 text-gold-300 mb-2 sm:mb-3">
                   {stat.icon}
                 </div>
-                <div className="text-2xl lg:text-3xl font-bold text-white">
+                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
                   {stat.value}
                 </div>
-                <div className="text-sm text-primary-200 mt-1">{stat.label}</div>
+                <div className="text-xs sm:text-sm text-primary-200 mt-1">{stat.label}</div>
               </div>
             ))}
           </div>

@@ -69,25 +69,25 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-start justify-center pt-16 sm:pt-24 px-4"
+      className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-start justify-center pt-12 sm:pt-16 lg:pt-24 px-3 sm:px-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label={t('অনুসন্ধান', 'Search')}
     >
       <div
-        className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[70vh] flex flex-col overflow-hidden animate-fade-in"
+        className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[80vh] sm:max-h-[70vh] flex flex-col overflow-hidden animate-fade-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input */}
-        <div className="flex items-center gap-3 p-4 border-b border-neutral-200">
-          <Search className="w-5 h-5 text-neutral-400 shrink-0" />
+        <div className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 border-b border-neutral-200">
+          <Search className="w-4 h-4 sm:w-5 sm:h-5 text-neutral-400 shrink-0" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t('নোটিশ, শিক্ষক বা ডকুমেন্ট খুঁজুন...', 'Search notices, teachers, or documents...')}
-            className="flex-1 text-base outline-none placeholder-neutral-400"
+            className="flex-1 text-sm sm:text-base outline-none placeholder-neutral-400"
             autoFocus
           />
           <button
@@ -95,7 +95,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             className="p-1.5 rounded-lg hover:bg-neutral-100 transition-colors text-neutral-500"
             aria-label={t('বন্ধ করুন', 'Close')}
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
