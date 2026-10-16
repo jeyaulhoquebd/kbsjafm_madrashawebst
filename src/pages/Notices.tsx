@@ -7,8 +7,8 @@ import Section from '../components/ui/Section';
 import Notice from '../components/ui/Notice';
 import EmptyState from '../components/ui/EmptyState';
 import Button from '../components/ui/Button';
-import { sampleNotices } from '../data/mockData';
-import { Search, Filter, Bell, ArrowDown } from 'lucide-react';
+import { usePublishedNotices } from '../hooks/useFirestore';
+import { Search, Filter, Bell, ArrowDown, Loader2 } from 'lucide-react';
 
 export default function Notices() {
   const { t } = useLanguage();
@@ -17,8 +17,11 @@ export default function Notices() {
   const [sortBy, setSortBy] = useState<'newest' | 'oldest'>('newest');
   const [visibleCount, setVisibleCount] = useState(5);
 
+  // Load notices from Firestore
+  const { notices: firestoreNotices, loading, error } = usePublishedNotices();
+
   const filteredNotices = useMemo(() => {
-    let filtered = sampleNotices.filter((notice) => {
+    let filtered = firestoreNotices.filter((notice) => {
       const matchesSearch =
         searchQuery === '' ||
         notice.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -37,7 +40,7 @@ export default function Notices() {
     });
 
     return filtered;
-  }, [searchQuery, selectedCategory, sortBy]);
+  }, [firestoreNotices, searchQuery, selectedCategory, sortBy]);
 
   const visibleNotices = filteredNotices.slice(0, visibleCount);
   const hasMore = visibleCount < filteredNotices.length;
@@ -60,6 +63,25 @@ export default function Notices() {
 
       <Section background="white">
         <div className="max-w-4xl mx-auto">
+          {/* Loading State */}
+          {loading && (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && !loading && (
+            <EmptyState
+              icon={<Bell className="w-8 h-8" />}
+              title={t('নোটিশ লোড করতে সমস্যা হয়েছে', 'Failed to load notices')}
+              description={error}
+            />
+          )}
+
+          {/* Notices Content */}
+          {!loading && !error && (
+            <>
           {/* Search and Filter */}
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <div className="flex-1 relative">
@@ -132,6 +154,8 @@ export default function Notices() {
               title={t('কোনো নোটিশ পাওয়া যায়নি', 'No notices found')}
               description={t('অনুসন্ধানের শর্ত পরিবর্তন করে আবার চেষ্টা করুন', 'Try changing your search criteria')}
             />
+          )}
+            </>
           )}
         </div>
       </Section>

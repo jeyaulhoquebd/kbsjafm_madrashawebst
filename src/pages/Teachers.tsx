@@ -5,17 +5,21 @@ import Breadcrumb from '../components/ui/Breadcrumb';
 import Section from '../components/ui/Section';
 import Card from '../components/ui/Card';
 import EmptyState from '../components/ui/EmptyState';
-import { demoTeachers, departments } from '../data/mockData';
+import { departments } from '../data/mockData';
+import { usePublishedTeachers } from '../hooks/useFirestore';
 import { Link } from 'react-router-dom';
-import { Search, User, Filter } from 'lucide-react';
+import { Search, User, Filter, Loader2 } from 'lucide-react';
 
 export default function Teachers() {
   const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDepartment, setSelectedDepartment] = useState('');
 
+  // Load teachers from Firestore
+  const { teachers: firestoreTeachers, loading, error } = usePublishedTeachers();
+
   const filteredTeachers = useMemo(() => {
-    return demoTeachers.filter((teacher) => {
+    return firestoreTeachers.filter((teacher) => {
       const matchesSearch =
         searchQuery === '' ||
         teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -28,7 +32,7 @@ export default function Teachers() {
 
       return matchesSearch && matchesDepartment;
     });
-  }, [searchQuery, selectedDepartment]);
+  }, [firestoreTeachers, searchQuery, selectedDepartment]);
 
   return (
     <>
@@ -40,6 +44,25 @@ export default function Teachers() {
 
       <Section background="white">
         <div className="max-w-6xl mx-auto">
+          {/* Loading State */}
+          {loading && (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && !loading && (
+            <EmptyState
+              icon={<User className="w-8 h-8" />}
+              title={t('শিক্ষক তথ্য লোড করতে সমস্যা হয়েছে', 'Failed to load teachers')}
+              description={error}
+            />
+          )}
+
+          {/* Teachers Content */}
+          {!loading && !error && (
+            <>
           {/* Search and Filter */}
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
             <div className="flex-1 relative">
@@ -82,9 +105,9 @@ export default function Teachers() {
                   <Card hover padding="none" className="overflow-hidden h-full group">
                     {/* Photo */}
                     <div className="aspect-square bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center relative overflow-hidden">
-                      {teacher.image ? (
+                      {teacher.photoUrl ? (
                         <img
-                          src={teacher.image}
+                          src={teacher.photoUrl}
                           alt={t(teacher.name, teacher.nameEn)}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           loading="lazy"
@@ -116,6 +139,8 @@ export default function Teachers() {
               title={t('কোনো শিক্ষক পাওয়া যায়নি', 'No teachers found')}
               description={t('অনুসন্ধানের শর্ত পরিবর্তন করে আবার চেষ্টা করুন', 'Try changing your search criteria')}
             />
+          )}
+            </>
           )}
         </div>
       </Section>

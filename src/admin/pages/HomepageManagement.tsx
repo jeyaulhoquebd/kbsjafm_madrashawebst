@@ -3,11 +3,19 @@ import { useAdmin } from '../context/AdminContext';
 import AdminCard, { AdminCardHeader } from '../components/AdminCard';
 import SuccessToast from '../components/SuccessToast';
 import FormField, { TextInput, TextAreaInput } from '../components/FormField';
+import ImageUpload from '../../components/admin/ImageUpload';
 import { Save, Info } from 'lucide-react';
+import { CLOUDINARY_FOLDERS, type UploadResult } from '../../services/cloudinary';
 
 export default function HomepageManagement() {
   const { homepage, updateHomepage } = useAdmin();
-  const [formData, setFormData] = useState(homepage);
+  const [formData, setFormData] = useState({
+    ...homepage,
+    heroBackgroundUrl: homepage.heroBackgroundUrl || '',
+    heroBackgroundPublicId: '',
+    principalPhotoUrl: homepage.principalPhotoUrl || '',
+    principalPhotoPublicId: '',
+  });
   const [successMessage, setSuccessMessage] = useState('');
   const [hasChanges, setHasChanges] = useState(false);
 
@@ -41,6 +49,26 @@ export default function HomepageManagement() {
         <AdminCard className="mb-6">
           <AdminCardHeader title="Hero Section" description="Main banner content" />
           <div className="space-y-4">
+            <ImageUpload
+              folder={CLOUDINARY_FOLDERS.BUILDING}
+              onUploadComplete={(result: UploadResult) => {
+                setFormData({
+                  ...formData,
+                  heroBackgroundUrl: result.secureUrl,
+                  heroBackgroundPublicId: result.publicId,
+                });
+                setHasChanges(true);
+              }}
+              currentImage={formData.heroBackgroundUrl}
+              label="Hero Background Image"
+            />
+            {formData.heroBackgroundUrl && (
+              <div className="p-3 bg-primary-50 border border-primary-200 rounded-lg">
+                <p className="text-xs text-primary-700 font-medium mb-1">Uploaded Image URL</p>
+                <p className="text-xs text-primary-600 break-all">{formData.heroBackgroundUrl}</p>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField label="Hero Title (Bengali)">
                 <TextInput value={formData.heroTitle} onChange={(e) => handleChange('heroTitle', e.target.value)} placeholder="Enter Bengali title" />
@@ -87,6 +115,26 @@ export default function HomepageManagement() {
         <AdminCard className="mb-6">
           <AdminCardHeader title="Principal Introduction" description="Principal's message section" />
           <div className="space-y-4">
+            <ImageUpload
+              folder={CLOUDINARY_FOLDERS.PRINCIPAL}
+              onUploadComplete={(result: UploadResult) => {
+                setFormData({
+                  ...formData,
+                  principalPhotoUrl: result.secureUrl,
+                  principalPhotoPublicId: result.publicId,
+                });
+                setHasChanges(true);
+              }}
+              currentImage={formData.principalPhotoUrl}
+              label="Principal Photograph"
+            />
+            {formData.principalPhotoUrl && (
+              <div className="p-3 bg-primary-50 border border-primary-200 rounded-lg">
+                <p className="text-xs text-primary-700 font-medium mb-1">Uploaded Photo URL</p>
+                <p className="text-xs text-primary-600 break-all">{formData.principalPhotoUrl}</p>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField label="Principal Name (Bengali)">
                 <TextInput value={formData.principalName} onChange={(e) => handleChange('principalName', e.target.value)} placeholder="Enter Bengali name" />

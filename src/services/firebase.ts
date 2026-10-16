@@ -14,13 +14,13 @@
 // import { initializeApp, FirebaseApp } from 'firebase/app';
 // import { getAuth, Auth } from 'firebase/auth';
 // import { getFirestore, Firestore } from 'firebase/firestore';
-// import { getStorage, FirebaseStorage } from 'firebase/storage';
+// Firebase Storage is NOT used - all images are stored in Cloudinary
 
 export interface FirebaseServices {
   // app: FirebaseApp;
   // auth: Auth;
   // db: Firestore;
-  // storage: FirebaseStorage;
+  // Firebase Storage is NOT used - all images are stored in Cloudinary
   isInitialized: boolean;
 }
 
@@ -58,7 +58,6 @@ export function initializeFirebase(): FirebaseServices {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
     authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
     projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
     appId: import.meta.env.VITE_FIREBASE_APP_ID,
   };
@@ -66,7 +65,7 @@ export function initializeFirebase(): FirebaseServices {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-  const storage = getStorage(app);
+  // Firebase Storage is NOT used - all images are stored in Cloudinary
 
   console.log('[Firebase] Initialized successfully');
 
@@ -74,7 +73,7 @@ export function initializeFirebase(): FirebaseServices {
     app,
     auth,
     db,
-    storage,
+    // Firebase Storage is NOT used - all images are stored in Cloudinary
     isInitialized: true,
   };
   */
