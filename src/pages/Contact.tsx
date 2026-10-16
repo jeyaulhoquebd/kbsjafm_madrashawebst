@@ -31,6 +31,7 @@ export default function Contact() {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -50,7 +51,12 @@ export default function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      setIsSubmitted(true);
+      setIsLoading(true);
+      // Simulate loading state (demo only - no actual submission)
+      setTimeout(() => {
+        setIsLoading(false);
+        setIsSubmitted(true);
+      }, 1500);
     }
   };
 
@@ -163,7 +169,7 @@ export default function Contact() {
                     <p className="text-xs text-neutral-400 mb-4">
                       {t('※ এটি একটি ডেমো ফরম। কোনো তথ্য প্রকৃতপক্ষে সংরক্ষণ করা হয়নি।', '※ This is a demo form. No data has been actually saved.')}
                     </p>
-                    <Button variant="outline" onClick={() => { setIsSubmitted(false); setFormData({ name: '', email: '', phone: '', subject: '', message: '' }); }}>
+                    <Button variant="outline" onClick={() => { setIsSubmitted(false); setIsLoading(false); setFormData({ name: '', email: '', phone: '', subject: '', message: '' }); }}>
                       {t('নতুন বার্তা', 'New Message')}
                     </Button>
                   </div>
@@ -235,8 +241,8 @@ export default function Contact() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <Button type="submit" variant="primary">
-                        {t('বার্তা পাঠান', 'Send Message')}
+                      <Button type="submit" variant="primary" isLoading={isLoading} disabled={isLoading}>
+                        {isLoading ? t('পাঠানো হচ্ছে...', 'Sending...') : t('বার্তা পাঠান', 'Send Message')}
                       </Button>
                       <p className="text-xs text-neutral-400">
                         {t('※ ডেমো ফরম - কোনো তথ্য সংরক্ষণ হবে না', '※ Demo form - No data will be saved')}

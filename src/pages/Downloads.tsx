@@ -6,7 +6,7 @@ import Section from '../components/ui/Section';
 import Card from '../components/ui/Card';
 import EmptyState from '../components/ui/EmptyState';
 import { downloadItems } from '../data/mockData';
-import { Download, FileText, Filter } from 'lucide-react';
+import { Download, FileText, Filter, AlertCircle } from 'lucide-react';
 
 export default function Downloads() {
   const { t } = useLanguage();
@@ -44,7 +44,7 @@ export default function Downloads() {
                 <button
                   key={cat.value}
                   onClick={() => setSelectedCategory(cat.value)}
-                  className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                  className={`px-3 py-1.5 text-sm rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 ${
                     selectedCategory === cat.value
                       ? 'bg-primary-700 text-white'
                       : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
@@ -60,7 +60,7 @@ export default function Downloads() {
           {filteredDownloads.length > 0 ? (
             <div className="space-y-3">
               {filteredDownloads.map((item) => (
-                <Card key={item.id} padding="md" hover>
+                <Card key={item.id} padding="md" hover={!item.url}>
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3 min-w-0 flex-1">
                       <div className="shrink-0 w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
@@ -82,16 +82,17 @@ export default function Downloads() {
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-primary-700 hover:bg-primary-50 rounded-lg transition-colors"
+                        className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-primary-700 hover:bg-primary-50 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
                         download
                       >
                         <Download className="w-4 h-4" />
                         <span className="hidden sm:inline">{t('ডাউনলোড', 'Download')}</span>
                       </a>
                     ) : (
-                      <span className="shrink-0 text-xs text-neutral-400 italic px-3">
-                        {t('[ফাইল নেই]', '[No File]')}
-                      </span>
+                      <div className="shrink-0 flex items-center gap-1.5 px-3 py-2 text-xs text-neutral-400 italic">
+                        <AlertCircle className="w-3.5 h-3.5" />
+                        <span>{t('অপেক্ষমান', 'Pending')}</span>
+                      </div>
                     )}
                   </div>
                 </Card>
@@ -107,12 +108,20 @@ export default function Downloads() {
 
           {/* Info Notice */}
           <div className="mt-8 bg-primary-50 border border-primary-100 rounded-lg p-4">
-            <p className="text-xs text-primary-700">
-              {t(
-                '※ উল্লেখ্য: কিছু ফাইল এখনও আপলোড করা হয়নি। প্রকৃত ফাইল পাওয়া গেলে ডাউনলোড লিংক সক্রিয় হবে।',
-                '※ Note: Some files have not been uploaded yet. Download links will be activated when actual files are available.'
-              )}
-            </p>
+            <div className="flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 text-primary-700 mt-0.5 shrink-0" />
+              <div>
+                <p className="text-xs text-primary-700 font-medium mb-1">
+                  {t('গুরুত্বপূর্ণ তথ্য', 'Important Information')}
+                </p>
+                <p className="text-xs text-primary-700">
+                  {t(
+                    '※ "অপেক্ষমান" চিহ্নিত ফাইলগুলো এখনও আপলোড করা হয়নি। প্রকৃত ফাইল পাওয়া গেলে ডাউনলোড লিংক সক্রিয় হবে।',
+                    '※ Files marked as "Pending" have not been uploaded yet. Download links will be activated when actual files are available.'
+                  )}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </Section>

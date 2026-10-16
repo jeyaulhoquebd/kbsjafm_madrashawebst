@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHeader from '../components/ui/PageHeader';
 import Breadcrumb from '../components/ui/Breadcrumb';
@@ -10,6 +10,35 @@ export default function Gallery() {
   const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  // Handle keyboard navigation in lightbox
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+
+      switch (e.key) {
+        case 'Escape':
+          setLightboxIndex(null);
+          break;
+        case 'ArrowLeft':
+          setLightboxIndex(lightboxIndex > 0 ? lightboxIndex - 1 : filteredImages.length - 1);
+          break;
+        case 'ArrowRight':
+          setLightboxIndex(lightboxIndex < filteredImages.length - 1 ? lightboxIndex + 1 : 0);
+          break;
+      }
+    };
+
+    if (lightboxIndex !== null) {
+      document.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [lightboxIndex]);
 
   // Combine real images with placeholders
   const allImages = [
@@ -30,18 +59,6 @@ export default function Gallery() {
 
   const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
-
-  const goToPrevious = () => {
-    if (lightboxIndex !== null) {
-      setLightboxIndex(lightboxIndex > 0 ? lightboxIndex - 1 : filteredImages.length - 1);
-    }
-  };
-
-  const goToNext = () => {
-    if (lightboxIndex !== null) {
-      setLightboxIndex(lightboxIndex < filteredImages.length - 1 ? lightboxIndex + 1 : 0);
-    }
-  };
 
   return (
     <>
@@ -137,7 +154,7 @@ export default function Gallery() {
 
           {/* Previous Button */}
           <button
-            onClick={(e) => { e.stopPropagation(); goToPrevious(); }}
+            onClick={(e) => { e.stopPropagation(); setLightboxIndex(lightboxIndex > 0 ? lightboxIndex - 1 : filteredImages.length - 1); }}
             className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-neutral-300 transition-colors z-10 bg-black/30 rounded-full p-2"
             aria-label={t('পূর্ববর্তী', 'Previous')}
           >
@@ -162,7 +179,7 @@ export default function Gallery() {
 
           {/* Next Button */}
           <button
-            onClick={(e) => { e.stopPropagation(); goToNext(); }}
+            onClick={(e) => { e.stopPropagation(); setLightboxIndex(lightboxIndex < filteredImages.length - 1 ? lightboxIndex + 1 : 0); }}
             className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-neutral-300 transition-colors z-10 bg-black/30 rounded-full p-2"
             aria-label={t('পরবর্তী', 'Next')}
           >

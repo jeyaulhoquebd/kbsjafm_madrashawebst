@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { navigationItems, institutionInfo } from '../data/mockData';
 import { Menu, X, Globe, Search, Phone, Mail, MapPin, ChevronDown } from 'lucide-react';
+import SearchModal from './SearchModal';
 
 export default function Header() {
   const { language, setLanguage, t } = useLanguage();
@@ -10,15 +11,45 @@ export default function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
+  // Close menus on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setActiveDropdown(null);
   }, [location]);
 
+  // Close mobile menu on Escape
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+        setActiveDropdown(null);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, []);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const isActive = (href: string) => {
     if (href === '/') return location.pathname === '/';
     return location.pathname.startsWith(href);
+  };
+
+  const handleMobileNavClick = () => {
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -37,7 +68,7 @@ export default function Header() {
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
               <button
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                onClick={() => setIsSearchOpen(true)}
                 className="p-1.5 rounded hover:bg-primary-800 transition-colors"
                 aria-label={t('অনুসন্ধান', 'Search')}
               >
@@ -55,23 +86,6 @@ export default function Header() {
           </div>
         </div>
       </div>
-
-      {/* Search Bar (Expandable) */}
-      {isSearchOpen && (
-        <div className="bg-primary-900 border-t border-primary-800 animate-fade-in">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-400" />
-              <input
-                type="text"
-                placeholder={t('অনুসন্ধান করুন...', 'Search...')}
-                className="w-full pl-10 pr-4 py-2 bg-primary-800 border border-primary-700 rounded-lg text-white placeholder-primary-400 text-sm focus:outline-none focus:border-primary-500"
-                autoFocus
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Main Header - Logo & Info */}
       <div className="bg-white border-b border-neutral-200 shadow-sm">
@@ -134,11 +148,14 @@ export default function Header() {
                     className={`
                       flex items-center gap-1 px-3 xl:px-4 py-3.5 text-sm font-medium
                       transition-colors duration-200 border-b-2
+                      focus-visible:outline-none focus-visible:bg-primary-700 focus-visible:text-white
                       ${isActive(item.href)
                         ? 'text-white bg-primary-700 border-gold-400'
                         : 'text-primary-100 hover:text-white hover:bg-primary-700 border-transparent'
                       }
                     `}
+                    aria-haspopup={item.children ? 'true' : undefined}
+                    aria-expanded={item.children && activeDropdown === item.href ? 'true' : undefined}
                   >
                     {t(item.label, item.labelEn)}
                     {item.children && <ChevronDown className="w-3.5 h-3.5" />}
@@ -151,7 +168,7 @@ export default function Header() {
                         <Link
                           key={child.href}
                           to={child.href}
-                          className="block px-4 py-2.5 text-sm text-neutral-700 hover:text-primary-700 hover:bg-primary-50 transition-colors"
+                          className="block px-4 py-2.5 text-sm text-neutral-700 hover:text-primary-700 hover:bg-primary-50 transition-colors focus-visible:outline-none focus-visible:bg-primary-50 focus-visible:text-primary-700"
                         >
                           {t(child.label, child.labelEn)}
                         </Link>
@@ -168,6 +185,7 @@ export default function Header() {
               className="lg:hidden flex items-center gap-2 px-4 py-3 text-primary-100 hover:text-white w-full justify-between"
               aria-label={isMobileMenuOpen ? t('মেনু বন্ধ', 'Close menu') : t('মেনু খুলুন', 'Open menu')}
               aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               <span className="text-sm font-medium">{t('মেনু', 'Menu')}</span>
               {isMobileMenuOpen ? (
@@ -181,30 +199,40 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-primary-900 border-t border-primary-700 animate-fade-in">
+          <div
+            id="mobile-menu"
+            ref={mobileMenuRef}
+            className="lg:hidden bg-primary-900 border-t border-primary-700 animate-fade-in"
+            role="menu"
+          >
             <div className="max-w-7xl mx-auto px-4 py-3 space-y-1 max-h-[70vh] overflow-y-auto">
               {navigationItems.map((item) => (
-                <div key={item.href}>
+                <div key={item.href} role="none">
                   <Link
                     to={item.href}
+                    onClick={handleMobileNavClick}
                     className={`
                       block px-4 py-2.5 rounded-lg text-sm font-medium
                       transition-colors
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400
                       ${isActive(item.href)
                         ? 'text-white bg-primary-700'
                         : 'text-primary-100 hover:text-white hover:bg-primary-700'
                       }
                     `}
+                    role="menuitem"
                   >
                     {t(item.label, item.labelEn)}
                   </Link>
                   {item.children && (
-                    <div className="ml-4 mt-1 space-y-1">
+                    <div className="ml-4 mt-1 space-y-1" role="group">
                       {item.children.map((child) => (
                         <Link
                           key={child.href}
                           to={child.href}
-                          className="block px-4 py-2 text-sm text-primary-200 hover:text-white hover:bg-primary-700 rounded-lg transition-colors"
+                          onClick={handleMobileNavClick}
+                          className="block px-4 py-2 text-sm text-primary-200 hover:text-white hover:bg-primary-700 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
+                          role="menuitem"
                         >
                           {t(child.label, child.labelEn)}
                         </Link>
@@ -217,6 +245,9 @@ export default function Header() {
           </div>
         )}
       </nav>
+
+      {/* Global Search Modal */}
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   );
 }

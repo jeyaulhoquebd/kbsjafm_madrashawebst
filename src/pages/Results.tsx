@@ -14,10 +14,16 @@ export default function Results() {
   const [examYear, setExamYear] = useState('');
   const [studentId, setStudentId] = useState('');
   const [hasSearched, setHasSearched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setHasSearched(true);
+    setIsLoading(true);
+    // Simulate loading (demo only)
+    setTimeout(() => {
+      setIsLoading(false);
+      setHasSearched(true);
+    }, 1000);
   };
 
   return (
@@ -72,14 +78,29 @@ export default function Results() {
                 </div>
               </div>
 
-              <Button type="submit" variant="primary" icon={<Search className="w-4 h-4" />}>
-                {t('ফলাফল দেখুন', 'View Results')}
+              <Button type="submit" variant="primary" icon={<Search className="w-4 h-4" />} isLoading={isLoading} disabled={isLoading}>
+                {isLoading ? t('অনুসন্ধান করা হচ্ছে...', 'Searching...') : t('ফলাফল দেখুন', 'View Results')}
               </Button>
             </form>
           </Card>
 
+          {/* Loading State */}
+          {isLoading && (
+            <Card padding="lg">
+              <div className="text-center py-8">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 mb-4">
+                  <svg className="animate-spin h-6 w-6 text-primary-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                </div>
+                <p className="text-neutral-600">{t('ফলাফল অনুসন্ধান করা হচ্ছে...', 'Searching for results...')}</p>
+              </div>
+            </Card>
+          )}
+
           {/* Demo Results State */}
-          {hasSearched && (
+          {hasSearched && !isLoading && (
             <Card padding="lg">
               <div className="text-center py-8">
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gold-100 mb-4">

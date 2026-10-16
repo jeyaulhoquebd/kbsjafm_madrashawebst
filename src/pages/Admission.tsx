@@ -34,6 +34,7 @@ export default function Admission() {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -57,8 +58,12 @@ export default function Admission() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      setIsSubmitted(true);
-      // In production, this would send data to a backend
+      setIsLoading(true);
+      // Simulate loading state (demo only - no actual submission)
+      setTimeout(() => {
+        setIsLoading(false);
+        setIsSubmitted(true);
+      }, 1500);
     }
   };
 
@@ -208,7 +213,7 @@ export default function Admission() {
                     '※ This is a demo form. No data has been actually saved.'
                   )}
                 </p>
-                <Button variant="outline" onClick={() => { setIsSubmitted(false); setFormData({ name: '', fatherName: '', motherName: '', phone: '', email: '', class: '', message: '' }); }}>
+                <Button variant="outline" onClick={() => { setIsSubmitted(false); setIsLoading(false); setFormData({ name: '', fatherName: '', motherName: '', phone: '', email: '', class: '', message: '' }); }}>
                   {t('নতুন জিজ্ঞাসা', 'New Inquiry')}
                 </Button>
               </div>
@@ -307,8 +312,8 @@ export default function Admission() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <Button type="submit" variant="primary">
-                    {t('জিজ্ঞাসা পাঠান', 'Submit Inquiry')}
+                  <Button type="submit" variant="primary" isLoading={isLoading} disabled={isLoading}>
+                    {isLoading ? t('পাঠানো হচ্ছে...', 'Submitting...') : t('জিজ্ঞাসা পাঠান', 'Submit Inquiry')}
                   </Button>
                   <p className="text-xs text-neutral-400">
                     {t('※ ডেমো ফরম - কোনো তথ্য সংরক্ষণ হবে না', '※ Demo form - No data will be saved')}
