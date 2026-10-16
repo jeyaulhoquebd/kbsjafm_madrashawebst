@@ -6,7 +6,8 @@ import Section, { SectionHeader } from '../components/ui/Section';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { institutionInfo } from '../data/mockData';
-import { MapPin, Phone, Mail, Clock, Globe, CheckCircle, AlertCircle } from 'lucide-react';
+import { institutionIdentity, getContactLinks, googleMapsLink } from '../data/institution';
+import { MapPin, Phone, Mail, Clock, Globe, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react';
 
 interface FormData {
   name: string;
@@ -92,9 +93,21 @@ export default function Contact() {
                     <div className="shrink-0 w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
                       <MapPin className="w-5 h-5 text-primary-700" />
                     </div>
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <h4 className="font-semibold text-neutral-800 text-sm">{t('ঠিকানা', 'Address')}</h4>
-                      <p className="text-sm text-neutral-600 mt-1">{t(institutionInfo.address, institutionInfo.addressEn)}</p>
+                      <p className="text-sm text-neutral-600 mt-1">{t(institutionIdentity.addressBn, institutionIdentity.addressEn)}</p>
+                      <a
+                        href={googleMapsLink.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-primary-600 hover:text-primary-700 mt-2"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        {t('মানচিত্রে দেখুন', 'View on Map')}
+                      </a>
+                      <p className="text-xs text-amber-600 mt-1 italic">
+                        {t(googleMapsLink.note, googleMapsLink.noteEn)}
+                      </p>
                     </div>
                   </div>
                 </Card>
@@ -104,9 +117,22 @@ export default function Contact() {
                     <div className="shrink-0 w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
                       <Phone className="w-5 h-5 text-primary-700" />
                     </div>
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <h4 className="font-semibold text-neutral-800 text-sm">{t('ফোন', 'Phone')}</h4>
-                      <p className="text-sm text-neutral-600 mt-1">{institutionInfo.phone}</p>
+                      <div className="mt-1 space-y-1">
+                        <a
+                          href={getContactLinks.phone(institutionIdentity.phonePrimary)}
+                          className="block text-sm text-primary-600 hover:text-primary-700 hover:underline"
+                        >
+                          {institutionIdentity.phonePrimary}
+                        </a>
+                        <a
+                          href={getContactLinks.phone(institutionIdentity.phoneAlternative)}
+                          className="block text-sm text-primary-600 hover:text-primary-700 hover:underline"
+                        >
+                          {institutionIdentity.phoneAlternative}
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </Card>
@@ -116,9 +142,26 @@ export default function Contact() {
                     <div className="shrink-0 w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
                       <Mail className="w-5 h-5 text-primary-700" />
                     </div>
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <h4 className="font-semibold text-neutral-800 text-sm">{t('ইমেইল', 'Email')}</h4>
-                      <p className="text-sm text-neutral-600 mt-1">{institutionInfo.email}</p>
+                      <a
+                        href={getContactLinks.email(institutionIdentity.email)}
+                        className="block text-sm text-primary-600 hover:text-primary-700 hover:underline mt-1"
+                      >
+                        {institutionIdentity.email}
+                      </a>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card padding="md">
+                  <div className="flex items-start gap-3">
+                    <div className="shrink-0 w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
+                      <Globe className="w-5 h-5 text-primary-700" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-neutral-800 text-sm">{t('EIIN', 'EIIN')}</h4>
+                      <p className="text-sm text-neutral-600 mt-1 font-mono">{institutionIdentity.eiin}</p>
                     </div>
                   </div>
                 </Card>

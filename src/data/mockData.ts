@@ -1,18 +1,19 @@
 import { NavItem, Notice, Department, InstitutionInfo, Teacher } from '../types';
+import { institutionIdentity } from './institution';
 
 // Institution Information
 export const institutionInfo: InstitutionInfo = {
-  name: 'খাগড়াছড়ি বাইতুশ শরফ জাব্বারিয়া আদর্শ ফাজিল (ডিগ্রি) মাদ্রাসা',
-  nameEn: 'Khagrachhari Baitush Sharaf Jabbaria Adarsha Fazil (Degree) Madrasa',
-  shortName: 'বাইতুশ শরফ জাব্বারিয়া মাদ্রাসা',
-  shortNameEn: 'Baitush Sharaf Jabbaria Madrasa',
+  name: institutionIdentity.nameBn,
+  nameEn: institutionIdentity.nameEn,
+  shortName: institutionIdentity.shortNameBn,
+  shortNameEn: institutionIdentity.shortNameEn,
   established: '[স্থাপনের বছর - সম্পাদনাযোগ্য]',
-  eiin: '[EIIN নম্বর - সম্পাদনাযোগ্য]',
-  address: '[প্রতিষ্ঠানের ঠিকানা - সম্পাদনাযোগ্য], খাগড়াছড়ি, বাংলাদেশ',
-  addressEn: '[Institution Address - Editable], Khagrachhari, Bangladesh',
-  phone: '[ফোন নম্বর - সম্পাদনাযোগ্য]',
-  email: '[ইমেইল - সম্পাদনাযোগ্য]',
-  website: '[ওয়েবসাইট - সম্পাদনাযোগ্য]',
+  eiin: institutionIdentity.eiin,
+  address: institutionIdentity.addressBn,
+  addressEn: institutionIdentity.addressEn,
+  phone: institutionIdentity.phonePrimary,
+  email: institutionIdentity.email,
+  website: institutionIdentity.website,
 };
 
 // Navigation Items - Complete set

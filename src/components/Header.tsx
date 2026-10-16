@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { navigationItems, institutionInfo } from '../data/mockData';
+import { institutionIdentity, brandAssets } from '../data/institution';
 import { Menu, X, Globe, Search, Phone, Mail, MapPin, ChevronDown } from 'lucide-react';
 import SearchModal from './SearchModal';
 import SafeImage from './ui/SafeImage';
@@ -61,10 +62,10 @@ export default function Header() {
           <div className="flex items-center justify-between h-8 sm:h-9 text-xs sm:text-sm">
             <div className="flex items-center gap-2 sm:gap-4 min-w-0">
               <span className="hidden md:inline text-primary-200 truncate">
-                {t('জ্ঞান, বিশ্বাস ও সেবা', 'Knowledge, Faith & Service')}
+                {t(institutionIdentity.mottoBn, institutionIdentity.mottoEn)}
               </span>
               <span className="hidden lg:inline text-primary-300 border-l border-primary-700 pl-4">
-                EIIN: {institutionInfo.eiin}
+                EIIN: {institutionIdentity.eiin}
               </span>
             </div>
             <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
@@ -95,7 +96,7 @@ export default function Header() {
             {/* Logo */}
             <Link to="/" className="shrink-0">
               <SafeImage
-                src="https://res.cloudinary.com/dc80xvaid/image/upload/v1792165465/madrashalogo.jpg"
+                src={brandAssets.logo}
                 alt={t(institutionInfo.shortName, institutionInfo.shortNameEn)}
                 className="w-12 h-12 sm:w-14 sm:h-14 lg:w-20 lg:h-20 rounded-full object-cover border-2 border-primary-200 shadow-sm"
                 loading="eager"

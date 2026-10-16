@@ -5,8 +5,8 @@ import Section, { SectionHeader } from '../components/ui/Section';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { Link } from 'react-router-dom';
-import { academicPrograms } from '../data/mockData';
-import { GraduationCap, Calendar, Clock, BookOpen, Download, ArrowRight } from 'lucide-react';
+import { academicPrograms } from '../data/institution';
+import { GraduationCap, Calendar, Clock, BookOpen, Download, ArrowRight, AlertCircle } from 'lucide-react';
 
 export default function Academics() {
   const { t } = useLanguage();
@@ -25,22 +25,48 @@ export default function Academics() {
           title={t('শিক্ষা কার্যক্রম', 'Academic Programs')}
           subtitle={t('আমাদের প্রতিষ্ঠানে প্রদত্ত শিক্ষা কার্যক্রমসমূহ', 'Educational programs offered at our institution')}
         />
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {academicPrograms.map((program) => (
-            <Card key={program.id} hover padding="lg">
+
+        {/* Verification Notice */}
+        <div className="max-w-6xl mx-auto mb-6">
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm text-amber-900 font-medium mb-1">
+                {t('গুরুত্বপূর্ণ তথ্য', 'Important Notice')}
+              </p>
+              <p className="text-xs text-amber-800">
+                {t(
+                  'প্রতিষ্ঠানের প্রকৃত বর্তমান প্রোগ্রাম এবং অধিভুক্তি যাচাই করার আগে এই তথ্যগুলো খসড়া হিসেবে বিবেচিত।',
+                  'The actual current programs and affiliations of the institution are considered drafts until verified.'
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {Object.entries(academicPrograms).map(([key, program]) => (
+            <Card key={key} hover padding="lg" className="relative">
+              {program.status === 'draft' && (
+                <div className="absolute top-2 right-2">
+                  <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded">
+                    {t('খসড়া', 'Draft')}
+                  </span>
+                </div>
+              )}
               <div className="flex items-start gap-3 mb-3">
                 <div className="shrink-0 w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
                   <GraduationCap className="w-5 h-5 text-primary-700" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-primary-900 font-bengali">{t(program.name, program.nameEn)}</h3>
-                  <p className="text-xs text-neutral-500 mt-0.5">{t(program.level, program.levelEn)}</p>
+                  <h3 className="text-lg font-semibold text-primary-900 font-bengali">{t(program.nameBn, program.nameEn)}</h3>
+                  <p className="text-xs text-neutral-500 mt-0.5">{t(program.levelBn, program.levelEn)}</p>
                 </div>
               </div>
-              <p className="text-sm text-neutral-600 mb-3">{t(program.description, program.descriptionEn)}</p>
+              <p className="text-sm text-neutral-600 mb-3">{t(program.descriptionBn, program.descriptionEn)}</p>
               <div className="flex items-center gap-2 text-xs text-primary-700 bg-primary-50 rounded-lg px-3 py-2">
                 <Clock className="w-3.5 h-3.5" />
-                <span>{t('সময়কাল:', 'Duration:')} {t(program.duration, program.durationEn)}</span>
+                <span>{t('সময়কাল:', 'Duration:')} {t(program.durationBn, program.durationEn)}</span>
               </div>
             </Card>
           ))}

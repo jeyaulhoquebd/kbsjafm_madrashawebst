@@ -1,5 +1,6 @@
 import { useLanguage } from '../context/LanguageContext';
 import { quickServices, galleryImages } from '../data/mockData';
+import { institutionIdentity, brandAssets, principalInfo } from '../data/institution';
 import { useLatestNotices, usePublishedTeachers, usePublishedGallery, useSiteSettings } from '../hooks/useFirestore';
 import Section, { SectionHeader } from '../components/ui/Section';
 import Card from '../components/ui/Card';
@@ -66,7 +67,7 @@ export default function Home() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <SafeImage
-            src="https://res.cloudinary.com/dc80xvaid/image/upload/v1792165382/bitushbg.jpg"
+            src={brandAssets.buildingPhoto}
             alt={t('মাদ্রাসা ভবন', 'Madrasa Building')}
             className="w-full h-full object-cover"
             loading="eager"
@@ -84,6 +85,11 @@ export default function Home() {
               بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
             </p>
 
+            {/* Official Motto */}
+            <p className="text-gold-300 text-sm sm:text-base lg:text-lg mb-2 sm:mb-3 leading-relaxed font-medium">
+              {t(institutionIdentity.mottoBn, institutionIdentity.mottoEn)}
+            </p>
+
             {/* Short Educational Message */}
             <p className="text-primary-200 text-xs sm:text-sm lg:text-base mb-2 sm:mb-3 leading-relaxed">
               {t(
@@ -95,8 +101,8 @@ export default function Home() {
             {/* Full Institution Name */}
             <h1 className="text-xl sm:text-2xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight font-bengali mb-3 sm:mb-4">
               {t(
-                'খাগড়াছড়ি বাইতুশ শরফ জাব্বারিয়া',
-                'Khagrachhari Baitush Sharaf Jabbaria'
+                institutionIdentity.nameBn,
+                institutionIdentity.nameEn
               )}
               <br />
               <span className="text-gold-300 text-lg sm:text-xl lg:text-3xl xl:text-4xl">
@@ -259,7 +265,7 @@ export default function Home() {
             <div className="relative">
               <div className="w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-2xl overflow-hidden shadow-xl border-4 border-primary-100">
                 <SafeImage
-                  src="https://res.cloudinary.com/dc80xvaid/image/upload/v1792165301/probasak.jpg"
+                  src={brandAssets.principalPhoto}
                   alt={t('অধ্যক্ষের ছবি', "Principal's Photo")}
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -279,19 +285,21 @@ export default function Home() {
                 {t('অধ্যক্ষের বাণী', "Principal's Message")}
               </p>
               <h2 className="text-2xl lg:text-3xl font-bold text-primary-900 font-bengali">
-                {t('[অধ্যক্ষের নাম - সম্পাদনাযোগ্য]', "[Principal's Name - Editable]")}
+                {t(principalInfo.nameBn, principalInfo.nameEn)}
               </h2>
               <p className="text-neutral-600 mt-1">
-                {t('[পদবি - সম্পাদনাযোগ্য]', '[Designation - Editable]')}
+                {t(principalInfo.designationBn, principalInfo.designationEn)}
               </p>
+              {principalInfo.status === 'draft' && (
+                <p className="text-amber-600 text-xs mt-1 italic">
+                  {t('[খসড়া বার্তা - প্রতিষ্ঠানের অনুমোদন সাপেক্ষে]', '[Draft message - Pending institutional approval]')}
+                </p>
+              )}
             </div>
 
             <div className="bg-primary-50 rounded-xl p-6 border border-primary-100 mb-6">
-              <p className="text-neutral-700 leading-relaxed text-sm lg:text-base">
-                {t(
-                  '[অধ্যক্ষের বাণী এখানে বসবে - সম্পাদনাযোগ্য। শিক্ষা প্রতিষ্ঠানের উদ্দেশ্য, লক্ষ্য এবং শিক্ষার্থীদের প্রতি বার্তা এখানে প্রকাশিত হবে।]',
-                  "[Principal's message will be placed here - Editable. The purpose, goals, and message to students of the educational institution will be expressed here.]"
-                )}
+              <p className="text-neutral-700 leading-relaxed text-sm lg:text-base whitespace-pre-line">
+                {t(principalInfo.messageDraftBn, principalInfo.messageDraftEn)}
               </p>
             </div>
 

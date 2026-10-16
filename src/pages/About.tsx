@@ -4,8 +4,10 @@ import Breadcrumb from '../components/ui/Breadcrumb';
 import Section, { SectionHeader } from '../components/ui/Section';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import Facilities from '../components/Facilities';
 import { Link } from 'react-router-dom';
 import { Building2, Target, Eye, BookOpen, Award, Users, ArrowRight } from 'lucide-react';
+import { aboutContent, principalInfo, brandAssets } from '../data/institution';
 
 export default function About() {
   const { t } = useLanguage();
@@ -28,11 +30,8 @@ export default function About() {
                 <Building2 className="w-6 h-6 text-primary-700" />
               </div>
               <div>
-                <p className="text-neutral-700 leading-relaxed">
-                  {t(
-                    '[প্রতিষ্ঠানের বিস্তারিত পরিচিতি এখানে বসবে - সম্পাদনাযোগ্য। এই মাদ্রাসা খাগড়াছড়ি জেলায় অবস্থিত একটি গুরুত্বপূর্ণ ইসলামী শিক্ষা প্রতিষ্ঠান। এখানে কুরআন, হাদীস, ফিকহ, আরবি ভাষা ও সাধারণ শিক্ষার সমন্বয়ে পাঠদান করা হয়।]',
-                    '[Detailed introduction of the institution will be placed here - Editable. This madrasa is an important Islamic educational institution located in Khagrachhari district. It provides education combining Quran, Hadith, Fiqh, Arabic language, and general education.]'
-                  )}
+                <p className="text-neutral-700 leading-relaxed whitespace-pre-line">
+                  {t(aboutContent.introductionBn, aboutContent.introductionEn)}
                 </p>
               </div>
             </div>
@@ -50,11 +49,8 @@ export default function About() {
                 <Eye className="w-7 h-7" />
               </div>
               <h3 className="text-xl font-bold text-primary-900 mb-3 font-bengali">{t('দৃষ্টিভঙ্গি', 'Vision')}</h3>
-              <p className="text-neutral-600 leading-relaxed">
-                {t(
-                  '[প্রতিষ্ঠানের দৃষ্টিভঙ্গি এখানে বসবে - সম্পাদনাযোগ্য। একটি আদর্শ ইসলামী শিক্ষা প্রতিষ্ঠান গড়ে তোলা যেখানে দ্বীনী ও আধুনিক শিক্ষার সমন্বয় ঘটবে।]',
-                  '[Institution vision will be placed here - Editable. To build an ideal Islamic educational institution where religious and modern education will be combined.]'
-                )}
+              <p className="text-neutral-600 leading-relaxed whitespace-pre-line">
+                {t(aboutContent.visionBn, aboutContent.visionEn)}
               </p>
             </div>
           </Card>
@@ -64,11 +60,8 @@ export default function About() {
                 <Target className="w-7 h-7" />
               </div>
               <h3 className="text-xl font-bold text-primary-900 mb-3 font-bengali">{t('লক্ষ্য', 'Mission')}</h3>
-              <p className="text-neutral-600 leading-relaxed">
-                {t(
-                  '[প্রতিষ্ঠানের লক্ষ্য এখানে বসবে - সম্পাদনাযোগ্য। দক্ষ ও নৈতিকতাসম্পন্ন মুসলিম নাগরিক গড়ে তোলা, যারা সমাজে ইতিবাচক অবদান রাখতে পারবে।]',
-                  '[Institution mission will be placed here - Editable. To develop skilled and ethical Muslim citizens who can contribute positively to society.]'
-                )}
+              <p className="text-neutral-600 leading-relaxed whitespace-pre-line">
+                {t(aboutContent.missionBn, aboutContent.missionEn)}
               </p>
             </div>
           </Card>
@@ -126,7 +119,7 @@ export default function About() {
               <div className="relative">
                 <div className="w-56 h-56 sm:w-64 sm:h-64 rounded-2xl overflow-hidden shadow-xl border-4 border-primary-100">
                   <img
-                    src="https://res.cloudinary.com/dc80xvaid/image/upload/v1792165301/probasak.jpg"
+                    src={brandAssets.principalPhoto}
                     alt={t('অধ্যক্ষের ছবি', "Principal's Photo")}
                     className="w-full h-full object-cover"
                     loading="lazy"
@@ -137,15 +130,19 @@ export default function About() {
             </div>
             <div className="lg:col-span-2">
               <h3 className="text-xl font-bold text-primary-900 mb-1 font-bengali">
-                {t('[অধ্যক্ষের নাম - সম্পাদনাযোগ্য]', "[Principal's Name - Editable]")}
+                {t(principalInfo.nameBn, principalInfo.nameEn)}
               </h3>
-              <p className="text-neutral-600 text-sm mb-4">{t('[পদবি - সম্পাদনাযোগ্য]', '[Designation - Editable]')}</p>
+              <p className="text-neutral-600 mb-2">
+                {t(principalInfo.designationBn, principalInfo.designationEn)}
+              </p>
+              {principalInfo.status === 'draft' && (
+                <p className="text-amber-600 text-xs mb-3 italic">
+                  {t('[খসড়া বার্তা - প্রতিষ্ঠানের অনুমোদন সাপেক্ষে]', '[Draft message - Pending institutional approval]')}
+                </p>
+              )}
               <div className="bg-primary-50 rounded-xl p-6 border border-primary-100">
-                <p className="text-neutral-700 leading-relaxed">
-                  {t(
-                    '[অধ্যক্ষের বাণী এখানে বসবে - সম্পাদনাযোগ্য। শিক্ষা প্রতিষ্ঠানের উদ্দেশ্য, লক্ষ্য এবং শিক্ষার্থীদের প্রতি বার্তা এখানে প্রকাশিত হবে।]',
-                    "[Principal's message will be placed here - Editable. The purpose, goals, and message to students will be expressed here.]"
-                  )}
+                <p className="text-neutral-700 leading-relaxed whitespace-pre-line">
+                  {t(principalInfo.messageDraftBn, principalInfo.messageDraftEn)}
                 </p>
               </div>
               <div className="mt-4">
@@ -159,6 +156,9 @@ export default function About() {
           </div>
         </div>
       </Section>
+
+      {/* Institutional Facilities */}
+      <Facilities />
     </>
   );
 }
