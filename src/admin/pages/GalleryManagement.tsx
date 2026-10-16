@@ -5,8 +5,10 @@ import AdminModal from '../components/AdminModal';
 import ConfirmDialog from '../components/ConfirmDialog';
 import SuccessToast from '../components/SuccessToast';
 import FormField, { TextInput, SelectInput } from '../components/FormField';
-import { Plus, Edit2, Trash2, Image as ImageIcon, Upload } from 'lucide-react';
+import ImageUpload from '../../components/admin/ImageUpload';
+import { Plus, Edit2, Trash2, Image as ImageIcon } from 'lucide-react';
 import { GalleryImage } from '../services/dataService';
+import { CLOUDINARY_FOLDERS, type UploadResult } from '../../services/cloudinary';
 
 export default function GalleryManagement() {
   const { gallery, addGalleryImage, updateGalleryImage, deleteGalleryImage } = useAdmin();
@@ -17,6 +19,7 @@ export default function GalleryManagement() {
 
   const [formData, setFormData] = useState({
     src: '',
+    cloudinaryPublicId: '',
     alt: '',
     altEn: '',
     category: 'building',
@@ -26,21 +29,27 @@ export default function GalleryManagement() {
 
   const openAddModal = () => {
     setEditingImage(null);
-    setFormData({ src: '', alt: '', altEn: '', category: 'building' });
+    setFormData({ src: '', cloudinaryPublicId: '', alt: '', altEn: '', category: 'building' });
     setErrors({});
     setIsModalOpen(true);
   };
 
   const openEditModal = (image: GalleryImage) => {
     setEditingImage(image);
-    setFormData({ src: image.src, alt: image.alt, altEn: image.altEn, category: image.category });
+    setFormData({ 
+      src: image.src, 
+      cloudinaryPublicId: image.cloudinaryPublicId || '',
+      alt: image.alt, 
+      altEn: image.altEn, 
+      category: image.category 
+    });
     setErrors({});
     setIsModalOpen(true);
   };
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.src.trim()) newErrors.src = 'Image URL is required';
+    if (!formData.src.trim()) newErrors.src = 'অনুগ্রহ করে একটি ছবি আপলোড করুন';
     if (!formData.alt.trim()) newErrors.alt = 'Caption is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -82,15 +91,19 @@ export default function GalleryManagement() {
           }
         />
 
-        {/* Upload Placeholder */}
-        <div className="mb-4 p-4 border-2 border-dashed border-neutral-300 rounded-lg bg-neutral-50">
-          <div className="flex items-center gap-3">
-            <Upload className="w-5 h-5 text-neutral-400" />
-            <div>
-              <p className="text-sm font-medium text-neutral-700">Image Upload</p>
-              <p className="text-xs text-neutral-500">Direct image upload will be available with Firebase Storage</p>
-            </div>
-          </div>
+        {/* Cloudinary Upload Integration */}
+        <div className="mb-6">
+          <ImageUpload
+            folder={CLOUDINARY_FOLDERS.GALLERY}
+            onUploadComplete={(result: UploadResult) => {
+              setFormData({
+                ...formData,
+                src: result.secureUrl,
+                cloudinaryPublicId: result.publicId,
+              });
+            }}
+            label="গ্যালারি ছবি আপলোড করুন"
+          />
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -130,9 +143,15 @@ export default function GalleryManagement() {
 
       <AdminModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={editingImage ? 'Edit Image' : 'Add New Image'}>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <FormField label="Image URL" error={errors.src} required>
-            <TextInput value={formData.src} onChange={(e) => setFormData({ ...formData, src: e.target.value })} error={errors.src} placeholder="Enter image URL" />
-          </FormField>
+          {formData.src && (
+            <div className="p-3 bg-primary-50 border border-primary-200 rounded-lg">
+              <p className="text-xs text-primary-700 font-medium mb-1">আপলোড করা ছবির URL</p>
+              <p className="text-xs text-primary-600 break-all">{formData.src}</p>
+              {formData.cloudinaryPublicId && (
+                <p className="text-xs text-primary-500 mt-1">Public ID: {formData.cloudinaryPublicId}</p>
+              )}
+            </div>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField label="Caption (Bengali)" error={errors.alt} required>
@@ -151,12 +170,6 @@ export default function GalleryManagement() {
               <option value="library">Library</option>
             </SelectInput>
           </FormField>
-
-          {formData.src && (
-            <div className="aspect-video bg-neutral-100 rounded-lg overflow-hidden">
-              <img src={formData.src} alt="Preview" className="w-full h-full object-cover" />
-            </div>
-          )}
 
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-neutral-200">
             <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100 rounded-lg transition-colors">
