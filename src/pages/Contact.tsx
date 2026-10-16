@@ -7,6 +7,9 @@ import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { institutionInfo } from '../data/mockData';
 import { institutionIdentity, getContactLinks, googleMapsLink } from '../data/institution';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../lib/firebase';
+import { getFirebaseErrorMessage } from '../lib/firebase-errors';
 import { MapPin, Phone, Mail, Clock, Globe, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react';
 
 interface FormData {
@@ -49,15 +52,31 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      setIsLoading(true);
-      // Simulate loading state (demo only - no actual submission)
-      setTimeout(() => {
-        setIsLoading(false);
-        setIsSubmitted(true);
-      }, 1500);
+    if (!validate()) return;
+
+    setIsLoading(true);
+    try {
+      // Submit to Firestore
+      await addDoc(collection(db, 'contactMessages'), {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message,
+        status: 'new',
+        adminNotes: '',
+        submittedAt: serverTimestamp(),
+      });
+      
+      setIsSubmitted(true);
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      alert(getFirebaseErrorMessage(error, 'bn'));
+    } finally {
+      setIsLoading(false);
     }
   };
 

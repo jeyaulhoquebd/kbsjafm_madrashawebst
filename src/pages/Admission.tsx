@@ -5,6 +5,9 @@ import Breadcrumb from '../components/ui/Breadcrumb';
 import Section, { SectionHeader } from '../components/ui/Section';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../lib/firebase';
+import { getFirebaseErrorMessage } from '../lib/firebase-errors';
 import { FileText, CheckCircle, AlertCircle, Download } from 'lucide-react';
 
 interface FormData {
@@ -55,15 +58,41 @@ export default function Admission() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      setIsLoading(true);
-      // Simulate loading state (demo only - no actual submission)
-      setTimeout(() => {
-        setIsLoading(false);
-        setIsSubmitted(true);
-      }, 1500);
+    if (!validate()) return;
+
+    setIsLoading(true);
+    try {
+      // Submit to Firestore
+      await addDoc(collection(db, 'admissionInquiries'), {
+        studentName: formData.name,
+        fatherName: formData.fatherName,
+        motherName: formData.motherName,
+        phone: formData.phone,
+        email: formData.email,
+        appliedClass: formData.class,
+        message: formData.message,
+        status: 'new',
+        adminNotes: '',
+        submittedAt: serverTimestamp(),
+      });
+      
+      setIsSubmitted(true);
+      setFormData({
+        name: '',
+        fatherName: '',
+        motherName: '',
+        phone: '',
+        email: '',
+        class: '',
+        message: '',
+      });
+    } catch (error) {
+      console.error('Error submitting admission form:', error);
+      alert(getFirebaseErrorMessage(error, 'bn'));
+    } finally {
+      setIsLoading(false);
     }
   };
 

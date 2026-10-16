@@ -3,13 +3,18 @@ import { useLanguage } from '../context/LanguageContext';
 import PageHeader from '../components/ui/PageHeader';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Section from '../components/ui/Section';
-import { galleryImages, galleryCategories } from '../data/mockData';
-import { Image as ImageIcon, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import EmptyState from '../components/ui/EmptyState';
+import { galleryCategories } from '../data/mockData';
+import { usePublishedGallery } from '../hooks/useFirestore';
+import { Image as ImageIcon, X, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 
 export default function Gallery() {
   const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  // Load gallery from Firestore
+  const { images: firestoreImages, loading, error } = usePublishedGallery();
 
   // Handle keyboard navigation in lightbox
   useEffect(() => {
@@ -40,22 +45,18 @@ export default function Gallery() {
     };
   }, [lightboxIndex]);
 
-  // Combine real images with placeholders
-  const allImages = [
-    ...galleryImages,
-    // Add placeholder images
-    ...Array.from({ length: 7 }, (_, i) => ({
-      id: `placeholder-${i + 1}`,
-      src: '',
-      alt: `[ছবি ${i + 1} - সম্পাদনাযোগ্য]`,
-      altEn: `[Photo ${i + 1} - Editable]`,
-      category: ['event', 'classroom', 'library', 'building', 'event', 'classroom', 'library'][i],
-    })),
-  ];
+  // Normalize Firestore images
+  const normalizedImages = firestoreImages.map(img => ({
+    id: img.id,
+    src: (img as any).imageUrl || '',
+    alt: (img as any).altText || '',
+    altEn: (img as any).altTextEn || '',
+    category: img.category,
+  }));
 
   const filteredImages = selectedCategory === 'all'
-    ? allImages
-    : allImages.filter((img) => img.category === selectedCategory);
+    ? normalizedImages
+    : normalizedImages.filter((img) => img.category === selectedCategory);
 
   const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
@@ -70,6 +71,25 @@ export default function Gallery() {
 
       <Section background="white">
         <div className="max-w-6xl mx-auto">
+          {/* Loading State */}
+          {loading && (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && !loading && (
+            <EmptyState
+              icon={<ImageIcon className="w-8 h-8" />}
+              title={t('গ্যালারি লোড করতে সমস্যা হয়েছে', 'Failed to load gallery')}
+              description={error}
+            />
+          )}
+
+          {/* Gallery Content */}
+          {!loading && !error && (
+            <>
           {/* Category Filters */}
           <div className="flex flex-wrap gap-2 mb-8">
             {galleryCategories.map((cat) => (
@@ -131,6 +151,8 @@ export default function Gallery() {
               )}
             </p>
           </div>
+            </>
+          )}
         </div>
       </Section>
 
