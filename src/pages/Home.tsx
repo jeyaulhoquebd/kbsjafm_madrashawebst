@@ -1,5 +1,6 @@
 import { useLanguage } from '../context/LanguageContext';
-import { sampleNotices, quickServices, demoTeachers, galleryImages } from '../data/mockData';
+import { quickServices, galleryImages } from '../data/mockData';
+import { useLatestNotices, usePublishedTeachers, usePublishedGallery, useSiteSettings } from '../hooks/useFirestore';
 import Section, { SectionHeader } from '../components/ui/Section';
 import Card from '../components/ui/Card';
 import Notice from '../components/ui/Notice';
@@ -20,6 +21,7 @@ import {
   User,
   Image as ImageIcon,
   BookOpen,
+  Loader2,
 } from 'lucide-react';
 
 const serviceIconMap: Record<string, React.ReactNode> = {
@@ -35,6 +37,27 @@ const serviceIconMap: Record<string, React.ReactNode> = {
 
 export default function Home() {
   const { t } = useLanguage();
+  const { notices, loading: noticesLoading } = useLatestNotices(4);
+  const { teachers, loading: teachersLoading } = usePublishedTeachers();
+  const { images: galleryData, loading: galleryLoading } = usePublishedGallery();
+  const { settings, loading: settingsLoading } = useSiteSettings();
+
+  // Use Firestore data or fallback to defaults
+  const displayNotices = notices.length > 0 ? notices : [];
+  const displayTeachers = teachers.length > 0 ? teachers.slice(0, 4) : [];
+  
+  // Normalize gallery data to handle both Firestore and mock data formats
+  const normalizedGallery = galleryData.length > 0 
+    ? galleryData.map(img => ({
+        id: img.id,
+        src: (img as any).imageUrl || (img as any).src || '',
+        alt: (img as any).altText || (img as any).alt || '',
+        altEn: (img as any).altTextEn || (img as any).altEn || '',
+        category: img.category,
+      }))
+    : galleryImages;
+  
+  const displayGallery = normalizedGallery;
 
   return (
     <>
@@ -148,9 +171,21 @@ export default function Home() {
             </div>
 
             <div className="space-y-3">
-              {sampleNotices.slice(0, 4).map((notice) => (
-                <Notice key={notice.id} notice={notice} />
-              ))}
+              {noticesLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="w-6 h-6 animate-spin text-primary-600" />
+                </div>
+              ) : displayNotices.length > 0 ? (
+                displayNotices.map((notice) => (
+                  <Link key={notice.id} to={`/notices/${notice.id}`} className="block">
+                    <Notice notice={notice} />
+                  </Link>
+                ))
+              ) : (
+                <p className="text-center py-8 text-neutral-500">
+                  {t('কোনো নোটিশ নেই', 'No notices available')}
+                </p>
+              )}
             </div>
           </div>
 
@@ -291,31 +326,52 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-          {demoTeachers.map((teacher) => (
-            <Card key={teacher.id} hover padding="none" className="overflow-hidden">
-              {/* Teacher Photo Placeholder */}
-              <div className="aspect-square bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                <div className="text-center">
-                  <User className="w-12 h-12 text-primary-400 mx-auto mb-2" />
-                  <p className="text-xs text-primary-500 px-2">
-                    {t('[ছবি - সম্পাদনাযোগ্য]', '[Photo - Editable]')}
-                  </p>
-                </div>
-              </div>
-              {/* Teacher Info */}
-              <div className="p-4 text-center">
-                <h3 className="text-sm font-semibold text-primary-900 truncate font-bengali">
-                  {t(teacher.name, teacher.nameEn)}
-                </h3>
-                <p className="text-xs text-neutral-600 mt-1 truncate">
-                  {t(teacher.designation, teacher.designationEn)}
-                </p>
-                <p className="text-xs text-primary-600 mt-0.5">
-                  {t(teacher.department, teacher.departmentEn)}
-                </p>
-              </div>
-            </Card>
-          ))}
+          {teachersLoading ? (
+            <div className="col-span-full flex items-center justify-center py-8">
+              <Loader2 className="w-6 h-6 animate-spin text-primary-600" />
+            </div>
+          ) : displayTeachers.length > 0 ? (
+            displayTeachers.map((teacher) => (
+              <Link key={teacher.id} to={`/teachers/${teacher.id}`}>
+                <Card hover padding="none" className="overflow-hidden h-full">
+                  {/* Teacher Photo */}
+                  <div className="aspect-square bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center overflow-hidden">
+                    {teacher.photoUrl ? (
+                      <SafeImage
+                        src={teacher.photoUrl}
+                        alt={t(teacher.name, teacher.nameEn)}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="text-center">
+                        <User className="w-12 h-12 text-primary-400 mx-auto mb-2" />
+                        <p className="text-xs text-primary-500 px-2">
+                          {t('[ছবি - সম্পাদনাযোগ্য]', '[Photo - Editable]')}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  {/* Teacher Info */}
+                  <div className="p-4 text-center">
+                    <h3 className="text-sm font-semibold text-primary-900 truncate font-bengali">
+                      {t(teacher.name, teacher.nameEn)}
+                    </h3>
+                    <p className="text-xs text-neutral-600 mt-1 truncate">
+                      {t(teacher.designation, teacher.designationEn)}
+                    </p>
+                    <p className="text-xs text-primary-600 mt-0.5">
+                      {t(teacher.department, teacher.departmentEn)}
+                    </p>
+                  </div>
+                </Card>
+              </Link>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-8 text-neutral-500">
+              {t('কোনো শিক্ষক তথ্য নেই', 'No teacher information available')}
+            </div>
+          )}
         </div>
 
         {/* Mobile View All */}
@@ -349,43 +405,62 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          {/* Main large image */}
-          <div className="col-span-2 sm:col-span-2 lg:col-span-2 row-span-2 rounded-xl overflow-hidden shadow-md group cursor-pointer">
-            <div className="relative h-full min-h-[200px] sm:min-h-[280px] lg:min-h-[360px]">
-              <img
-                src={galleryImages[0].src}
-                alt={t(galleryImages[0].alt, galleryImages[0].altEn)}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 sm:p-4">
-                <p className="text-white text-xs sm:text-sm font-medium">
-                  {t(galleryImages[0].alt, galleryImages[0].altEn)}
-                </p>
-              </div>
-            </div>
+        {galleryLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-6 h-6 animate-spin text-primary-600" />
           </div>
-
-          {/* Smaller placeholder images */}
-          {[1, 2, 3, 4].map((item) => (
-            <div key={item} className="rounded-xl overflow-hidden shadow-md group cursor-pointer">
-              <div className="relative aspect-square bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                <div className="text-center p-2">
-                  <ImageIcon className="w-8 h-8 text-primary-300 mx-auto mb-1" />
-                  <p className="text-xs text-primary-400">
-                    {t('[ছবি - সম্পাদনাযোগ্য]', '[Photo - Editable]')}
-                  </p>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                  <p className="text-white text-xs font-medium">
-                    {t('[ছবির ক্যাপশন]', '[Photo Caption]')}
+        ) : displayGallery.length > 0 ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            {/* Main large image */}
+            <div className="col-span-2 sm:col-span-2 lg:col-span-2 row-span-2 rounded-xl overflow-hidden shadow-md group cursor-pointer">
+              <div className="relative h-full min-h-[200px] sm:min-h-[280px] lg:min-h-[360px]">
+                <img
+                  src={displayGallery[0].src}
+                  alt={t(displayGallery[0].alt, displayGallery[0].altEn)}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 sm:p-4">
+                  <p className="text-white text-xs sm:text-sm font-medium">
+                    {t(displayGallery[0].alt, displayGallery[0].altEn)}
                   </p>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+
+            {/* Smaller images */}
+            {displayGallery.slice(1, 5).map((image, index) => (
+              <div key={image.id || index} className="rounded-xl overflow-hidden shadow-md group cursor-pointer">
+                <div className="relative aspect-square bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
+                  {image.src ? (
+                    <img
+                      src={image.src}
+                      alt={t(image.alt, image.altEn)}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="text-center p-2">
+                      <ImageIcon className="w-8 h-8 text-primary-300 mx-auto mb-1" />
+                      <p className="text-xs text-primary-400">
+                        {t('[ছবি - সম্পাদনাযোগ্য]', '[Photo - Editable]')}
+                      </p>
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                    <p className="text-white text-xs font-medium">
+                      {t(image.alt, image.altEn)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 text-neutral-500">
+            {t('কোনো ছবি নেই', 'No images available')}
+          </div>
+        )}
 
         {/* Mobile View All */}
         <div className="mt-6 text-center sm:hidden">
