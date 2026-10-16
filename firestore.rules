@@ -1,0 +1,151 @@
+rules_version = '2';
+
+// Cloud Firestore Security Rules for Khagrachhari Baitush Sharaf Jabbaria Adarsha Fazil Madrasa
+// Project: kbsjafm
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ========================================================================
+    // HELPER FUNCTIONS
+    // ========================================================================
+    
+    // Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Check if user has admin role
+    function isAdmin() {
+      return isAuthenticated() && 
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.active == true;
+    }
+    
+    // Check if resource is published
+    function isPublished() {
+      return resource.data.status == 'published';
+    }
+    
+    // Validate string length
+    function isValidString(value, maxLength) {
+      return value is string && value.size() > 0 && value.size() <= maxLength;
+    }
+    
+    // Validate email format
+    function isValidEmail(email) {
+      return email is string && email.matches('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$');
+    }
+    
+    // Validate phone number (Bangladesh format)
+    function isValidPhone(phone) {
+      return phone is string && phone.matches('^\\+?880?[0-9]{10,11}$');
+    }
+    
+    // ========================================================================
+    // PUBLIC COLLECTIONS - Read published content only
+    // ========================================================================
+    
+    // Notices - Public can read published, Admin can manage all
+    match /notices/{noticeId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Teachers - Public can read published, Admin can manage all
+    match /teachers/{teacherId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Gallery - Public can read published, Admin can manage all
+    match /gallery/{imageId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Resources - Public can read published, Admin can manage all
+    match /resources/{resourceId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Academic Content - Public can read published, Admin can manage all
+    match /academicContent/{contentId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Results - Public can read published, Admin can manage all
+    match /results/{resultId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // ========================================================================
+    // SITE SETTINGS - Single document, public read, admin write
+    // ========================================================================
+    
+    match /siteSettings/{settingsId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    // ========================================================================
+    // PUBLIC FORM SUBMISSIONS - Create only, no read/update/delete
+    // ========================================================================
+    
+    // Admission Inquiries - Public can create, Admin can manage
+    match /admissionInquiries/{inquiryId} {
+      allow create: if 
+        isValidString(request.resource.data.studentName, 100) &&
+        isValidString(request.resource.data.fatherName, 100) &&
+        isValidString(request.resource.data.motherName, 100) &&
+        isValidPhone(request.resource.data.phone) &&
+        isValidEmail(request.resource.data.email) &&
+        isValidString(request.resource.data.appliedClass, 50) &&
+        isValidString(request.resource.data.message, 2000) &&
+        request.resource.data.status == 'new' &&
+        request.resource.data.adminNotes == '' &&
+        request.resource.data.submittedAt is timestamp;
+      
+      allow read, update, delete: if isAdmin();
+    }
+    
+    // Contact Messages - Public can create, Admin can manage
+    match /contactMessages/{messageId} {
+      allow create: if 
+        isValidString(request.resource.data.name, 100) &&
+        isValidEmail(request.resource.data.email) &&
+        isValidPhone(request.resource.data.phone) &&
+        isValidString(request.resource.data.subject, 200) &&
+        isValidString(request.resource.data.message, 2000) &&
+        request.resource.data.status == 'new' &&
+        request.resource.data.adminNotes == '' &&
+        request.resource.data.submittedAt is timestamp;
+      
+      allow read, update, delete: if isAdmin();
+    }
+    
+    // ========================================================================
+    // ADMINS COLLECTION - Strict access control
+    // ========================================================================
+    
+    match /admins/{adminId} {
+      // Only admins can read admin records
+      allow read: if isAdmin();
+      
+      // NO ONE can create, update, or delete admin records via client
+      // Admins must be created manually via Firebase Console
+      allow create, update, delete: if false;
+    }
+    
+    // ========================================================================
+    // DEFAULT DENY - All other paths
+    // ========================================================================
+    
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

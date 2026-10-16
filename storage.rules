@@ -1,0 +1,70 @@
+rules_version = '2';
+
+// Firebase Storage Security Rules for Khagrachhari Baitush Sharaf Jabbaria Adarsha Fazil Madrasa
+// Project: kbsjafm
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // ========================================================================
+    // HELPER FUNCTIONS
+    // ========================================================================
+    
+    // Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Check if user has admin role (requires Firestore lookup)
+    function isAdmin() {
+      return isAuthenticated() && 
+        exists(/databases/(default)/documents/admins/$(request.auth.uid)) &&
+        get(/databases/(default)/documents/admins/$(request.auth.uid)).data.active == true;
+    }
+    
+    // Validate file size (max 10MB for documents)
+    function isValidSize(maxSizeMB) {
+      return request.resource.size < maxSizeMB * 1024 * 1024;
+    }
+    
+    // Validate file type
+    function isValidDocumentType() {
+      return request.resource.contentType.matches('^application/(pdf|msword|vnd\\.openxmlformats-officedocument\\.wordprocessingml\\.document|vnd\\.ms-excel|vnd\\.openxmlformats-officedocument\\.spreadsheetml\\.sheet)$');
+    }
+    
+    // ========================================================================
+    // PUBLIC DOCUMENTS - Readable by anyone
+    // ========================================================================
+    
+    // Public documents folder - anyone can read, admins can write
+    match /public/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() && isValidSize(10) && isValidDocumentType();
+    }
+    
+    // ========================================================================
+    // ADMIN DOCUMENTS - Admin access only
+    // ========================================================================
+    
+    // Admin documents folder - admins only
+    match /admin/{allPaths=**} {
+      allow read, write: if isAdmin() && isValidSize(10) && isValidDocumentType();
+    }
+    
+    // ========================================================================
+    // TEMPORARY UPLOADS - For processing before moving to final location
+    // ========================================================================
+    
+    match /temp/{userId}/{allPaths=**} {
+      allow read, write: if isAuthenticated() && request.auth.uid == userId && isValidSize(10);
+    }
+    
+    // ========================================================================
+    // DEFAULT DENY - All other paths
+    // ========================================================================
+    
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
