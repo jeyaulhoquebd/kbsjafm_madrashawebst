@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { useAdmin } from '../context/AdminContext';
 import { useAuth } from '../../contexts/AuthContext';
+import { brandAssets } from '../../data/institution';
 
 const navItems = [
   { path: '/admin', label: 'Overview', labelBn: 'ওভারভিউ', icon: LayoutDashboard, exact: true },
@@ -72,7 +73,7 @@ export default function AdminLayout() {
           <div className="p-4 border-b border-neutral-200">
             <div className="flex items-center gap-3">
               <img
-                src="https://res.cloudinary.com/dc80xvaid/image/upload/v1792165465/madrashalogo.jpg"
+                src={brandAssets.logo}
                 alt="Logo"
                 className="w-10 h-10 rounded-full object-cover border-2 border-primary-200"
               />
