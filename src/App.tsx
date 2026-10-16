@@ -8,6 +8,9 @@ import Notices from './pages/Notices';
 import Teachers from './pages/Teachers';
 import Results from './pages/Results';
 import Academic from './pages/Academic';
+import Admission from './pages/Admission';
+import Downloads from './pages/Downloads';
+import Gallery from './pages/Gallery';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -20,14 +23,22 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/about/history" element={<About />} />
             <Route path="/about/administration" element={<About />} />
+            <Route path="/about/principal" element={<About />} />
             <Route path="/academic" element={<Academic />} />
             <Route path="/academic/departments" element={<Academic />} />
             <Route path="/academic/programs" element={<Academic />} />
             <Route path="/academic/calendar" element={<Academic />} />
+            <Route path="/academic/routine" element={<Academic />} />
+            <Route path="/academic/exam-routine" element={<Academic />} />
             <Route path="/teachers" element={<Teachers />} />
+            <Route path="/admission" element={<Admission />} />
+            <Route path="/admission/apply" element={<Admission />} />
             <Route path="/notices" element={<Notices />} />
             <Route path="/results" element={<Results />} />
+            <Route path="/downloads" element={<Downloads />} />
+            <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/library" element={<NotFound />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
