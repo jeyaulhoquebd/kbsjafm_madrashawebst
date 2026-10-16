@@ -1,0 +1,63 @@
+import { ReactNode } from 'react';
+
+interface CardProps {
+  children: ReactNode;
+  className?: string;
+  hover?: boolean;
+  padding?: 'none' | 'sm' | 'md' | 'lg';
+}
+
+const paddingStyles = {
+  none: '',
+  sm: 'p-3 sm:p-4',
+  md: 'p-4 sm:p-6',
+  lg: 'p-5 sm:p-8',
+};
+
+export default function Card({
+  children,
+  className = '',
+  hover = false,
+  padding = 'md',
+}: CardProps) {
+  return (
+    <div
+      className={`
+        bg-white rounded-xl
+        border border-neutral-200
+        shadow-sm
+        ${hover ? 'hover:shadow-md hover:border-primary-200 transition-all duration-300 hover:-translate-y-0.5' : ''}
+        ${paddingStyles[padding]}
+        ${className}
+      `}
+    >
+      {children}
+    </div>
+  );
+}
+
+interface CardHeaderProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function CardHeader({ children, className = '' }: CardHeaderProps) {
+  return (
+    <div className={`mb-4 ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+interface CardTitleProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function CardTitle({ children, className = '' }: CardTitleProps) {
+  return (
+    <h3 className={`text-lg font-semibold text-primary-900 ${className}`}>
+      {children}
+    </h3>
+  );
+}
