@@ -16,52 +16,54 @@ export const institutionInfo: InstitutionInfo = {
   website: institutionIdentity.website,
 };
 
-// Navigation Items - Complete set
+// Navigation Items - Simplified and organized
 export const navigationItems: NavItem[] = [
   { label: 'হোম', labelEn: 'Home', href: '/' },
   {
     label: 'আমাদের সম্পর্কে', labelEn: 'About Us', href: '/about',
     children: [
-      { label: 'মাদরাসা পরিচিতি', labelEn: 'Institution Overview', href: '/about' },
+      { label: 'প্রতিষ্ঠান পরিচিতি', labelEn: 'Institution Overview', href: '/about' },
       { label: 'ইতিহাস ও ঐতিহ্য', labelEn: 'History & Heritage', href: '/about/history' },
-      { label: 'লক্ষ্য ও উদ্দেশ্য', labelEn: 'Vision & Mission', href: '/about/vision-mission' },
-      { label: 'প্রতিষ্ঠানের মূলনীতি', labelEn: 'Core Values', href: '/about/values' },
-      { label: 'প্রতিষ্ঠাতা ও অনুপ্রেরণা', labelEn: 'Founder & Inspiration', href: '/about/founder' },
       { label: 'অধ্যক্ষের বাণী', labelEn: "Principal's Message", href: '/about/principal' },
-      { label: 'পরিচালনা পর্ষদ', labelEn: 'Governing Body', href: '/about/governing-body' },
+      { label: 'লক্ষ্য ও উদ্দেশ্য', labelEn: 'Vision & Mission', href: '/about/vision-mission' },
     ],
   },
   {
     label: 'একাডেমিক', labelEn: 'Academics', href: '/academics',
     children: [
-      { label: 'শিক্ষা কার্যক্রম', labelEn: 'Academic Programs', href: '/academics/programs' },
-      { label: 'বিভাগ ও শ্রেণি', labelEn: 'Departments & Classes', href: '/academics/departments' },
-      { label: 'একাডেমিক ক্যালেন্ডার', labelEn: 'Academic Calendar', href: '/academics/calendar' },
+      { label: 'শিক্ষাকার্যক্রম', labelEn: 'Academic Programs', href: '/academics/programs' },
+      { label: 'শ্রেণি ও বিভাগ', labelEn: 'Classes & Departments', href: '/academics/departments' },
       { label: 'ক্লাস রুটিন', labelEn: 'Class Routine', href: '/academics/routine' },
       { label: 'পরীক্ষার রুটিন', labelEn: 'Exam Routine', href: '/academics/exam-routine' },
-      { label: 'পরীক্ষার ফলাফল', labelEn: 'Exam Results', href: '/results' },
-      { label: 'সিলেবাস', labelEn: 'Syllabus', href: '/academics/syllabus' },
+      { label: 'ফলাফল', labelEn: 'Results', href: '/results' },
     ],
   },
   { label: 'শিক্ষক ও কর্মকর্তা', labelEn: 'Teachers & Staff', href: '/teachers' },
+  { label: 'ভর্তি', labelEn: 'Admission', href: '/admission' },
+  { label: 'নোটিশ', labelEn: 'Notices', href: '/notices' },
   {
-    label: 'ভর্তি', labelEn: 'Admission', href: '/admission',
+    label: 'শিক্ষার্থী কর্নার', labelEn: 'Student Corner', href: '/student-corner',
     children: [
-      { label: 'ভর্তি বিজ্ঞপ্তি', labelEn: 'Admission Notice', href: '/admission/notice' },
-      { label: 'ভর্তির যোগ্যতা', labelEn: 'Eligibility', href: '/admission/eligibility' },
-      { label: 'ভর্তি প্রক্রিয়া', labelEn: 'Admission Process', href: '/admission/process' },
-      { label: 'প্রয়োজনীয় কাগজপত্র', labelEn: 'Required Documents', href: '/admission/documents' },
-      { label: 'প্রশ্নোত্তর', labelEn: 'FAQ', href: '/admission/faq' },
+      { label: 'শিক্ষার্থীদের তথ্য', labelEn: 'Student Information', href: '/student-corner' },
+      { label: 'প্রয়োজনীয় নির্দেশনা', labelEn: 'Guidelines', href: '/student-corner/guidelines' },
+      { label: 'ডাউনলোড', labelEn: 'Downloads', href: '/downloads' },
     ],
   },
-  { label: 'নোটিশ', labelEn: 'Notices', href: '/notices' },
-  { label: 'ফলাফল', labelEn: 'Results', href: '/results' },
-  { label: 'শিক্ষার্থী কর্নার', labelEn: 'Student Corner', href: '/student-corner' },
-  { label: 'এতিমখানা', labelEn: 'Orphanage', href: '/orphanage' },
-  { label: 'হেফজখানা', labelEn: 'Hifzkhana', href: '/hifzkhana' },
-  { label: 'সংবাদ ও অনুষ্ঠান', labelEn: 'News & Events', href: '/news-events' },
-  { label: 'ফটো গ্যালারি', labelEn: 'Photo Gallery', href: '/gallery' },
-  { label: 'ভিডিও গ্যালারি', labelEn: 'Video Gallery', href: '/video-gallery' },
+  {
+    label: 'সেবামূলক কার্যক্রম', labelEn: 'Services', href: '#',
+    children: [
+      { label: 'এতিমখানা', labelEn: 'Orphanage', href: '/orphanage' },
+      { label: 'হেফজখানা', labelEn: 'Hifzkhana', href: '/hifzkhana' },
+    ],
+  },
+  {
+    label: 'মিডিয়া', labelEn: 'Media', href: '#',
+    children: [
+      { label: 'সংবাদ ও অনুষ্ঠান', labelEn: 'News & Events', href: '/news-events' },
+      { label: 'ফটো গ্যালারি', labelEn: 'Photo Gallery', href: '/gallery' },
+      { label: 'ভিডিও গ্যালারি', labelEn: 'Video Gallery', href: '/video-gallery' },
+    ],
+  },
   { label: 'ডাউনলোড', labelEn: 'Downloads', href: '/downloads' },
   { label: 'যোগাযোগ', labelEn: 'Contact', href: '/contact' },
 ];
