@@ -16,40 +16,55 @@ export const institutionInfo: InstitutionInfo = {
   website: institutionIdentity.website,
 };
 
-// Navigation Items - Complete set
+// Navigation Items - Simplified and organized
 export const navigationItems: NavItem[] = [
   { label: 'হোম', labelEn: 'Home', href: '/' },
   {
-    label: 'পরিচিতি', labelEn: 'About Us', href: '/about',
+    label: 'আমাদের সম্পর্কে', labelEn: 'About Us', href: '/about',
     children: [
       { label: 'প্রতিষ্ঠান পরিচিতি', labelEn: 'Institution Overview', href: '/about' },
-      { label: 'ইতিহাস', labelEn: 'History', href: '/about/history' },
-      { label: 'কর্তৃপক্ষ', labelEn: 'Administration', href: '/about/administration' },
+      { label: 'ইতিহাস ও ঐতিহ্য', labelEn: 'History & Heritage', href: '/about/history' },
       { label: 'অধ্যক্ষের বাণী', labelEn: "Principal's Message", href: '/about/principal' },
+      { label: 'লক্ষ্য ও উদ্দেশ্য', labelEn: 'Vision & Mission', href: '/about/vision-mission' },
     ],
   },
   {
     label: 'একাডেমিক', labelEn: 'Academics', href: '/academics',
     children: [
-      { label: 'শিক্ষা কার্যক্রম', labelEn: 'Programs', href: '/academics/programs' },
+      { label: 'শিক্ষাকার্যক্রম', labelEn: 'Academic Programs', href: '/academics/programs' },
+      { label: 'শ্রেণি ও বিভাগ', labelEn: 'Classes & Departments', href: '/academics/departments' },
       { label: 'ক্লাস রুটিন', labelEn: 'Class Routine', href: '/academics/routine' },
       { label: 'পরীক্ষার রুটিন', labelEn: 'Exam Routine', href: '/academics/exam-routine' },
-      { label: 'শিক্ষা ক্যালেন্ডার', labelEn: 'Academic Calendar', href: '/academics/calendar' },
-      { label: 'সিলেবাস', labelEn: 'Syllabus', href: '/academics/syllabus' },
+      { label: 'ফলাফল', labelEn: 'Results', href: '/results' },
     ],
   },
-  { label: 'শিক্ষকবৃন্দ', labelEn: 'Teachers', href: '/teachers' },
-  {
-    label: 'ভর্তি', labelEn: 'Admission', href: '/admission',
-    children: [
-      { label: 'ভর্তি তথ্য', labelEn: 'Admission Info', href: '/admission' },
-      { label: 'অনলাইন আবেদন', labelEn: 'Online Application', href: '/admission/apply' },
-    ],
-  },
+  { label: 'শিক্ষক ও কর্মকর্তা', labelEn: 'Teachers & Staff', href: '/teachers' },
+  { label: 'ভর্তি', labelEn: 'Admission', href: '/admission' },
   { label: 'নোটিশ', labelEn: 'Notices', href: '/notices' },
-  { label: 'ফলাফল', labelEn: 'Results', href: '/results' },
+  {
+    label: 'শিক্ষার্থী কর্নার', labelEn: 'Student Corner', href: '/student-corner',
+    children: [
+      { label: 'শিক্ষার্থীদের তথ্য', labelEn: 'Student Information', href: '/student-corner' },
+      { label: 'প্রয়োজনীয় নির্দেশনা', labelEn: 'Guidelines', href: '/student-corner/guidelines' },
+      { label: 'ডাউনলোড', labelEn: 'Downloads', href: '/downloads' },
+    ],
+  },
+  {
+    label: 'সেবামূলক কার্যক্রম', labelEn: 'Services', href: '#',
+    children: [
+      { label: 'এতিমখানা', labelEn: 'Orphanage', href: '/orphanage' },
+      { label: 'হেফজখানা', labelEn: 'Hifzkhana', href: '/hifzkhana' },
+    ],
+  },
+  {
+    label: 'মিডিয়া', labelEn: 'Media', href: '#',
+    children: [
+      { label: 'সংবাদ ও অনুষ্ঠান', labelEn: 'News & Events', href: '/news-events' },
+      { label: 'ফটো গ্যালারি', labelEn: 'Photo Gallery', href: '/gallery' },
+      { label: 'ভিডিও গ্যালারি', labelEn: 'Video Gallery', href: '/video-gallery' },
+    ],
+  },
   { label: 'ডাউনলোড', labelEn: 'Downloads', href: '/downloads' },
-  { label: 'গ্যালারি', labelEn: 'Gallery', href: '/gallery' },
   { label: 'যোগাযোগ', labelEn: 'Contact', href: '/contact' },
 ];
 
@@ -233,12 +248,16 @@ export const galleryImages = [
 // Quick Services
 export const quickServices = [
   { label: 'ভর্তি তথ্য', labelEn: 'Admission Info', href: '/admission', icon: 'FileText' },
+  { label: 'ভর্তি আবেদন', labelEn: 'Apply for Admission', href: '/admission/apply', icon: 'FileText' },
+  { label: 'সর্বশেষ নোটিশ', labelEn: 'Latest Notices', href: '/notices', icon: 'Bell' },
+  { label: 'পরীক্ষার ফলাফল', labelEn: 'Exam Results', href: '/results', icon: 'Award' },
   { label: 'ক্লাস রুটিন', labelEn: 'Class Routine', href: '/academics/routine', icon: 'Calendar' },
   { label: 'পরীক্ষার রুটিন', labelEn: 'Exam Routine', href: '/academics/exam-routine', icon: 'ClipboardList' },
-  { label: 'ফলাফল', labelEn: 'Results', href: '/results', icon: 'Award' },
-  { label: 'নোটিশ বোর্ড', labelEn: 'Notice Board', href: '/notices', icon: 'Bell' },
+  { label: 'একাডেমিক ক্যালেন্ডার', labelEn: 'Academic Calendar', href: '/academics/calendar', icon: 'CalendarDays' },
+  { label: 'সিলেবাস', labelEn: 'Syllabus', href: '/academics/syllabus', icon: 'BookOpen' },
   { label: 'ডাউনলোড', labelEn: 'Downloads', href: '/downloads', icon: 'Download' },
-  { label: 'শিক্ষা ক্যালেন্ডার', labelEn: 'Academic Calendar', href: '/academics/calendar', icon: 'CalendarDays' },
+  { label: 'শিক্ষক তালিকা', labelEn: 'Teachers List', href: '/teachers', icon: 'Users' },
+  { label: 'ফটো গ্যালারি', labelEn: 'Photo Gallery', href: '/gallery', icon: 'Image' },
   { label: 'যোগাযোগ', labelEn: 'Contact & Location', href: '/contact', icon: 'MapPin' },
 ];
 

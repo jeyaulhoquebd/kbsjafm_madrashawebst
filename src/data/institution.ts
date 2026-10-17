@@ -24,8 +24,12 @@ export const institutionIdentity = {
   shortNameEn: 'Baitush Sharaf Jabbaria Madrasa',
   
   // Institutional motto (official)
-  mottoBn: 'ইমান, ইলম ও আমল',
-  mottoEn: 'Faith, Knowledge & Practice',
+  mottoBn: 'জ্ঞান, বিশ্বাস ও সেবা',
+  mottoEn: 'Knowledge, Faith & Service',
+  
+  // Alternative tagline
+  taglineBn: 'ইসলামের আলোয় আলোকিত হোক প্রতিটি হৃদয়।',
+  taglineEn: 'Let every heart be illuminated with the light of Islam.',
   
   // EIIN (official)
   eiin: '131810',
@@ -288,6 +292,169 @@ export const googleMapsLink = {
   url: 'https://www.google.com/maps/search/বায়তুশ+শরফ+রোড,+আরামবাগ,+খাগড়াছড়ি',
   note: '[অনুসন্ধান ভিত্তিক লিংক - সঠিক অবস্থান যাচাই করা হয়নি]',
   noteEn: '[Search-based link - Exact location not verified]',
+};
+
+// ============================================================================
+// HISTORICAL INFORMATION (PENDING VERIFICATION)
+// ============================================================================
+
+export const historicalInfo = {
+  // Establishment information (pending verification)
+  establishmentDate: {
+    date: '১ জানুয়ারি ১৯৯১',
+    dateEn: '1 January 1991',
+    status: 'pending_verification' as const,
+    note: '[যাচাই সাপেক্ষে - সরকারি নথি দ্বারা নিশ্চিত করতে হবে]',
+    noteEn: '[Pending verification - Must be confirmed by official documents]',
+  },
+
+  // Inspirational figure (pending verification)
+  inspirationalFigure: {
+    nameBn: 'শাহ সুফী আলহাজ্ব হযরত মাওলানা মুহাম্মদ আব্দুল জব্বার (রহ.)',
+    nameEn: 'Shah Sufi Alhaj Hazrat Maulana Muhammad Abdul Jabbar (Rah.)',
+    roleBn: 'অনুপ্রেরণাদায়ক ব্যক্তিত্ব',
+    roleEn: 'Inspirational Figure',
+    status: 'pending_verification' as const,
+    note: '[যাচাই সাপেক্ষে]',
+    noteEn: '[Pending verification]',
+  },
+
+  // Academic development timeline (pending verification)
+  academicTimeline: [
+    {
+      year: '১৯৯১',
+      yearEn: '1991',
+      eventBn: 'প্রতিষ্ঠা',
+      eventEn: 'Establishment',
+      descriptionBn: '[বিস্তারিত বিবরণ - যাচাই সাপেক্ষে]',
+      descriptionEn: '[Detailed description - Pending verification]',
+      status: 'pending_verification' as const,
+    },
+    {
+      year: '২০০৬',
+      yearEn: '2006',
+      eventBn: 'দাখিল স্বীকৃতি',
+      eventEn: 'Dakhil Level Recognition',
+      descriptionBn: '[বিস্তারিত বিবরণ - যাচাই সাপেক্ষে]',
+      descriptionEn: '[Detailed description - Pending verification]',
+      status: 'pending_verification' as const,
+    },
+    {
+      year: '[বছর - যাচাই সাপেক্ষে]',
+      yearEn: '[Year - Pending verification]',
+      eventBn: 'আলিম পর্যায়',
+      eventEn: 'Alim Level',
+      descriptionBn: '[বিস্তারিত বিবরণ - যাচাই সাপেক্ষে]',
+      descriptionEn: '[Detailed description - Pending verification]',
+      status: 'pending_verification' as const,
+    },
+    {
+      year: '[বছর - যাচাই সাপেক্ষে]',
+      yearEn: '[Year - Pending verification]',
+      eventBn: 'ফাজিল (ডিগ্রি) পর্যায়',
+      eventEn: 'Fazil (Degree) Level',
+      descriptionBn: '[বিস্তারিত বিবরণ - যাচাই সাপেক্ষে]',
+      descriptionEn: '[Detailed description - Pending verification]',
+      status: 'pending_verification' as const,
+    },
+  ],
+
+  // Tradition association (pending verification)
+  traditionAssociation: {
+    nameBn: 'বায়তুশ শরফ ঐতিহ্য',
+    nameEn: 'Baitush Sharaf Tradition',
+    descriptionBn: '[প্রতিষ্ঠানটি বায়তুশ শরফ ঐতিহ্যের সাথে যুক্ত - যাচাই সাপেক্ষে]',
+    descriptionEn: '[The institution is associated with the Baitush Sharaf tradition - Pending verification]',
+    status: 'pending_verification' as const,
+  },
+};
+
+// ============================================================================
+// VISION, MISSION AND VALUES
+// ============================================================================
+
+export const visionMissionValues = {
+  vision: {
+    bn: 'দ্বীনি ও আধুনিক শিক্ষার সমন্বয়ে জ্ঞানসমৃদ্ধ, নৈতিকতাবান, দায়িত্বশীল ও মানবিক প্রজন্ম গড়ে তোলা।',
+    en: 'To develop a knowledgeable, ethical, responsible and humane generation through the combination of religious and modern education.',
+    status: 'draft' as const,
+  },
+
+  mission: {
+    bn: 'শিক্ষার্থীদের ধর্মীয় জ্ঞান, সাধারণ শিক্ষা, শৃঙ্খলা, নৈতিকতা এবং সামাজিক দায়িত্ববোধ বিকাশের উপযোগী শিক্ষার পরিবেশ তৈরি করা।',
+    en: 'To create an educational environment suitable for developing students\' religious knowledge, general education, discipline, ethics and social responsibility.',
+    status: 'draft' as const,
+  },
+
+  coreValues: [
+    { bn: 'ইসলামী মূল্যবোধ', en: 'Islamic Values' },
+    { bn: 'জ্ঞান ও প্রজ্ঞা', en: 'Knowledge & Wisdom' },
+    { bn: 'সততা ও নৈতিকতা', en: 'Honesty & Ethics' },
+    { bn: 'শৃঙ্খলা ও দায়িত্বশীলতা', en: 'Discipline & Responsibility' },
+    { bn: 'মানবসেবা', en: 'Service to Humanity' },
+    { bn: 'সহমর্মিতা', en: 'Compassion' },
+    { bn: 'দেশ ও সমাজের কল্যাণ', en: 'Welfare of Country and Society' },
+    { bn: 'জ্ঞানচর্চা ও ব্যক্তিত্বের বিকাশ', en: 'Pursuit of Knowledge and Personality Development' },
+  ],
+};
+
+// ============================================================================
+// ORPHANAGE AND LILLAH BOARDING (PENDING VERIFICATION)
+// ============================================================================
+
+export const orphanageInfo = {
+  nameBn: 'খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া এতিমখানা',
+  nameEn: 'Khagrachhari Baitush Sharaf Jabbaria Orphanage',
+  
+  introductionBn: '[এতিমখানার পরিচিতি - যাচাই সাপেক্ষে]',
+  introductionEn: '[Orphanage introduction - Pending verification]',
+  
+  objectivesBn: '[এতিমখানার উদ্দেশ্য - যাচাই সাপেক্ষে]',
+  objectivesEn: '[Orphanage objectives - Pending verification]',
+  
+  educationalSupportBn: '[শিক্ষা সহায়তা কার্যক্রম - যাচাই সাপেক্ষে]',
+  educationalSupportEn: '[Educational support activities - Pending verification]',
+  
+  accommodationBn: '[আবাসন সুবিধা - যাচাই সাপেক্ষে]',
+  accommodationEn: '[Accommodation facilities - Pending verification]',
+  
+  contactInfo: {
+    phone: '[ফোন নম্বর - যাচাই সাপেক্ষে]',
+    email: '[ইমেইল - যাচাই সাপেক্ষে]',
+  },
+  
+  status: 'pending_verification' as const,
+};
+
+// ============================================================================
+// JABBARIA HIFZKHANA (PENDING VERIFICATION)
+// ============================================================================
+
+export const hifzkhanaInfo = {
+  nameBn: 'জব্বারিয়া হেফজখানা',
+  nameEn: 'Jabbaria Hifzkhana',
+  
+  introductionBn: '[হেফজখানার পরিচিতি - যাচাই সাপেক্ষে]',
+  introductionEn: '[Hifzkhana introduction - Pending verification]',
+  
+  objectivesBn: '[হেফজখানার উদ্দেশ্য - যাচাই সাপেক্ষে]',
+  objectivesEn: '[Hifzkhana objectives - Pending verification]',
+  
+  hifzProgramBn: '[হেফজ শিক্ষা কার্যক্রম - যাচাই সাপেক্ষে]',
+  hifzProgramEn: '[Hifz education program - Pending verification]',
+  
+  residentialFacilitiesBn: '[আবাসিক সুবিধা - যাচাই সাপেক্ষে]',
+  residentialFacilitiesEn: '[Residential facilities - Pending verification]',
+  
+  admissionInfoBn: '[ভর্তি তথ্য - যাচাই সাপেক্ষে]',
+  admissionInfoEn: '[Admission information - Pending verification]',
+  
+  contactInfo: {
+    phone: '[ফোন নম্বর - যাচাই সাপেক্ষে]',
+    email: '[ইমেইল - যাচাই সাপেক্ষে]',
+  },
+  
+  status: 'pending_verification' as const,
 };
 
 // ============================================================================
