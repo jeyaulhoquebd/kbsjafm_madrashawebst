@@ -1,56 +1,53 @@
 import { useLanguage } from '../context/LanguageContext';
-import { facilities } from '../data/institution';
 import Section, { SectionHeader } from './ui/Section';
 import Card from './ui/Card';
-import { Building2, TreePine, DoorOpen, Maximize, Users, BookOpen, AlertCircle } from 'lucide-react';
+import { Building2, TreePine, DoorOpen, BookOpen, Users, Award, ShieldCheck, Heart } from 'lucide-react';
 
 export default function Facilities() {
   const { t } = useLanguage();
 
-  const facilityItems = [
+  const facilitiesList = [
     {
-      icon: <TreePine className="w-6 h-6" />,
-      labelBn: 'মোট জমির পরিমাণ',
-      labelEn: 'Total Land Area',
-      value: facilities.landArea.value,
-      unitBn: facilities.landArea.unit,
-      unitEn: facilities.landArea.unitEn,
-      verified: facilities.landArea.verified,
-      note: facilities.landArea.note,
-      noteEn: facilities.landArea.noteEn,
+      icon: <Building2 className="w-6 h-6 text-primary-700" />,
+      titleBn: 'আধুনিক একাডেমিক ভবন',
+      titleEn: 'Modern Academic Building',
+      descBn: 'সুপরিসর শ্রেণিকক্ষ, পর্যাপ্ত আলো-বাতাস এবং সুশৃঙ্খল পাঠদানের মনোরম ক্যাম্পাস।',
+      descEn: 'Spacious classrooms with natural ventilation and a peaceful learning environment.',
     },
     {
-      icon: <Building2 className="w-6 h-6" />,
-      labelBn: 'খেলার মাঠ',
-      labelEn: 'Playground Area',
-      value: facilities.playgroundArea.value,
-      unitBn: facilities.playgroundArea.unit,
-      unitEn: facilities.playgroundArea.unitEn,
-      verified: facilities.playgroundArea.verified,
-      note: facilities.playgroundArea.note,
-      noteEn: facilities.playgroundArea.noteEn,
+      icon: <BookOpen className="w-6 h-6 text-primary-700" />,
+      titleBn: 'ইসলামিক ও সাধারণ লাইব্রেরি',
+      titleEn: 'Islamic & General Library',
+      descBn: 'কুরআন, হাদিস, ফিকহ, আরবি সাহিত্য ও আধুনিক পাঠ্যবই সমৃদ্ধ পাঠকক্ষ।',
+      descEn: 'Well-stocked library featuring classical Islamic texts, Arabic literature, and modern reference books.',
     },
     {
-      icon: <DoorOpen className="w-6 h-6" />,
-      labelBn: 'মোট কক্ষ সংখ্যা',
-      labelEn: 'Total Rooms',
-      value: facilities.roomCount.value,
-      unitBn: facilities.roomCount.unit,
-      unitEn: facilities.roomCount.unitEn,
-      verified: facilities.roomCount.verified,
-      note: facilities.roomCount.note,
-      noteEn: facilities.roomCount.noteEn,
+      icon: <TreePine className="w-6 h-6 text-primary-700" />,
+      titleBn: 'খেলার মাঠ ও উন্মুক্ত প্রাঙ্গণ',
+      titleEn: 'Playground & Open Campus',
+      descBn: 'শিক্ষার্থীদের শারীরিক বিকাশ, দৈনিক সমাবেশ ও সহশিক্ষা কার্যক্রমের জন্য উন্মুক্ত প্রাঙ্গণ।',
+      descEn: 'Open playground for daily assemblies, physical recreation, and extracurricular activities.',
     },
     {
-      icon: <Maximize className="w-6 h-6" />,
-      labelBn: 'মোট মেঝের ক্ষেত্রফল',
-      labelEn: 'Total Floor Space',
-      value: facilities.floorSpace.value,
-      unitBn: facilities.floorSpace.unit,
-      unitEn: facilities.floorSpace.unitEn,
-      verified: facilities.floorSpace.verified,
-      note: facilities.floorSpace.note,
-      noteEn: facilities.floorSpace.noteEn,
+      icon: <Heart className="w-6 h-6 text-primary-700" />,
+      titleBn: 'বায়তুশ শরফ এতিমখানা',
+      titleEn: 'Baitush Sharaf Orphanage',
+      descBn: 'পিতৃহীন ও সুবিধাবঞ্চিত শিশুদের স্নেহপূর্ণ আবাসিক পরিচর্যা ও শিক্ষা সহায়তা।',
+      descEn: 'Dedicated residential care, welfare, and educational patronage for orphaned children.',
+    },
+    {
+      icon: <Award className="w-6 h-6 text-gold-700" />,
+      titleBn: 'জব্বারিয়া হেফজখানা বিভাগ',
+      titleEn: 'Jabbaria Hifzkhana Section',
+      descBn: 'অভিজ্ঞ হাফেজগণের নিবিড় তত্ত্বাবধানে সহীহ তাজবিদসহ পূর্ণাঙ্গ কুরআন হিফজ।',
+      descEn: 'Specialized Quran memorization section under certified Huffaz with proper Tajweed.',
+    },
+    {
+      icon: <ShieldCheck className="w-6 h-6 text-primary-700" />,
+      titleBn: 'নিরাপদ ও সুশৃঙ্খল পরিবেশ',
+      titleEn: 'Safe & Disciplined Environment',
+      descBn: 'ইসলামী অনুশাসন, নৈতিক মূল্যবোধ ও নিবিড় শিক্ষকমণ্ডলীর তত্ত্বাবধান।',
+      descEn: 'Strict adherence to Islamic decorum, safety, and close pastoral teacher mentorship.',
     },
   ];
 
@@ -58,100 +55,23 @@ export default function Facilities() {
     <Section background="light">
       <SectionHeader
         title={t('প্রাতিষ্ঠানিক সুযোগ-সুবিধা', 'Institutional Facilities')}
-        subtitle={t(
-          'আমাদের প্রতিষ্ঠানের অবকাঠামো ও সুযোগ-সুবিধা',
-          'Infrastructure and facilities of our institution'
-        )}
+        subtitle={t('আমাদের প্রতিষ্ঠানের অবকাঠামো ও শিক্ষা পরিবেশ', 'Campus infrastructure and learning facilities')}
       />
 
-      {/* Verification Notice */}
-      <div className="max-w-5xl mx-auto mb-6">
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm text-amber-900 font-medium mb-1">
-              {t('গুরুত্বপূর্ণ তথ্য', 'Important Notice')}
-            </p>
-            <p className="text-xs text-amber-800">
-              {t(
-                'নিম্নলিখিত তথ্যগুলো প্রতিবেদন ভিত্তিক এবং প্রশাসনিক যাচাই সাপেক্ষে। সঠিক তথ্যের জন্য প্রতিষ্ঠান কর্তৃপক্ষের সাথে যোগাযোগ করুন।',
-                'The following information is reported and subject to administrative verification. Please contact the institution authority for accurate information.'
-              )}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Facilities Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto mb-8">
-        {facilityItems.map((item, index) => (
-          <Card key={index} padding="lg" className="text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary-100 text-primary-700 mb-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {facilitiesList.map((item, index) => (
+          <Card key={index} padding="lg" hover className="border-neutral-200 bg-white">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary-50 border border-primary-100 mb-4">
               {item.icon}
             </div>
-            <h3 className="text-sm font-semibold text-neutral-700 mb-2">
-              {t(item.labelBn, item.labelEn)}
+            <h3 className="text-base font-bold text-primary-950 mb-2 font-bengali">
+              {t(item.titleBn, item.titleEn)}
             </h3>
-            <div className="mb-2">
-              <span className="text-2xl font-bold text-primary-900">{item.value}</span>
-              <span className="text-sm text-neutral-600 ml-1">
-                {t(item.unitBn, item.unitEn)}
-              </span>
-            </div>
-            {!item.verified && (
-              <p className="text-xs text-amber-600 italic mt-2">
-                {t(item.note, item.noteEn)}
-              </p>
-            )}
+            <p className="text-sm text-neutral-600 leading-relaxed font-bengali">
+              {t(item.descBn, item.descEn)}
+            </p>
           </Card>
         ))}
-      </div>
-
-      {/* Additional Facilities */}
-      <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-        {/* Orphanage */}
-        <Card padding="lg">
-          <div className="flex items-start gap-4">
-            <div className="shrink-0 w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center">
-              <Users className="w-6 h-6 text-primary-700" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold text-primary-900 mb-2 font-bengali">
-                {t('এতিমখানা', 'Orphanage')}
-              </h3>
-              <p className="text-sm text-neutral-600 leading-relaxed mb-2">
-                {t(facilities.orphanage.descriptionBn, facilities.orphanage.descriptionEn)}
-              </p>
-              {!facilities.orphanage.verified && (
-                <p className="text-xs text-amber-600 italic">
-                  {t(facilities.orphanage.nameBn, facilities.orphanage.nameEn)}
-                </p>
-              )}
-            </div>
-          </div>
-        </Card>
-
-        {/* Hifzkhana */}
-        <Card padding="lg">
-          <div className="flex items-start gap-4">
-            <div className="shrink-0 w-12 h-12 rounded-xl bg-gold-100 flex items-center justify-center">
-              <BookOpen className="w-6 h-6 text-gold-700" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold text-primary-900 mb-2 font-bengali">
-                {t('হিফজখানা', 'Hifzkhana')}
-              </h3>
-              <p className="text-sm text-neutral-600 leading-relaxed mb-2">
-                {t(facilities.hifzkhana.descriptionBn, facilities.hifzkhana.descriptionEn)}
-              </p>
-              {!facilities.hifzkhana.verified && (
-                <p className="text-xs text-amber-600 italic">
-                  {t(facilities.hifzkhana.nameBn, facilities.hifzkhana.nameEn)}
-                </p>
-              )}
-            </div>
-          </div>
-        </Card>
       </div>
     </Section>
   );

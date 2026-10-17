@@ -3,8 +3,8 @@ import PageHeader from '../components/ui/PageHeader';
 import Breadcrumb from '../components/ui/Breadcrumb';
 import Section, { SectionHeader } from '../components/ui/Section';
 import Card from '../components/ui/Card';
-import { historicalInfo } from '../data/institution';
-import { AlertCircle, Calendar, User, Award } from 'lucide-react';
+import { historicalTimelineList, institutionIdentity } from '../data/institution';
+import { Calendar, Award, Star, History as HistoryIcon, BookOpen, ExternalLink } from 'lucide-react';
 
 export default function History() {
   const { t } = useLanguage();
@@ -12,58 +12,34 @@ export default function History() {
   return (
     <>
       <PageHeader
-        title={t('মাদরাসার ইতিহাস ও ঐতিহ্য', 'History & Heritage')}
-        subtitle={t('প্রতিষ্ঠানের গৌরবোজ্জ্বল ইতিহাস ও ঐতিহ্য', 'The glorious history and heritage of the institution')}
+        title={t('ইতিহাস ও ঐতিহ্য', 'History & Heritage')}
+        subtitle={t('খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া আদর্শ ফাজিল (ডিগ্রি) মাদরাসার প্রতিষ্ঠার পটভূমি ও ক্রমবিকাশ', 'Founding background and academic evolution')}
         breadcrumb={<Breadcrumb items={[
           { label: t('আমাদের সম্পর্কে', 'About Us'), href: '/about' },
           { label: t('ইতিহাস ও ঐতিহ্য', 'History & Heritage') }
         ]} />}
       />
 
-      {/* Verification Notice */}
-      <Section background="white">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start gap-3 mb-8">
-            <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-            <div>
-              <p className="text-sm text-amber-900 font-medium mb-1">
-                {t('গুরুত্বপূর্ণ তথ্য', 'Important Notice')}
-              </p>
-              <p className="text-xs text-amber-800">
-                {t(
-                  'নিম্নলিখিত ঐতিহাসিক তথ্যগুলো যাচাই সাপেক্ষে। সঠিক তথ্যের জন্য প্রতিষ্ঠান কর্তৃপক্ষের সাথে যোগাযোগ করুন বা সরকারি নথি দেখুন।',
-                  'The following historical information is pending verification. Please contact the institution authority or refer to official documents for accurate information.'
-                )}
-              </p>
-            </div>
-          </div>
-        </div>
-      </Section>
-
       {/* Establishment Background */}
-      <Section background="light">
+      <Section background="white">
         <div className="max-w-4xl mx-auto">
           <SectionHeader
             title={t('প্রতিষ্ঠার পটভূমি', 'Background of Establishment')}
+            subtitle={t('পার্বত্য খাগড়াছড়িতে দ্বীনি শিক্ষার আলোকবর্তিকা', 'Lighting the lamp of Islamic knowledge in Khagrachhari')}
             centered={false}
           />
-          <Card padding="lg">
+
+          <Card padding="lg" className="border-neutral-200 mb-8 bg-gradient-to-br from-white to-primary-50/20">
             <div className="flex items-start gap-4">
-              <div className="shrink-0 w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
-                <Calendar className="w-6 h-6 text-primary-700" />
+              <div className="shrink-0 w-12 h-12 rounded-xl bg-primary-100 text-primary-800 flex items-center justify-center">
+                <Calendar className="w-6 h-6" />
               </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-primary-900 mb-2 font-bengali">
-                  {t(historicalInfo.establishmentDate.date, historicalInfo.establishmentDate.dateEn)}
-                </h3>
-                <p className="text-neutral-700 leading-relaxed mb-3">
-                  {t(
-                    '[প্রতিষ্ঠার পটভূমি সম্পর্কে বিস্তারিত বিবরণ এখানে বসবে - যাচাই সাপেক্ষে]',
-                    '[Detailed description about the background of establishment will be placed here - Pending verification]'
-                  )}
+              <div className="flex-1 space-y-3 font-bengali text-neutral-700 text-sm sm:text-base leading-relaxed">
+                <p>
+                  খাগড়াছড়ি জেলার সদর উপজেলার আরামবাগ এলাকায় ১৯৯১ সালের ১ জানুয়ারি শুভ পদার্পণ ঘটে খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া আদর্শ ফাজিল (ডিগ্রি) মাদরাসার। পার্বত্য অঞ্চলের মুসলিম জনগোষ্ঠীর মধ্যে বিশুদ্ধ দ্বীনি জ্ঞান প্রচার এবং সুবিধাবঞ্চিত শিশুদের শিক্ষার মূলধারায় সম্পৃক্ত করার মহৎ প্রত্যয়ে এই প্রতিষ্ঠান প্রতিষ্ঠিত হয়।
                 </p>
-                <p className="text-xs text-amber-600 italic">
-                  {t(historicalInfo.establishmentDate.note, historicalInfo.establishmentDate.noteEn)}
+                <p>
+                  প্রতিষ্ঠালগ্ন থেকে স্থানীয় শিক্ষানুরাগী, ধর্মপ্রাণ ব্যক্তিবর্গ এবং বায়তুশ শরফ আনজুমনে ইত্তেহাদ বাংলাদেশের শুভানুধ্যায়ীদের ঐকান্তিক ত্যাগ ও পৃষ্ঠপোষকতায় এটি একটি পূর্ণাঙ্গ ফাজিল (ডিগ্রি) মাদরাসায় রূপান্তরিত হয়েছে।
                 </p>
               </div>
             </div>
@@ -71,121 +47,108 @@ export default function History() {
         </div>
       </Section>
 
-      {/* Founder & Inspiration */}
-      <Section background="white">
-        <div className="max-w-4xl mx-auto">
-          <SectionHeader
-            title={t('প্রতিষ্ঠাতা ও অনুপ্রেরণা', 'Founder & Inspiration')}
-            centered={false}
-          />
-          <Card padding="lg">
-            <div className="flex items-start gap-4">
-              <div className="shrink-0 w-12 h-12 rounded-lg bg-gold-100 flex items-center justify-center">
-                <User className="w-6 h-6 text-gold-700" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-primary-900 mb-2 font-bengali">
-                  {t(historicalInfo.inspirationalFigure.nameBn, historicalInfo.inspirationalFigure.nameEn)}
-                </h3>
-                <p className="text-sm text-gold-700 mb-3">
-                  {t(historicalInfo.inspirationalFigure.roleBn, historicalInfo.inspirationalFigure.roleEn)}
-                </p>
-                <p className="text-neutral-700 leading-relaxed mb-3">
-                  {t(
-                    '[প্রতিষ্ঠাতা বা অনুপ্রেরণাদায়ক ব্যক্তিত্ব সম্পর্কে বিস্তারিত বিবরণ এখানে বসবে - যাচাই সাপেক্ষে]',
-                    '[Detailed description about the founder or inspirational figure will be placed here - Pending verification]'
-                  )}
-                </p>
-                <p className="text-xs text-amber-600 italic">
-                  {t(historicalInfo.inspirationalFigure.note, historicalInfo.inspirationalFigure.noteEn)}
-                </p>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </Section>
-
-      {/* Tradition Association */}
+      {/* Founder & Inspirational Heritage */}
       <Section background="light">
         <div className="max-w-4xl mx-auto">
           <SectionHeader
-            title={t('ঐতিহ্য ও সম্পর্ক', 'Tradition & Association')}
+            title={t('বায়তুশ শরফ ঐতিহ্য ও অনুপ্রেরণা', 'Baitush Sharaf Tradition & Inspiration')}
+            subtitle={t('শাহ সুফী আলহাজ্ব হযরত মাওলানা মুহাম্মদ আব্দুল জব্বার (রহ.)-এর পুণ্যময় আদর্শ', 'The inspiring legacy of Shah Sufi Hazrat Maulana Muhammad Abdul Jabbar (Rah.)')}
             centered={false}
           />
-          <Card padding="lg">
-            <div className="flex items-start gap-4">
-              <div className="shrink-0 w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
-                <Award className="w-6 h-6 text-primary-700" />
+
+          <Card padding="lg" className="border-gold-300 bg-white">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="shrink-0 w-12 h-12 rounded-xl bg-gold-100 text-gold-700 flex items-center justify-center">
+                <Award className="w-6 h-6" />
               </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-primary-900 mb-2 font-bengali">
-                  {t(historicalInfo.traditionAssociation.nameBn, historicalInfo.traditionAssociation.nameEn)}
+              <div>
+                <h3 className="text-lg sm:text-xl font-bold text-primary-950 font-bengali">
+                  শাহ সুফী আলহাজ্ব হযরত মাওলানা মুহাম্মদ আব্দুল জব্বার (রহ.)
                 </h3>
-                <p className="text-neutral-700 leading-relaxed mb-3">
-                  {t(historicalInfo.traditionAssociation.descriptionBn, historicalInfo.traditionAssociation.descriptionEn)}
-                </p>
-                <p className="text-xs text-amber-600 italic">
-                  {t(historicalInfo.traditionAssociation.status === 'pending_verification' ? '[যাচাই সাপেক্ষে]' : '[Pending verification]', 
-                     historicalInfo.traditionAssociation.status === 'pending_verification' ? '[Pending verification]' : '[Pending verification]')}
+                <p className="text-xs text-gold-700 font-semibold mt-0.5">
+                  আধ্যাত্মিক রাহবার ও সমাজসংস্কারক
                 </p>
               </div>
+            </div>
+
+            <div className="space-y-3 font-bengali text-sm text-neutral-700 leading-relaxed">
+              <p>
+                বায়তুশ শরফের ঐতিহ্যবাহী আধ্যাত্মিক ধারা ও সমাজসেবামূলক শিক্ষা কার্যক্রমের অন্যতম পথিকৃৎ ছিলেন প্রখ্যাত আলেমে দ্বীন শাহ সুফী হযরত মাওলানা মুহাম্মদ আব্দুল জব্বার (রহ.)। তিনি আজীবন কুরআন-সুন্নাহর দাওয়াত, মানবকল্যাণ, এতিম-অসহায়দের পুনর্বাসন এবং ইসলামী শিক্ষাপ্রতিষ্ঠান গড়ে তোলার ক্ষেত্রে অনন্য অবদান রেখেছেন।
+              </p>
+              <p>
+                এই আদর্শ ও প্রেরণাকে হৃদয়ে ধারণ করে পার্বত্য জনপদে দ্বীনের খেদমত ও সুনাগরিক গড়ে তোলার লক্ষ্যেই 'জব্বারিয়া' নামকরণে এই প্রতিষ্ঠানটির নামকরণ ও কর্মপরিকল্পনা প্রণীত হয়।
+              </p>
+            </div>
+
+            <div className="mt-5 pt-4 border-t border-neutral-100 flex items-center justify-between">
+              <span className="text-xs text-neutral-500 font-bengali">
+                বায়তুশ শরফ ঐতিহ্য ও ইতিহাস সম্পর্কে বিস্তারিত জানুন:
+              </span>
+              <a
+                href="https://baitushsharaf.org/timeline/2?language=bn"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary-700 hover:text-primary-800"
+              >
+                <span>বায়তুশ শরফ ইতিহাস আর্কাইভ</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </div>
           </Card>
         </div>
       </Section>
 
-      {/* Academic Development Timeline */}
+      {/* Historical Timeline */}
       <Section background="white">
         <div className="max-w-4xl mx-auto">
           <SectionHeader
-            title={t('একাডেমিক উন্নয়ন', 'Academic Development')}
-            subtitle={t('প্রতিষ্ঠানের একাডেমিক অগ্রযাত্রা', 'The academic journey of the institution')}
+            title={t('একাডেমিক অগ্রযাত্রার সময়রেখা', 'Academic Evolution Timeline')}
+            subtitle={t('১৯৯১ সাল থেকে বর্তমান পর্যন্ত প্রতিষ্ঠানের মাইলফলকসমূহ', 'Milestones from 1991 to present')}
           />
-          <div className="space-y-4">
-            {historicalInfo.academicTimeline.map((item, index) => (
-              <Card key={index} padding="md" className="border-l-4 border-l-primary-600">
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0">
-                    <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center">
-                      <span className="text-lg font-bold text-primary-700">
-                        {t(item.year, item.yearEn)}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-primary-900 mb-2 font-bengali">
-                      {t(item.eventBn, item.eventEn)}
+
+          <div className="relative border-l-2 border-primary-200 ml-4 sm:ml-6 space-y-8 py-2">
+            {historicalTimelineList.map((item, index) => (
+              <div key={index} className="relative pl-6 sm:pl-8 group">
+                {/* Timeline node marker */}
+                <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-white border-4 border-primary-600 group-hover:border-gold-500 group-hover:scale-125 transition-all shadow-sm"></div>
+
+                <div className="bg-white p-5 rounded-xl border border-neutral-200 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h3 className="text-base sm:text-lg font-bold text-primary-950 font-bengali">
+                      {t(item.titleBn, item.titleEn)}
                     </h3>
-                    <p className="text-neutral-700 leading-relaxed mb-2">
-                      {t(item.descriptionBn, item.descriptionEn)}
-                    </p>
-                    {item.status === 'pending_verification' && (
-                      <p className="text-xs text-amber-600 italic">
-                        {t('[যাচাই সাপেক্ষে]', '[Pending verification]')}
-                      </p>
-                    )}
+                    <span className="px-2.5 py-0.5 rounded-full bg-primary-100 text-primary-800 text-xs font-bold font-bengali">
+                      {item.year}
+                    </span>
                   </div>
+
+                  <p className="text-xs sm:text-sm text-neutral-700 font-bengali leading-relaxed">
+                    {t(item.descriptionBn, item.descriptionEn)}
+                  </p>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         </div>
       </Section>
 
-      {/* Future Plans */}
+      {/* Official Recognition & Portals */}
       <Section background="light">
         <div className="max-w-4xl mx-auto">
-          <SectionHeader
-            title={t('বর্তমান কার্যক্রম ও ভবিষ্যৎ পরিকল্পনা', 'Current Activities & Future Plans')}
-            centered={false}
-          />
-          <Card padding="lg">
-            <p className="text-neutral-700 leading-relaxed">
-              {t(
-                '[বর্তমান কার্যক্রম এবং ভবিষ্যৎ পরিকল্পনা সম্পর্কে বিস্তারিত বিবরণ এখানে বসবে - যাচাই সাপেক্ষে]',
-                '[Detailed description about current activities and future plans will be placed here - Pending verification]'
-              )}
-            </p>
+          <Card padding="lg" className="border-primary-100 bg-primary-50/50">
+            <h4 className="text-base font-bold text-primary-950 font-bengali mb-2">
+              সরকারি প্রাতিষ্ঠানিক স্বীকৃতি ও পরিচিতি
+            </h4>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs sm:text-sm text-neutral-700 font-bengali">
+              <div className="p-3 bg-white rounded-lg border border-neutral-200">
+                <span className="font-semibold text-primary-800 block">ইআইআইএন (EIIN):</span>
+                <span className="font-latin text-base font-bold text-neutral-900">{institutionIdentity.eiin}</span>
+              </div>
+              <div className="p-3 bg-white rounded-lg border border-neutral-200">
+                <span className="font-semibold text-primary-800 block">শিক্ষা বোর্ড স্বীকৃতি:</span>
+                <span>বাংলাদেশ মাদরাসা শিক্ষা বোর্ড ও ইসলামিক আরবি বিশ্ববিদ্যালয়</span>
+              </div>
+            </div>
           </Card>
         </div>
       </Section>

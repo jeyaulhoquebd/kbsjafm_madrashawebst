@@ -52,26 +52,54 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
     
-    // Teachers - Public can read published, Admin can manage all
+    // Teachers & Staff - Public can read published, Admin can manage all
     match /teachers/{teacherId} {
       allow read: if isPublished();
       allow create, update, delete: if isAdmin();
     }
+    match /staff/{staffId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
     
-    // Gallery - Public can read published, Admin can manage all
+    // Gallery & Videos - Public can read published, Admin can manage all
     match /gallery/{imageId} {
       allow read: if isPublished();
       allow create, update, delete: if isAdmin();
     }
-    
-    // Resources - Public can read published, Admin can manage all
-    match /resources/{resourceId} {
+    match /galleryAlbums/{albumId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    match /galleryItems/{itemId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    match /videos/{videoId} {
       allow read: if isPublished();
       allow create, update, delete: if isAdmin();
     }
     
-    // Academic Content - Public can read published, Admin can manage all
+    // Resources & Downloads - Public can read published, Admin can manage all
+    match /resources/{resourceId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    match /downloads/{downloadId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    match /studentResources/{resourceId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Academic Content & Programs - Public can read published, Admin can manage all
     match /academicContent/{contentId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    match /academicPrograms/{programId} {
       allow read: if isPublished();
       allow create, update, delete: if isAdmin();
     }
@@ -80,6 +108,38 @@ service cloud.firestore {
     match /results/{resultId} {
       allow read: if isPublished();
       allow create, update, delete: if isAdmin();
+    }
+
+    // News & Events - Public can read published, Admin can manage all
+    match /news/{newsId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    match /events/{eventId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Historical Timeline, Orphanage, Hifzkhana & Admission info
+    match /historicalTimeline/{itemId} {
+      allow read: if isPublished();
+      allow create, update, delete: if isAdmin();
+    }
+    match /orphanage/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /hifzkhana/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /admission/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /institution/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
     }
     
     // ========================================================================
@@ -100,14 +160,8 @@ service cloud.firestore {
       allow create: if 
         isValidString(request.resource.data.studentName, 100) &&
         isValidString(request.resource.data.fatherName, 100) &&
-        isValidString(request.resource.data.motherName, 100) &&
         isValidPhone(request.resource.data.phone) &&
-        isValidEmail(request.resource.data.email) &&
-        isValidString(request.resource.data.appliedClass, 50) &&
-        isValidString(request.resource.data.message, 2000) &&
-        request.resource.data.status == 'new' &&
-        request.resource.data.adminNotes == '' &&
-        request.resource.data.submittedAt is timestamp;
+        request.resource.data.status == 'new';
       
       allow read, update, delete: if isAdmin();
     }
@@ -117,12 +171,9 @@ service cloud.firestore {
       allow create: if 
         isValidString(request.resource.data.name, 100) &&
         isValidEmail(request.resource.data.email) &&
-        isValidPhone(request.resource.data.phone) &&
         isValidString(request.resource.data.subject, 200) &&
         isValidString(request.resource.data.message, 2000) &&
-        request.resource.data.status == 'new' &&
-        request.resource.data.adminNotes == '' &&
-        request.resource.data.submittedAt is timestamp;
+        request.resource.data.status == 'new';
       
       allow read, update, delete: if isAdmin();
     }
@@ -132,11 +183,10 @@ service cloud.firestore {
     // ========================================================================
     
     match /admins/{adminId} {
-      // Only admins can read admin records
-      allow read: if isAdmin();
+      // Authenticated user can read their own admin doc, or admin can read
+      allow read: if isAuthenticated() && (request.auth.uid == adminId || isAdmin());
       
-      // NO ONE can create, update, or delete admin records via client
-      // Admins must be created manually via Firebase Console
+      // Admins cannot elevate themselves or create arbitrary admins from client
       allow create, update, delete: if false;
     }
     

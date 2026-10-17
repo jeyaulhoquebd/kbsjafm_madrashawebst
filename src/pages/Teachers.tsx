@@ -5,7 +5,7 @@ import Breadcrumb from '../components/ui/Breadcrumb';
 import Section from '../components/ui/Section';
 import Card from '../components/ui/Card';
 import EmptyState from '../components/ui/EmptyState';
-import { departments } from '../data/mockData';
+import { departments, demoTeachers } from '../data/mockData';
 import { usePublishedTeachers } from '../hooks/useFirestore';
 import { Link } from 'react-router-dom';
 import { Search, User, Filter, Loader2 } from 'lucide-react';
@@ -18,8 +18,26 @@ export default function Teachers() {
   // Load teachers from Firestore
   const { teachers: firestoreTeachers, loading, error } = usePublishedTeachers();
 
+  const effectiveTeachers = useMemo(() => {
+    if (firestoreTeachers.length > 0) return firestoreTeachers;
+    return demoTeachers.map(t => ({
+      id: t.id,
+      name: t.name,
+      nameEn: t.nameEn,
+      designation: t.designation,
+      designationEn: t.designationEn,
+      department: t.department,
+      departmentEn: t.departmentEn,
+      photoUrl: t.image,
+      displayOrder: 1,
+      status: 'published' as const,
+      createdAt: '',
+      updatedAt: '',
+    }));
+  }, [firestoreTeachers]);
+
   const filteredTeachers = useMemo(() => {
-    return firestoreTeachers.filter((teacher) => {
+    return effectiveTeachers.filter((teacher) => {
       const matchesSearch =
         searchQuery === '' ||
         teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -32,7 +50,7 @@ export default function Teachers() {
 
       return matchesSearch && matchesDepartment;
     });
-  }, [firestoreTeachers, searchQuery, selectedDepartment]);
+  }, [effectiveTeachers, searchQuery, selectedDepartment]);
 
   return (
     <>
@@ -51,8 +69,8 @@ export default function Teachers() {
             </div>
           )}
 
-          {/* Error State */}
-          {error && !loading && (
+          {/* Error State only if no fallback */}
+          {error && !loading && effectiveTeachers.length === 0 && (
             <EmptyState
               icon={<User className="w-8 h-8" />}
               title={t('শিক্ষক তথ্য লোড করতে সমস্যা হয়েছে', 'Failed to load teachers')}
@@ -61,7 +79,7 @@ export default function Teachers() {
           )}
 
           {/* Teachers Content */}
-          {!loading && !error && (
+          {!loading && (effectiveTeachers.length > 0 || !error) && (
             <>
           {/* Search and Filter */}
           <div className="flex flex-col sm:flex-row gap-4 mb-8">

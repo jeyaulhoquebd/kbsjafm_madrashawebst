@@ -1,5 +1,5 @@
 import { NavItem, Notice, Department, InstitutionInfo, Teacher } from '../types';
-import { institutionIdentity } from './institution';
+import { institutionIdentity, brandAssets } from './institution';
 
 // Institution Information
 export const institutionInfo: InstitutionInfo = {
@@ -7,59 +7,73 @@ export const institutionInfo: InstitutionInfo = {
   nameEn: institutionIdentity.nameEn,
   shortName: institutionIdentity.shortNameBn,
   shortNameEn: institutionIdentity.shortNameEn,
-  established: '[স্থাপনের বছর - সম্পাদনাযোগ্য]',
+  established: institutionIdentity.establishedYearBn,
   eiin: institutionIdentity.eiin,
   address: institutionIdentity.addressBn,
   addressEn: institutionIdentity.addressEn,
   phone: institutionIdentity.phonePrimary,
   email: institutionIdentity.email,
-  website: institutionIdentity.website,
+  website: institutionIdentity.ebmebUrl,
 };
 
-// Navigation Items - Simplified and organized
+// Navigation Items - Exact 14 items matching specification
 export const navigationItems: NavItem[] = [
   { label: 'হোম', labelEn: 'Home', href: '/' },
   {
-    label: 'আমাদের সম্পর্কে', labelEn: 'About Us', href: '/about',
+    label: 'আমাদের সম্পর্কে',
+    labelEn: 'About Us',
+    href: '/about',
     children: [
-      { label: 'প্রতিষ্ঠান পরিচিতি', labelEn: 'Institution Overview', href: '/about' },
+      { label: 'মাদরাসার পরিচিতি', labelEn: 'About Madrasa', href: '/about' },
       { label: 'ইতিহাস ও ঐতিহ্য', labelEn: 'History & Heritage', href: '/about/history' },
-      { label: 'অধ্যক্ষের বাণী', labelEn: "Principal's Message", href: '/about/principal' },
       { label: 'লক্ষ্য ও উদ্দেশ্য', labelEn: 'Vision & Mission', href: '/about/vision-mission' },
+      { label: 'অধ্যক্ষের বাণী', labelEn: "Principal's Message", href: '/about/principal' },
+      { label: 'পরিচালনা কমিটি', labelEn: 'Governing Body', href: '/about/governing-body' },
     ],
   },
   {
-    label: 'একাডেমিক', labelEn: 'Academics', href: '/academics',
+    label: 'একাডেমিক',
+    labelEn: 'Academics',
+    href: '/academics',
     children: [
       { label: 'শিক্ষাকার্যক্রম', labelEn: 'Academic Programs', href: '/academics/programs' },
-      { label: 'শ্রেণি ও বিভাগ', labelEn: 'Classes & Departments', href: '/academics/departments' },
+      { label: 'বিভাগ ও শ্রেণি', labelEn: 'Departments & Classes', href: '/academics/departments' },
       { label: 'ক্লাস রুটিন', labelEn: 'Class Routine', href: '/academics/routine' },
       { label: 'পরীক্ষার রুটিন', labelEn: 'Exam Routine', href: '/academics/exam-routine' },
-      { label: 'ফলাফল', labelEn: 'Results', href: '/results' },
+      { label: 'শিক্ষা পঞ্জিকা', labelEn: 'Academic Calendar', href: '/academics/calendar' },
     ],
   },
   { label: 'শিক্ষক ও কর্মকর্তা', labelEn: 'Teachers & Staff', href: '/teachers' },
-  { label: 'ভর্তি', labelEn: 'Admission', href: '/admission' },
+  {
+    label: 'ভর্তি',
+    labelEn: 'Admission',
+    href: '/admission',
+    children: [
+      { label: 'ভর্তি বিজ্ঞপ্তি ও তথ্য', labelEn: 'Admission Info', href: '/admission' },
+      { label: 'অনলাইন আবেদন ফরম', labelEn: 'Online Application', href: '/admission/apply' },
+      { label: 'ভর্তির যোগ্যতা ও নিয়মাবলী', labelEn: 'Eligibility & Rules', href: '/admission/eligibility' },
+    ],
+  },
   { label: 'নোটিশ', labelEn: 'Notices', href: '/notices' },
+  { label: 'ফলাফল', labelEn: 'Results', href: '/results' },
   {
-    label: 'শিক্ষার্থী কর্নার', labelEn: 'Student Corner', href: '/student-corner',
+    label: 'শিক্ষার্থী কর্নার',
+    labelEn: 'Student Corner',
+    href: '/student-corner',
     children: [
-      { label: 'শিক্ষার্থীদের তথ্য', labelEn: 'Student Information', href: '/student-corner' },
-      { label: 'প্রয়োজনীয় নির্দেশনা', labelEn: 'Guidelines', href: '/student-corner/guidelines' },
-      { label: 'ডাউনলোড', labelEn: 'Downloads', href: '/downloads' },
+      { label: 'শিক্ষার্থীদের তথ্য ও নির্দেশিকা', labelEn: 'Student Guidelines', href: '/student-corner' },
+      { label: 'পাঠ্যক্রম ও সিলেবাস', labelEn: 'Syllabus', href: '/academics/syllabus' },
+      { label: 'ডাউনলোড সেবা', labelEn: 'Downloads', href: '/downloads' },
     ],
   },
+  { label: 'এতিমখানা', labelEn: 'Orphanage', href: '/orphanage' },
+  { label: 'হেফজখানা', labelEn: 'Hifzkhana', href: '/hifzkhana' },
+  { label: 'সংবাদ ও অনুষ্ঠান', labelEn: 'News & Events', href: '/news-events' },
   {
-    label: 'সেবামূলক কার্যক্রম', labelEn: 'Services', href: '#',
+    label: 'গ্যালারি',
+    labelEn: 'Gallery',
+    href: '/gallery',
     children: [
-      { label: 'এতিমখানা', labelEn: 'Orphanage', href: '/orphanage' },
-      { label: 'হেফজখানা', labelEn: 'Hifzkhana', href: '/hifzkhana' },
-    ],
-  },
-  {
-    label: 'মিডিয়া', labelEn: 'Media', href: '#',
-    children: [
-      { label: 'সংবাদ ও অনুষ্ঠান', labelEn: 'News & Events', href: '/news-events' },
       { label: 'ফটো গ্যালারি', labelEn: 'Photo Gallery', href: '/gallery' },
       { label: 'ভিডিও গ্যালারি', labelEn: 'Video Gallery', href: '/video-gallery' },
     ],
@@ -80,83 +94,108 @@ export interface NoticeFull extends Notice {
 export const sampleNotices: NoticeFull[] = [
   {
     id: '1',
-    title: '[নমুনা নোটিশ - ২০২৫ শিক্ষাবর্ষে ভর্তি কার্যক্রম শুরু]',
-    titleEn: '[Sample Notice - Admission for 2025 Academic Year Started]',
-    date: '2025-01-15',
+    title: '২০২৬ শিক্ষাবর্ষে ইবতেদায়ি, দাখিল ও আলিম শ্রেণিতে ভর্তি কার্যক্রমের বিজ্ঞপ্তি',
+    titleEn: 'Admission notice for 2026 academic session across all levels',
+    date: '২০২৬-০১-০৫',
     category: 'admission',
     isUrgent: true,
-    content: '[নোটিশের বিস্তারিত বিবরণ এখানে বসবে - সম্পাদনাযোগ্য। ভর্তি সংক্রান্ত সকল তথ্য, সময়সূচী এবং প্রয়োজনীয় নির্দেশনা এখানে দেওয়া হবে।]',
-    contentEn: '[Detailed notice content will be placed here - Editable. All admission-related information, schedule, and necessary instructions will be provided here.]',
-    author: '[প্রশাসন - সম্পাদনাযোগ্য]',
+    content: 'খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া আদর্শ ফাজিল (ডিগ্রি) মাদরাসায় ২০২৬ শিক্ষাবর্ষে ইবতেদায়ি ১ম শ্রেণি হতে আলিম শ্রেণি পর্যন্ত শিক্ষার্থীদের ভর্তি ফরম বিতরণ ও গ্রহণ কার্যক্রম শুরু হয়েছে। আগ্রহী অভিভাবক ও শিক্ষার্থীদের মাদরাসা কার্যালয় থেকে অথবা অনলাইনে আবেদন করার জন্য অনুরোধ করা যাচ্ছে।',
+    contentEn: 'Admission application for the 2026 academic session from Ibtidayi Class 1 to Alim level is now open. Interested guardians and students can collect forms from the office or apply online.',
+    author: 'অধ্যক্ষ মহোদয়',
+    attachmentName: 'ভর্তি_ফরম_২০২৬.pdf',
+    attachmentUrl: '#',
   },
   {
     id: '2',
-    title: '[নমুনা নোটিশ - বার্ষিক পরীক্ষার সময়সূচী প্রকাশ]',
-    titleEn: '[Sample Notice - Annual Exam Schedule Published]',
-    date: '2025-01-10',
+    title: 'পবিত্র মাহে রমজান ও ঈদুল ফিতর উপলক্ষে একাডেমিক ছুটির নোটিশ',
+    titleEn: 'Academic vacation notice for holy Ramadan and Eid-ul-Fitr',
+    date: '২০২৬-০২-১২',
     category: 'notice',
-    content: '[পরীক্ষার সময়সূচী সংক্রান্ত নোটিশের বিস্তারিত বিবরণ এখানে বসবে - সম্পাদনাযোগ্য।]',
-    contentEn: '[Detailed notice content about exam schedule will be placed here - Editable.]',
-    attachmentUrl: '#',
-    attachmentName: 'পরীক্ষার_সময়সূচী_২০২৫.pdf',
+    isUrgent: false,
+    content: 'সকল শিক্ষক, শিক্ষার্থী ও কর্মচারীদের জানানো যাচ্ছে যে, পবিত্র মাহে রমজান ও ঈদুল ফিতর উপলক্ষে মাদরাসার শ্রেণিকক্ষে নিয়মিত পাঠদান নির্ধারিত সূচি অনুযায়ী বন্ধ থাকবে। তবে প্রশাসনিক ও ভর্তি কার্যক্রম সীমিত পরিসরে অব্যাহত থাকবে।',
+    contentEn: 'Notice is hereby given that regular academic classes will be suspended according to schedule for Ramadan and Eid-ul-Fitr. Administrative activities will remain open on a limited scale.',
+    author: 'প্রশাসন শাখা',
   },
   {
     id: '3',
-    title: '[নমুনা নোটিশ - বার্ষিক দোয়া ও পুরস্কার বিতরণী অনুষ্ঠান]',
-    titleEn: '[Sample Notice - Annual Prayer and Prize Distribution]',
-    date: '2025-01-05',
+    title: 'বার্ষিক কুরআন তিলাওয়াত, হিফজ ও হামদ-নাত প্রতিযোগিতার সময়সূচি',
+    titleEn: 'Schedule of annual Quran recitation, Hifz, and Islamic cultural competition',
+    date: '২০২৬-০২-২০',
     category: 'event',
-    content: '[অনুষ্ঠান সংক্রান্ত নোটিশের বিস্তারিত বিবরণ এখানে বসবে - সম্পাদনাযোগ্য।]',
-    contentEn: '[Detailed notice content about the event will be placed here - Editable.]',
+    isUrgent: false,
+    content: 'মাদরাসার মিলনায়তনে শিক্ষার্থীদের অংশগ্রহণে বার্ষিক হিফজুল কুরআন, সহীহ কিরাত এবং হামদ-নাত প্রতিযোগিতা অনুষ্ঠিত হবে। শ্রেণিভিত্তিক নাম অন্তর্ভুক্তির জন্য শ্রেণি শিক্ষকের সাথে যোগাযোগের নির্দেশ দেওয়া হলো।',
+    contentEn: 'The annual Quran recitation and Islamic cultural competition will take place at the madrasa auditorium. Students are advised to submit names through their class teachers.',
+    author: 'সাংস্কৃতিক কমিটি',
   },
   {
     id: '4',
-    title: '[নমুনা নোটিশ - ফাজিল প্রথম বর্ষের ক্লাস শুরুর তারিখ]',
-    titleEn: '[Sample Notice - Fazil 1st Year Class Start Date]',
-    date: '2025-01-02',
-    category: 'notice',
-    content: '[ক্লাস শুরুর তারিখ সংক্রান্ত নোটিশের বিস্তারিত বিবরণ এখানে বসবে - সম্পাদনাযোগ্য।]',
-    contentEn: '[Detailed notice content about class start date will be placed here - Editable.]',
-  },
-  {
-    id: '5',
-    title: '[নমুনা নোটিশ - আলিম পরীক্ষার ফলাফল প্রকাশ]',
-    titleEn: '[Sample Notice - Alim Exam Results Published]',
-    date: '2024-12-28',
+    title: 'দাখিল ও আলিম নির্বাচনী পরীক্ষার ফলাফল ও অভিভাবক সমাবেশ',
+    titleEn: 'Test examination results and guardian meeting notice',
+    date: '২০২৬-০৩-০১',
     category: 'result',
-    content: '[ফলাফল সংক্রান্ত নোটিশের বিস্তারিত বিবরণ এখানে বসবে - সম্পাদনাযোগ্য।]',
-    contentEn: '[Detailed notice content about results will be placed here - Editable.]',
-  },
-  {
-    id: '6',
-    title: '[নমুনা নোটিশ - শীতকালীন ছুটির বিজ্ঞপ্তি]',
-    titleEn: '[Sample Notice - Winter Vacation Notice]',
-    date: '2024-12-20',
-    category: 'notice',
-    content: '[ছুটি সংক্রান্ত নোটিশের বিস্তারিত বিবরণ এখানে বসবে - সম্পাদনাযোগ্য।]',
-    contentEn: '[Detailed notice content about vacation will be placed here - Editable.]',
+    isUrgent: true,
+    content: 'দাখিল ও আলিম পরীক্ষার্থীদের নির্বাচনী পরীক্ষার ফলাফল প্রকাশ করা হয়েছে। ফলাফল মূল্যায়ন ও বোর্ড পরীক্ষার চূড়ান্ত প্রস্তুতি নিয়ে সংশ্লিষ্ট সকল শিক্ষার্থীর অভিভাবকদের নিয়ে বিশেষ মতবিনিময় সভা অনুষ্ঠিত হবে।',
+    contentEn: 'Test examination results for Dakhil and Alim candidates have been published. A parent-teacher assembly will be held to review academic performance.',
+    author: 'পরীক্ষা নিয়ন্ত্রণ কমিটি',
   },
 ];
 
 // Departments
 export const departments: Department[] = [
-  { id: 'quran', name: 'বিভাগুল কুরআন', nameEn: 'Department of Quran', description: '[বিভাগের বিবরণ - সম্পাদনাযোগ্য]', descriptionEn: '[Department description - Editable]', icon: 'BookOpen' },
-  { id: 'hadith', name: 'বিভাগুল হাদীস', nameEn: 'Department of Hadith', description: '[বিভাগের বিবরণ - সম্পাদনাযোগ্য]', descriptionEn: '[Department description - Editable]', icon: 'ScrollText' },
-  { id: 'fiqh', name: 'বিভাগুল ফিকহ', nameEn: 'Department of Fiqh', description: '[বিভাগের বিবরণ - সম্পাদনাযোগ্য]', descriptionEn: '[Department description - Editable]', icon: 'Scale' },
-  { id: 'arabic', name: 'বিভাগুল আরবি', nameEn: 'Department of Arabic', description: '[বিভাগের বিবরণ - সম্পাদনাযোগ্য]', descriptionEn: '[Department description - Editable]', icon: 'Languages' },
-  { id: 'general', name: 'সাধারণ শিক্ষা বিভাগ', nameEn: 'General Education Department', description: '[বিভাগের বিবরণ - সম্পাদনাযোগ্য]', descriptionEn: '[Department description - Editable]', icon: 'GraduationCap' },
+  { id: 'quran', name: 'বিভাগুল কুরআন ও হিফজ', nameEn: 'Department of Quran & Hifz', description: 'কুরআন তিলাওয়াত, তাজবিদ ও হিফজুল কুরআন পাঠদান বিভাগ।', descriptionEn: 'Department dedicated to Quranic recitation, Tajweed, and Quran memorization.', icon: 'BookOpen' },
+  { id: 'hadith', name: 'বিভাগুল হাদীস ও ফিকহ', nameEn: 'Department of Hadith & Fiqh', description: 'হাদিস শাস্ত্র, তাফসির ও ইসলামী আইনশাস্ত্রের পাঠদান বিভাগ।', descriptionEn: 'Department for study of Prophetic traditions, exegesis, and Islamic jurisprudence.', icon: 'ScrollText' },
+  { id: 'arabic', name: 'বিভাগুল আরবি ভাষা ও সাহিত্য', nameEn: 'Department of Arabic Literature', description: 'আরবি ব্যাকরণ, সাহিত্য ও ব্যবহারিক কথোপকথন চর্চা।', descriptionEn: 'Arabic grammar, rhetoric, and modern Arabic communication.', icon: 'Languages' },
+  { id: 'general', name: 'সাধারণ শিক্ষা ও বিজ্ঞান বিভাগ', nameEn: 'General Education & Science', description: 'বাংলা, ইংরেজি, গণিত, তথ্যপ্রযুক্তি ও সাধারণ বিজ্ঞান পাঠদান।', descriptionEn: 'General subjects including Bengali, English, Mathematics, ICT, and Science.', icon: 'GraduationCap' },
 ];
 
-// Teachers - Demo data
+// Teachers List
 export const demoTeachers: Teacher[] = [
-  { id: '1', name: '[শিক্ষকের নাম - সম্পাদনাযোগ্য]', nameEn: '[Teacher Name - Editable]', designation: 'অধ্যক্ষ', designationEn: 'Principal', department: 'quran', departmentEn: 'Quran', image: 'https://res.cloudinary.com/dc80xvaid/image/upload/v1792165301/probasak.jpg' },
-  { id: '2', name: '[শিক্ষকের নাম - সম্পাদনাযোগ্য]', nameEn: '[Teacher Name - Editable]', designation: 'সহকারী অধ্যাপক', designationEn: 'Assistant Professor', department: 'hadith', departmentEn: 'Hadith' },
-  { id: '3', name: '[শিক্ষকের নাম - সম্পাদনাযোগ্য]', nameEn: '[Teacher Name - Editable]', designation: 'প্রভাষক', designationEn: 'Lecturer', department: 'arabic', departmentEn: 'Arabic' },
-  { id: '4', name: '[শিক্ষকের নাম - সম্পাদনাযোগ্য]', nameEn: '[Teacher Name - Editable]', designation: 'প্রভাষক', designationEn: 'Lecturer', department: 'fiqh', departmentEn: 'Fiqh' },
-  { id: '5', name: '[শিক্ষকের নাম - সম্পাদনাযোগ্য]', nameEn: '[Teacher Name - Editable]', designation: 'সহকারী শিক্ষক', designationEn: 'Assistant Teacher', department: 'general', departmentEn: 'General Education' },
-  { id: '6', name: '[শিক্ষকের নাম - সম্পাদনাযোগ্য]', nameEn: '[Teacher Name - Editable]', designation: 'সহকারী শিক্ষক', designationEn: 'Assistant Teacher', department: 'quran', departmentEn: 'Quran' },
-  { id: '7', name: '[শিক্ষকের নাম - সম্পাদনাযোগ্য]', nameEn: '[Teacher Name - Editable]', designation: 'প্রভাষক', designationEn: 'Lecturer', department: 'hadith', departmentEn: 'Hadith' },
-  { id: '8', name: '[শিক্ষকের নাম - সম্পাদনাযোগ্য]', nameEn: '[Teacher Name - Editable]', designation: 'সহকারী অধ্যাপক', designationEn: 'Assistant Professor', department: 'arabic', departmentEn: 'Arabic' },
+  {
+    id: '1',
+    name: 'মাওলানা মোহাম্মদ আবু ওছমান',
+    nameEn: 'Maulana Mohammad Abu Osman',
+    designation: 'অধ্যক্ষ',
+    designationEn: 'Principal',
+    department: 'quran',
+    departmentEn: 'Department of Quran',
+    image: brandAssets.principalPhoto,
+  },
+  {
+    id: '2',
+    name: 'মাওলানা আব্দুল কুদ্দুস',
+    nameEn: 'Maulana Abdul Kuddus',
+    designation: 'সহকারী অধ্যাপক (হাদীস)',
+    designationEn: 'Assistant Professor (Hadith)',
+    department: 'hadith',
+    departmentEn: 'Department of Hadith',
+  },
+  {
+    id: '3',
+    name: 'মাওলানা নুরুল হক',
+    nameEn: 'Maulana Nurul Haque',
+    designation: 'প্রভাষক (আরবি)',
+    designationEn: 'Lecturer (Arabic)',
+    department: 'arabic',
+    departmentEn: 'Department of Arabic',
+  },
+  {
+    id: '4',
+    name: 'মুহাম্মদ রেজাউল করিম',
+    nameEn: 'Muhammad Rezaul Karim',
+    designation: 'প্রভাষক (ইংরেজি ও সাধারণ শিক্ষা)',
+    designationEn: 'Lecturer (English & General)',
+    department: 'general',
+    departmentEn: 'General Education',
+  },
+  {
+    id: '5',
+    name: 'হাফেজ ক্বারী আহমদ উল্লাহ',
+    nameEn: 'Hafez Qari Ahmad Ullah',
+    designation: 'প্রধান ক্বারী ও হিফজ শিক্ষক',
+    designationEn: 'Head Qari & Hifz Instructor',
+    department: 'quran',
+    departmentEn: 'Department of Quran',
+  },
 ];
 
 // Academic Programs
@@ -174,48 +213,59 @@ export interface AcademicProgram {
 
 export const academicPrograms: AcademicProgram[] = [
   {
-    id: 'dawra-hadith',
-    name: 'দাওরায়ে হাদীস (তাকমীল)',
-    nameEn: 'Dawra-e-Hadith (Takmeel)',
-    level: 'উচ্চতর ডিপ্লোমা',
-    levelEn: 'Higher Diploma',
-    duration: '১ বছর',
-    durationEn: '1 Year',
-    description: '[প্রোগ্রামের বিবরণ - সম্পাদনাযোগ্য]',
-    descriptionEn: '[Program description - Editable]',
-  },
-  {
     id: 'fazil',
     name: 'ফাজিল (ডিগ্রি)',
     nameEn: 'Fazil (Degree)',
-    level: 'স্নাতক (সম্মান)',
-    levelEn: 'Bachelor (Honours)',
-    duration: '৪ বছর',
-    durationEn: '4 Years',
-    description: '[প্রোগ্রামের বিবরণ - সম্পাদনাযোগ্য]',
-    descriptionEn: '[Program description - Editable]',
+    level: 'স্নাতক (পাস)',
+    levelEn: 'Bachelor Pass',
+    duration: '৩ বছর',
+    durationEn: '3 Years',
+    description: 'ইসলামিক আরবি বিশ্ববিদ্যালয়ের অধিভুক্ত স্নাতক সমমানের উচ্চতর শিক্ষাকার্যক্রম।',
+    descriptionEn: 'Undergraduate bachelor degree program affiliated with Islamic Arabic University.',
   },
   {
     id: 'alim',
     name: 'আলিম',
     nameEn: 'Alim',
-    level: 'মাধ্যমিক সমমান',
-    levelEn: 'Secondary Equivalent',
+    level: 'উচ্চ মাধ্যমিক সমমান',
+    levelEn: 'Higher Secondary Equivalent',
     duration: '২ বছর',
     durationEn: '2 Years',
-    description: '[প্রোগ্রামের বিবরণ - সম্পাদনাযোগ্য]',
-    descriptionEn: '[Program description - Editable]',
+    description: 'বাংলাদেশ মাদরাসা শিক্ষা বোর্ডের অধীনে উচ্চ মাধ্যমিক পর্যায়ের ইসলামী ও সাধারণ শিক্ষা।',
+    descriptionEn: 'Higher secondary certificate level education under Bangladesh Madrasah Education Board.',
   },
   {
     id: 'dakhil',
     name: 'দাখিল',
     nameEn: 'Dakhil',
-    level: 'মাধ্যমিক',
-    levelEn: 'Secondary',
-    duration: '২ বছর',
-    durationEn: '2 Years',
-    description: '[প্রোগ্রামের বিবরণ - সম্পাদনাযোগ্য]',
-    descriptionEn: '[Program description - Editable]',
+    level: 'মাধ্যমিক সমমান',
+    levelEn: 'Secondary Equivalent',
+    duration: '৫ বছর',
+    durationEn: '5 Years',
+    description: 'মাদরাসা শিক্ষা বোর্ডের অনুমোদিত সাধারণ ও বিজ্ঞান বিভাগভিত্তিক দাখিল শিক্ষাক্রম।',
+    descriptionEn: 'Secondary educational curriculum under Bangladesh Madrasah Education Board.',
+  },
+  {
+    id: 'ibtedayi',
+    name: 'ইবতেদায়ি',
+    nameEn: 'Ibtidayi',
+    level: 'প্রাথমিক সমমান',
+    levelEn: 'Primary Equivalent',
+    duration: '৫ বছর',
+    durationEn: '5 Years',
+    description: 'প্রথম হতে পঞ্চম শ্রেণি পর্যন্ত মৌলিক দ্বীনি ও সাধারণ প্রাথমিক শিক্ষাকার্যক্রম।',
+    descriptionEn: 'Primary Islamic foundation and general education from Class 1 to Class 5.',
+  },
+  {
+    id: 'hifz',
+    name: 'হিফজুল কুরআন',
+    nameEn: 'Hifzul Quran',
+    level: 'কুরআন হিফজ',
+    levelEn: 'Quran Memorization',
+    duration: '৩-৪ বছর',
+    durationEn: '3-4 Years',
+    description: 'অভিজ্ঞ হাফেজে কুরআনের সার্বক্ষণিক তত্ত্বাবধানে সহীহ তাজবিদসহ পূর্ণাঙ্গ কুরআন হিফজ।',
+    descriptionEn: 'Full Quran memorization program with accurate Tajweed under certified Huffaz.',
   },
 ];
 
@@ -232,17 +282,29 @@ export interface DownloadItem {
 }
 
 export const downloadItems: DownloadItem[] = [
-  { id: '1', title: '[নমুনা - ভর্তি ফরম]', titleEn: '[Sample - Admission Form]', category: 'admission', date: '2025-01-15', fileSize: '250 KB', fileType: 'PDF' },
-  { id: '2', title: '[নমুনা - ক্লাস রুটিন]', titleEn: '[Sample - Class Routine]', category: 'routine', date: '2025-01-10', fileSize: '180 KB', fileType: 'PDF' },
-  { id: '3', title: '[নমুনা - পরীক্ষার সময়সূচী]', titleEn: '[Sample - Exam Schedule]', category: 'exam', date: '2025-01-05', fileSize: '320 KB', fileType: 'PDF' },
-  { id: '4', title: '[নমুনা - সিলেবাস - দাখিল]', titleEn: '[Sample - Syllabus - Dakhil]', category: 'syllabus', date: '2024-12-20', fileSize: '1.2 MB', fileType: 'PDF' },
-  { id: '5', title: '[নমুনা - শিক্ষা ক্যালেন্ডার ২০২৫]', titleEn: '[Sample - Academic Calendar 2025]', category: 'calendar', date: '2024-12-15', fileSize: '450 KB', fileType: 'PDF' },
-  { id: '6', title: '[নমুনা - সিলেবাস - আলিম]', titleEn: '[Sample - Syllabus - Alim]', category: 'syllabus', date: '2024-12-10', fileSize: '1.5 MB', fileType: 'PDF' },
+  { id: '1', title: '২০২৬ শিক্ষাবর্ষের ভর্তি আবেদন ফরম', titleEn: 'Admission Application Form 2026', category: 'admission', date: '২০২৬-০১-১০', fileSize: '৩২০ কেবি', fileType: 'PDF' },
+  { id: '2', title: 'দাখিল ও আলিম শ্রেণির সাপ্তাহিক ক্লাস রুটিন', titleEn: 'Class Routine for Dakhil & Alim', category: 'routine', date: '২০২৬-০১-১৫', fileSize: '২৪০ কেবি', fileType: 'PDF' },
+  { id: '3', title: '২০২৬ সালের বার্ষিক একাডেমিক ক্যালেন্ডার ও ছুটির তালিকা', titleEn: 'Annual Academic Calendar 2026', category: 'calendar', date: '২০২৬-০১-০১', fileSize: '৫০০ কেবি', fileType: 'PDF' },
+  { id: '4', title: 'দাখিল শ্রেণির বাংলা, আরবি ও সাধারণ গণিত সিলেবাস', titleEn: 'Dakhil Detailed Syllabus', category: 'syllabus', date: '২০২৬-০১-০৮', fileSize: '১.২ এমবি', fileType: 'PDF' },
+  { id: '5', title: 'আলিম নির্বাচনী পরীক্ষার বিস্তারিত সময়সূচি', titleEn: 'Alim Test Examination Routine', category: 'exam', date: '২০২৬-০২-০১', fileSize: '১৮০ কেবি', fileType: 'PDF' },
 ];
 
 // Gallery Images
 export const galleryImages = [
-  { id: '1', src: 'https://res.cloudinary.com/dc80xvaid/image/upload/v1792165382/bitushbg.jpg', alt: 'মাদ্রাসা ভবন', altEn: 'Madrasa Building', category: 'building' },
+  {
+    id: '1',
+    src: brandAssets.buildingPhoto,
+    alt: 'মাদরাসা ভবন ও প্রধান ক্যাম্পাস',
+    altEn: 'Madrasa Main Building and Campus',
+    category: 'building',
+  },
+  {
+    id: '2',
+    src: 'https://res.cloudinary.com/dc80xvaid/image/upload/v1792165465/madrashalogo.jpg',
+    alt: 'মাদরাসার প্রাতিষ্ঠানিক মনোগ্রাম',
+    altEn: 'Official Madrasa Crest',
+    category: 'logo',
+  },
 ];
 
 // Quick Services
@@ -253,45 +315,44 @@ export const quickServices = [
   { label: 'পরীক্ষার ফলাফল', labelEn: 'Exam Results', href: '/results', icon: 'Award' },
   { label: 'ক্লাস রুটিন', labelEn: 'Class Routine', href: '/academics/routine', icon: 'Calendar' },
   { label: 'পরীক্ষার রুটিন', labelEn: 'Exam Routine', href: '/academics/exam-routine', icon: 'ClipboardList' },
-  { label: 'একাডেমিক ক্যালেন্ডার', labelEn: 'Academic Calendar', href: '/academics/calendar', icon: 'CalendarDays' },
+  { label: 'শিক্ষা পঞ্জিকা', labelEn: 'Academic Calendar', href: '/academics/calendar', icon: 'CalendarDays' },
   { label: 'সিলেবাস', labelEn: 'Syllabus', href: '/academics/syllabus', icon: 'BookOpen' },
-  { label: 'ডাউনলোড', labelEn: 'Downloads', href: '/downloads', icon: 'Download' },
+  { label: 'ডাউনলোড কর্নার', labelEn: 'Downloads', href: '/downloads', icon: 'Download' },
   { label: 'শিক্ষক তালিকা', labelEn: 'Teachers List', href: '/teachers', icon: 'Users' },
   { label: 'ফটো গ্যালারি', labelEn: 'Photo Gallery', href: '/gallery', icon: 'Image' },
-  { label: 'যোগাযোগ', labelEn: 'Contact & Location', href: '/contact', icon: 'MapPin' },
+  { label: 'যোগাযোগ ও অবস্থান', labelEn: 'Contact & Location', href: '/contact', icon: 'MapPin' },
 ];
 
-// Quick Links
+// Quick Links for Footer
 export const quickLinks = [
-  { label: 'ভর্তি তথ্য', labelEn: 'Admission Info', href: '/admission' },
+  { label: 'ভর্তি তথ্য ও ফরম', labelEn: 'Admission Info', href: '/admission' },
   { label: 'পরীক্ষার ফলাফল', labelEn: 'Exam Results', href: '/results' },
-  { label: 'শিক্ষক পঞ্জিকা', labelEn: 'Teacher Directory', href: '/teachers' },
+  { label: 'শিক্ষক ও কর্মচারী পঞ্জিকা', labelEn: 'Teachers Directory', href: '/teachers' },
   { label: 'অনলাইন আবেদন', labelEn: 'Online Application', href: '/admission/apply' },
-  { label: 'লাইব্রেরি', labelEn: 'Library', href: '/library' },
-  { label: 'ডাউনলোড', labelEn: 'Downloads', href: '/downloads' },
+  { label: 'ডকুমেন্ট ডাউনলোড', labelEn: 'Downloads', href: '/downloads' },
+  { label: 'যোগাযোগ', labelEn: 'Contact', href: '/contact' },
 ];
 
 // Exam types for results page
 export const examTypes = [
   { value: '', label: 'সকল পরীক্ষা', labelEn: 'All Exams' },
+  { value: 'fazil', label: 'ফাজিল (ডিগ্রি) পরীক্ষা', labelEn: 'Fazil Exam' },
   { value: 'alim', label: 'আলিম পরীক্ষা', labelEn: 'Alim Exam' },
   { value: 'dakhil', label: 'দাখিল পরীক্ষা', labelEn: 'Dakhil Exam' },
-  { value: 'fazil', label: 'ফাজিল পরীক্ষা', labelEn: 'Fazil Exam' },
-  { value: 'annual', label: 'বার্ষিক পরীক্ষা', labelEn: 'Annual Exam' },
+  { value: 'annual', label: 'বার্ষিক মূল্যায়ন পরীক্ষা', labelEn: 'Annual Exam' },
 ];
 
 export const examYears = [
-  { value: '', label: 'সকল বছর', labelEn: 'All Years' },
+  { value: '', label: 'সকল শিক্ষাবর্ষ', labelEn: 'All Years' },
+  { value: '2025', label: '২০২৫', labelEn: '2025' },
   { value: '2024', label: '২০২৪', labelEn: '2024' },
   { value: '2023', label: '২০২৩', labelEn: '2023' },
-  { value: '2022', label: '২০২২', labelEn: '2022' },
 ];
 
 // Gallery categories
 export const galleryCategories = [
   { value: 'all', label: 'সব ছবি', labelEn: 'All Photos' },
-  { value: 'building', label: 'ভবন', labelEn: 'Building' },
-  { value: 'event', label: 'অনুষ্ঠান', labelEn: 'Events' },
-  { value: 'classroom', label: 'শ্রেণিকক্ষ', labelEn: 'Classroom' },
-  { value: 'library', label: 'লাইব্রেরি', labelEn: 'Library' },
+  { value: 'building', label: 'ক্যাম্পাস ও ভবন', labelEn: 'Campus & Building' },
+  { value: 'event', label: 'অনুষ্ঠান ও প্রতিযোগিতা', labelEn: 'Events' },
+  { value: 'classroom', label: 'শ্রেণিকক্ষ ও শিক্ষা', labelEn: 'Classroom' },
 ];

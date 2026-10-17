@@ -1,13 +1,13 @@
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { quickServices, galleryImages } from '../data/mockData';
-import { institutionIdentity, brandAssets, principalInfo } from '../data/institution';
-import { useLatestNotices, usePublishedTeachers, usePublishedGallery, useSiteSettings } from '../hooks/useFirestore';
+import { quickServices, galleryImages, sampleNotices, demoTeachers, academicPrograms } from '../data/mockData';
+import { institutionIdentity, brandAssets, principalInfo, orphanageData, hifzkhanaData, getContactLinks } from '../data/institution';
+import { useLatestNotices, usePublishedTeachers, usePublishedGallery } from '../hooks/useFirestore';
 import Section, { SectionHeader } from '../components/ui/Section';
 import Card from '../components/ui/Card';
 import Notice from '../components/ui/Notice';
 import Button from '../components/ui/Button';
 import SafeImage from '../components/ui/SafeImage';
-import { Link } from 'react-router-dom';
 import {
   FileText,
   Calendar,
@@ -24,20 +24,26 @@ import {
   BookOpen,
   Loader2,
   Users,
+  GraduationCap,
+  Phone,
+  Mail,
+  Heart,
+  Sparkles,
+  ExternalLink,
 } from 'lucide-react';
 
 const serviceIconMap: Record<string, React.ReactNode> = {
-  FileText: <FileText className="w-6 h-6" />,
-  Calendar: <Calendar className="w-6 h-6" />,
-  ClipboardList: <ClipboardList className="w-6 h-6" />,
-  Award: <Award className="w-6 h-6" />,
-  Bell: <Bell className="w-6 h-6" />,
-  Download: <Download className="w-6 h-6" />,
-  CalendarDays: <CalendarDays className="w-6 h-6" />,
-  MapPin: <MapPin className="w-6 h-6" />,
-  BookOpen: <BookOpen className="w-6 h-6" />,
-  Users: <Users className="w-6 h-6" />,
-  Image: <ImageIcon className="w-6 h-6" />,
+  FileText: <FileText className="w-5 h-5 sm:w-6 sm:h-6" />,
+  Calendar: <Calendar className="w-5 h-5 sm:w-6 sm:h-6" />,
+  ClipboardList: <ClipboardList className="w-5 h-5 sm:w-6 sm:h-6" />,
+  Award: <Award className="w-5 h-5 sm:w-6 sm:h-6" />,
+  Bell: <Bell className="w-5 h-5 sm:w-6 sm:h-6" />,
+  Download: <Download className="w-5 h-5 sm:w-6 sm:h-6" />,
+  CalendarDays: <CalendarDays className="w-5 h-5 sm:w-6 sm:h-6" />,
+  MapPin: <MapPin className="w-5 h-5 sm:w-6 sm:h-6" />,
+  BookOpen: <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />,
+  Users: <Users className="w-5 h-5 sm:w-6 sm:h-6" />,
+  Image: <ImageIcon className="w-5 h-5 sm:w-6 sm:h-6" />,
 };
 
 export default function Home() {
@@ -45,14 +51,27 @@ export default function Home() {
   const { notices, loading: noticesLoading } = useLatestNotices(4);
   const { teachers, loading: teachersLoading } = usePublishedTeachers();
   const { images: galleryData, loading: galleryLoading } = usePublishedGallery();
-  const { settings, loading: settingsLoading } = useSiteSettings();
 
-  // Use Firestore data or fallback to defaults
-  const displayNotices = notices.length > 0 ? notices : [];
-  const displayTeachers = teachers.length > 0 ? teachers.slice(0, 4) : [];
-  
-  // Normalize gallery data to handle both Firestore and mock data formats
-  const normalizedGallery = galleryData.length > 0 
+  // Use Firestore data or fallback to clean verified defaults
+  const displayNotices = notices.length > 0 ? notices : sampleNotices.slice(0, 4);
+  const displayTeachers = teachers.length > 0
+    ? teachers.slice(0, 4)
+    : demoTeachers.slice(0, 4).map(t => ({
+        id: t.id,
+        name: t.name,
+        nameEn: t.nameEn,
+        designation: t.designation,
+        designationEn: t.designationEn,
+        department: t.department,
+        departmentEn: t.departmentEn,
+        photoUrl: t.image,
+        displayOrder: 1,
+        status: 'published' as const,
+        createdAt: '',
+        updatedAt: '',
+      }));
+
+  const normalizedGallery = galleryData.length > 0
     ? galleryData.map(img => ({
         id: img.id,
         src: (img as any).imageUrl || (img as any).src || '',
@@ -61,522 +80,608 @@ export default function Home() {
         category: img.category,
       }))
     : galleryImages;
-  
-  const displayGallery = normalizedGallery;
 
   return (
     <>
-      {/* SECTION 4: HERO BANNER */}
-      <section className="relative overflow-hidden min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] flex items-center">
-        {/* Background Image */}
+      {/* =========================================================================
+          SECTION A: HERO BANNER
+          ========================================================================= */}
+      <section className="relative overflow-hidden min-h-[480px] sm:min-h-[540px] lg:min-h-[620px] flex items-center">
+        {/* Madrasa Building Photograph from Cloudinary */}
         <div className="absolute inset-0">
           <SafeImage
             src={brandAssets.buildingPhoto}
-            alt={t('মাদ্রাসা ভবন', 'Madrasa Building')}
-            className="w-full h-full object-cover"
+            alt={t(institutionIdentity.nameBn, institutionIdentity.nameEn)}
+            className="w-full h-full object-cover object-center"
             loading="eager"
           />
-          {/* Dark Green Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-950/95 via-primary-900/80 to-primary-800/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 via-transparent to-primary-950/30" />
+          {/* Subtle Emerald Green Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-950/95 via-primary-950/85 to-primary-900/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary-950/80 via-transparent to-primary-950/40" />
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24 w-full">
-          <div className="max-w-2xl">
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 w-full">
+          <div className="max-w-3xl">
             {/* Bismillah */}
-            <p className="text-gold-300 text-base sm:text-lg lg:text-xl mb-3 sm:mb-4 font-bengali-serif opacity-90">
+            <p className="text-gold-300 text-sm sm:text-base lg:text-lg mb-2 sm:mb-3 font-bengali-serif opacity-95 tracking-wide">
               بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
             </p>
 
-            {/* Official Motto */}
-            <p className="text-gold-300 text-sm sm:text-base lg:text-lg mb-2 sm:mb-3 leading-relaxed font-medium">
-              {t(institutionIdentity.mottoBn, institutionIdentity.mottoEn)}
-            </p>
+            {/* Official Bengali Motto Headline */}
+            <div className="inline-block px-3 py-1 rounded bg-gold-500/20 border border-gold-400/40 text-gold-300 text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
+              {t('জ্ঞান, বিশ্বাস ও সেবা', 'Knowledge, Faith & Service')}
+            </div>
 
-            {/* Alternative Tagline */}
-            <p className="text-primary-200 text-xs sm:text-sm lg:text-base mb-2 sm:mb-3 leading-relaxed italic">
-              {t(institutionIdentity.taglineBn, institutionIdentity.taglineEn)}
-            </p>
-
-            {/* Short Educational Message */}
-            <p className="text-primary-200 text-xs sm:text-sm lg:text-base mb-2 sm:mb-3 leading-relaxed">
-              {t(
-                'দ্বীনি ও আধুনিক শিক্ষার সমন্বয়ে জ্ঞান, নৈতিকতা ও মানবিক মূল্যবোধসম্পন্ন প্রজন্ম গড়ে তোলার প্রত্যয়ে।',
-                'With the determination to build a generation with knowledge, ethics and human values through the combination of religious and modern education.'
-              )}
-            </p>
-
-            {/* Full Institution Name */}
-            <h1 className="text-xl sm:text-2xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight font-bengali mb-3 sm:mb-4">
-              {t(
-                institutionIdentity.nameBn,
-                institutionIdentity.nameEn
-              )}
-              <br />
-              <span className="text-gold-300 text-lg sm:text-xl lg:text-3xl xl:text-4xl">
-                {t('আদর্শ ফাজিল (ডিগ্রি) মাদ্রাসা', 'Adarsha Fazil (Degree) Madrasa')}
-              </span>
+            {/* Full Official Institution Name */}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight font-bengali mb-3 sm:mb-4">
+              {t(institutionIdentity.nameBn, institutionIdentity.nameEn)}
             </h1>
 
-            {/* Supporting Description */}
-            <p className="text-primary-100 text-xs sm:text-sm lg:text-base xl:text-lg mt-3 sm:mt-4 mb-6 sm:mb-8 leading-relaxed max-w-xl">
-              {t(
-                'এই প্রতিষ্ঠান কুরআন, হাদীস, ফিকহ ও আধুনিক শিক্ষার সমন্বয়ে শিক্ষার্থীদের জ্ঞানার্জন ও চরিত্র গঠনে নিবেদিত।',
-                'This institution is dedicated to nurturing students through a combination of Quran, Hadith, Fiqh, and modern education.'
-              )}
+            {/* Official Description */}
+            <p className="text-primary-100 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl mb-6 sm:mb-8 font-bengali">
+              {t(institutionIdentity.descriptionBn, institutionIdentity.descriptionEn)}
             </p>
 
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 sm:gap-3">
-              <Link to="/about" className="sm:inline-block">
-                <Button variant="gold" size="lg" icon={<ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />} className="w-full sm:w-auto text-sm sm:text-base">
-                  {t('আমাদের সম্পর্কে জানুন', 'Learn About Us')}
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3">
+              <Link to="/about">
+                <Button
+                  variant="gold"
+                  size="lg"
+                  icon={<ArrowRight className="w-4 h-4" />}
+                  className="w-full sm:w-auto font-semibold shadow-lg"
+                >
+                  {t('মাদরাসা সম্পর্কে জানুন', 'About the Madrasa')}
                 </Button>
               </Link>
-              <Link to="/admission" className="sm:inline-block">
+
+              <Link to="/admission">
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-full sm:w-auto border-white/30 text-white hover:bg-white/10 hover:border-white/50 text-sm sm:text-base"
+                  className="w-full sm:w-auto border-gold-400/80 text-gold-200 hover:bg-gold-500/20 hover:border-gold-300 font-semibold"
                 >
-                  {t('ভর্তি তথ্য', 'Admission Info')}
+                  {t('ভর্তি তথ্য দেখুন', 'View Admission Info')}
                 </Button>
               </Link>
-              <Link to="/notices" className="sm:inline-block">
+
+              <Link to="/contact">
                 <Button
                   variant="ghost"
                   size="lg"
-                  className="w-full sm:w-auto text-primary-100 hover:text-white hover:bg-white/10 text-sm sm:text-base"
-                  icon={<Bell className="w-4 h-4 sm:w-5 sm:h-5" />}
+                  className="w-full sm:w-auto text-primary-100 hover:text-white hover:bg-white/10"
                 >
-                  {t('সর্বশেষ নোটিশ', 'Latest Notices')}
+                  {t('যোগাযোগ করুন', 'Contact Us')}
                 </Button>
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-            <path d="M0 40L1440 40L1440 20C1440 20 1200 0 720 0C240 0 0 20 0 20L0 40Z" fill="white" />
+        {/* Decorative Wave Divider */}
+        <div className="absolute bottom-0 left-0 right-0 pointer-events-none">
+          <svg viewBox="0 0 1440 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 text-neutral-50 preserve-3d">
+            <path d="M0 32L1440 32L1440 12C1440 12 1100 0 720 0C340 0 0 12 0 12L0 32Z" fill="#F7FAF8" />
           </svg>
         </div>
       </section>
 
-      {/* SECTION 5: NOTICE BOARD AND MADRASA INTRODUCTION */}
+      {/* =========================================================================
+          SECTION B: IMPORTANT INFORMATION CARDS
+          ========================================================================= */}
+      <section className="bg-primary-50 py-6 sm:py-8 border-b border-primary-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+            {/* Card 1: EIIN */}
+            <div className="bg-white p-4 rounded-xl border border-primary-200/80 shadow-sm text-center">
+              <span className="text-xs text-primary-700 font-semibold uppercase tracking-wider block mb-1">
+                {t('ইআইআইএন (EIIN)', 'EIIN')}
+              </span>
+              <p className="text-xl sm:text-2xl font-bold text-primary-950 font-latin">
+                {institutionIdentity.eiin}
+              </p>
+              <p className="text-[11px] text-neutral-500 mt-0.5">মাদরাসা শিক্ষা বোর্ড</p>
+            </div>
+
+            {/* Card 2: Establishment Year */}
+            <div className="bg-white p-4 rounded-xl border border-primary-200/80 shadow-sm text-center">
+              <span className="text-xs text-primary-700 font-semibold uppercase tracking-wider block mb-1">
+                {t('প্রতিষ্ঠা সন', 'Established')}
+              </span>
+              <p className="text-xl sm:text-2xl font-bold text-primary-950 font-bengali">
+                {institutionIdentity.establishedYearBn} খ্রি.
+              </p>
+              <p className="text-[11px] text-neutral-500 mt-0.5">১ জানুয়ারি ১৯৯১</p>
+            </div>
+
+            {/* Card 3: Address */}
+            <div className="bg-white p-4 rounded-xl border border-primary-200/80 shadow-sm text-center">
+              <span className="text-xs text-primary-700 font-semibold uppercase tracking-wider block mb-1">
+                {t('ঠিকানা ও অবস্থান', 'Location')}
+              </span>
+              <p className="text-sm sm:text-base font-bold text-primary-950 font-bengali truncate">
+                আরামবাগ, খাগড়াছড়ি সদর
+              </p>
+              <p className="text-[11px] text-neutral-500 mt-0.5">বায়তুশ শরফ রোড</p>
+            </div>
+
+            {/* Card 4: Contact Number */}
+            <div className="bg-white p-4 rounded-xl border border-primary-200/80 shadow-sm text-center">
+              <span className="text-xs text-primary-700 font-semibold uppercase tracking-wider block mb-1">
+                {t('যোগাযোগ নম্বর', 'Helpline')}
+              </span>
+              <a
+                href={getContactLinks.phone(institutionIdentity.phonePrimary)}
+                className="text-base sm:text-xl font-bold text-primary-700 hover:text-primary-900 font-latin block transition-colors"
+              >
+                {institutionIdentity.phonePrimary}
+              </a>
+              <p className="text-[11px] text-neutral-500 mt-0.5">দাপ্তরিক তথ্যসেবা</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION C & D: NOTICE BOARD & MADRASA INTRODUCTION
+          ========================================================================= */}
       <Section background="white">
         <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
-          {/* Left Column - Notices */}
+          {/* Left Column: Notices */}
           <div className="lg:col-span-3">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-5">
               <SectionHeader
                 title={t('সর্বশেষ নোটিশ', 'Latest Notices')}
+                subtitle={t('মাদরাসার সাম্প্রতিক বিজ্ঞপ্তি ও ঘোষণা', 'Recent announcements and circulars')}
                 centered={false}
                 className="mb-0"
               />
               <Link
                 to="/notices"
-                className="text-sm text-primary-700 hover:text-primary-800 font-medium flex items-center gap-1 shrink-0"
+                className="text-sm text-primary-700 hover:text-primary-800 font-semibold flex items-center gap-1 shrink-0"
               >
-                {t('সব দেখুন', 'View All')}
+                {t('সকল নোটিশ দেখুন', 'View All')}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
             <div className="space-y-3">
               {noticesLoading ? (
-                <div className="flex items-center justify-center py-8">
+                <div className="flex items-center justify-center py-10 bg-primary-50/50 rounded-xl">
                   <Loader2 className="w-6 h-6 animate-spin text-primary-600" />
                 </div>
               ) : displayNotices.length > 0 ? (
                 displayNotices.map((notice) => (
-                  <Link key={notice.id} to={`/notices/${notice.id}`} className="block">
+                  <Link key={notice.id} to={`/notices/${notice.id}`} className="block group">
                     <Notice notice={notice} />
                   </Link>
                 ))
               ) : (
-                <p className="text-center py-8 text-neutral-500">
-                  {t('কোনো নোটিশ নেই', 'No notices available')}
-                </p>
+                <div className="p-8 text-center bg-neutral-50 rounded-xl border border-neutral-200 text-neutral-600 font-bengali">
+                  {t('বর্তমানে কোনো প্রকাশিত নোটিশ নেই।', 'No published notices available.')}
+                </div>
               )}
             </div>
           </div>
 
-          {/* Right Column - Madrasa Introduction */}
-          <div className="lg:col-span-2">
+          {/* Right Column: About Madrasa Introduction */}
+          <div className="lg:col-span-2 flex flex-col">
             <SectionHeader
-              title={t('মাদ্রাসা পরিচিতি', 'About Madrasa')}
+              title={t('মাদরাসা পরিচিতি', 'About the Madrasa')}
+              subtitle={t('দ্বীনি ও আধুনিক শিক্ষার সমন্বয়', 'Blend of Islamic & Modern Education')}
               centered={false}
-              className="mb-6"
+              className="mb-5"
             />
 
-            <Card padding="lg" className="h-full">
-              {/* Quran Image */}
-              <div className="mb-4 rounded-lg overflow-hidden bg-primary-50 flex items-center justify-center h-40">
-                <div className="text-center">
-                  <BookOpen className="w-12 h-12 text-primary-300 mx-auto mb-2" />
-                  <p className="text-xs text-neutral-400">
-                    {t('[কুরআনের ছবি - সম্পাদনাযোগ্য]', '[Quran Image - Editable]')}
-                  </p>
+            <Card padding="lg" className="flex-1 flex flex-col justify-between border-primary-100 bg-gradient-to-br from-white to-primary-50/30">
+              <div>
+                <div className="mb-4 rounded-xl overflow-hidden shadow-sm h-40 relative">
+                  <img
+                    src={brandAssets.buildingPhoto}
+                    alt={institutionIdentity.nameBn}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-950/70 to-transparent flex items-end p-3">
+                    <p className="text-white text-xs font-semibold">
+                      {institutionIdentity.shortNameBn}
+                    </p>
+                  </div>
                 </div>
+
+                <p className="text-neutral-700 text-sm sm:text-base leading-relaxed font-bengali mb-4">
+                  {t(
+                    'খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া আদর্শ ফাজিল (ডিগ্রি) মাদরাসা পার্বত্য অঞ্চলের একটি সুপরিচিত ইসলামী শিক্ষাপ্রতিষ্ঠান। কুরআন-হাদিসের বিশুদ্ধ পাঠ, সুন্নাহভিত্তিক চরিত্রগঠন ও আধুনিক জাতীয় শিক্ষাক্রমের যুগোপযোগী সমন্বয়ে শিক্ষার্থীদের গড়ে তোলাই এই প্রতিষ্ঠানের মূল লক্ষ্য।',
+                    'Khagrachhari Baitush Sharaf Jabbaria Adarsha Fazil (Degree) Madrasa is an established Islamic institution in the region. Its mission is to nurture students through pure Islamic values, character building, and the national educational curriculum.'
+                  )}
+                </p>
               </div>
 
-              <p className="text-neutral-700 text-sm leading-relaxed mb-4">
-                {t(
-                  '[মাদ্রাসার সংক্ষিপ্ত পরিচিতি এখানে বসবে। এই প্রতিষ্ঠানটি খাগড়াছড়ি জেলায় অবস্থিত একটি স্বনামধন্য ইসলামী শিক্ষা প্রতিষ্ঠান যা দ্বীনী ও আধুনিক শিক্ষার সমন্বয়ে শিক্ষার্থীদের গড়ে তুলছে।]',
-                  '[Brief introduction of the madrasa will be placed here. This institution is a renowned Islamic educational institution in Khagrachhari district, nurturing students with a blend of religious and modern education.]'
-                )}
-              </p>
-
-              <Link to="/about">
-                <Button variant="primary" size="sm" icon={<ArrowRight className="w-4 h-4" />}>
-                  {t('আরও জানুন', 'Learn More')}
-                </Button>
-              </Link>
+              <div className="pt-2">
+                <Link to="/about">
+                  <Button variant="primary" size="sm" icon={<ArrowRight className="w-4 h-4" />}>
+                    {t('বিস্তারিত ইতিহাস ও পরিচিতি', 'Learn More About Us')}
+                  </Button>
+                </Link>
+              </div>
             </Card>
           </div>
         </div>
       </Section>
 
-      {/* SECTION 6: QUICK SERVICES */}
+      {/* =========================================================================
+          SECTION E: PRINCIPAL'S MESSAGE
+          ========================================================================= */}
       <Section background="light">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-center bg-white rounded-2xl p-6 sm:p-8 lg:p-10 shadow-sm border border-neutral-200">
+            {/* Principal Photo */}
+            <div className="lg:col-span-1 flex flex-col items-center text-center">
+              <div className="relative mb-4">
+                <div className="w-48 h-48 sm:w-56 sm:h-56 rounded-2xl overflow-hidden shadow-md border-4 border-primary-100">
+                  <SafeImage
+                    src={brandAssets.principalPhoto}
+                    alt={t(principalInfo.nameBn, principalInfo.nameEn)}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    fallbackText="অধ্যক্ষ"
+                  />
+                </div>
+                <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-full bg-gold-400 text-primary-950 flex items-center justify-center font-bold text-xs shadow">
+                  ★
+                </div>
+              </div>
+
+              <h3 className="text-lg sm:text-xl font-bold text-primary-950 font-bengali">
+                {t(principalInfo.nameBn, principalInfo.nameEn)}
+              </h3>
+              <p className="text-sm text-gold-600 font-semibold mt-0.5">
+                {t(principalInfo.designationBn, principalInfo.designationEn)}
+              </p>
+              <p className="text-xs text-neutral-500 mt-0.5">
+                {institutionIdentity.shortNameBn}
+              </p>
+            </div>
+
+            {/* Principal Message Content */}
+            <div className="lg:col-span-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-gold-600 mb-1 block">
+                {t('অধ্যক্ষের বাণী', "Principal's Message")}
+              </span>
+              <h2 className="text-xl sm:text-2xl font-bold text-primary-950 font-bengali mb-4">
+                {t('শিক্ষার্থীদের প্রতি দিকনির্দেশনা ও শুভেচ্ছা', 'Guidance and Blessings for Students')}
+              </h2>
+
+              <div className="bg-primary-50/70 rounded-xl p-5 border border-primary-100 mb-5">
+                <p className="text-neutral-700 text-sm sm:text-base leading-relaxed font-bengali line-clamp-6">
+                  {t(principalInfo.messageBn, principalInfo.messageEn)}
+                </p>
+              </div>
+
+              <Link to="/about/principal">
+                <Button variant="outline" size="sm" icon={<ArrowRight className="w-4 h-4" />}>
+                  {t('সম্পূর্ণ বাণী পড়ুন', 'Read Full Message')}
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* =========================================================================
+          SECTION F: ACADEMIC PROGRAMS
+          ========================================================================= */}
+      <Section background="white">
         <SectionHeader
-          title={t('দ্রুত সেবাসমূহ', 'Quick Services')}
-          subtitle={t(
-            'প্রয়োজনীয় সেবা এক ক্লিকেই পান',
-            'Access essential services with a single click'
-          )}
+          title={t('আমাদের শিক্ষাকার্যক্রম', 'Our Academic Programs')}
+          subtitle={t('ইবতেদায়ি থেকে ফাজিল (ডিগ্রি) এবং হিফজুল কুরআন বিভাগ', 'From Ibtidayi to Fazil Degree and Quran Memorization')}
         />
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-          {quickServices.map((service, index) => (
-            <Link key={index} to={service.href}>
-              <Card hover padding="lg" className="text-center h-full group">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary-100 text-primary-700 mb-3 group-hover:bg-primary-200 transition-colors">
-                  {serviceIconMap[service.icon] || <Star className="w-6 h-6" />}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {academicPrograms.map((prog) => (
+            <Card key={prog.id} hover padding="lg" className="flex flex-col justify-between border-neutral-200 h-full">
+              <div>
+                <div className="w-12 h-12 rounded-xl bg-primary-100 text-primary-800 flex items-center justify-center mb-4">
+                  <GraduationCap className="w-6 h-6" />
                 </div>
-                <h3 className="text-sm lg:text-base font-semibold text-primary-900 group-hover:text-primary-700 transition-colors font-bengali">
-                  {t(service.label, service.labelEn)}
+                <h3 className="text-lg font-bold text-primary-950 font-bengali mb-1">
+                  {t(prog.name, prog.nameEn)}
                 </h3>
-              </Card>
-            </Link>
+                <span className="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary-50 text-primary-700 mb-3 border border-primary-100">
+                  {t(prog.level, prog.levelEn)} • {t(prog.duration, prog.durationEn)}
+                </span>
+                <p className="text-neutral-600 text-sm leading-relaxed font-bengali">
+                  {t(prog.description, prog.descriptionEn)}
+                </p>
+              </div>
+
+              <div className="pt-4 mt-4 border-t border-neutral-100">
+                <Link
+                  to="/academics/programs"
+                  className="text-xs font-bold text-primary-700 hover:text-primary-800 flex items-center gap-1"
+                >
+                  <span>{t('বিস্তারিত কারিকুলাম', 'View Curriculum')}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </Card>
           ))}
         </div>
       </Section>
 
-      {/* SECTION 7: PRINCIPAL INTRODUCTION */}
-      <Section background="white">
-        <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-center">
-          {/* Principal Photo */}
-          <div className="lg:col-span-1 flex justify-center lg:justify-start">
-            <div className="relative">
-              <div className="w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-2xl overflow-hidden shadow-xl border-4 border-primary-100">
-                <SafeImage
-                  src={brandAssets.principalPhoto}
-                  alt={t('অধ্যক্ষের ছবি', "Principal's Photo")}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  fallbackText={t('ছবি', 'Photo')}
-                />
-              </div>
-              {/* Decorative accent */}
-              <div className="absolute -bottom-3 -right-3 w-20 h-20 rounded-xl bg-gold-200/50 -z-10" />
-              <div className="absolute -top-3 -left-3 w-16 h-16 rounded-xl bg-primary-200/50 -z-10" />
-            </div>
-          </div>
-
-          {/* Principal Message */}
-          <div className="lg:col-span-2">
-            <div className="mb-4">
-              <p className="text-gold-600 text-sm font-medium uppercase tracking-wider mb-1">
-                {t('অধ্যক্ষের বাণী', "Principal's Message")}
-              </p>
-              <h2 className="text-2xl lg:text-3xl font-bold text-primary-900 font-bengali">
-                {t(principalInfo.nameBn, principalInfo.nameEn)}
-              </h2>
-              <p className="text-neutral-600 mt-1">
-                {t(principalInfo.designationBn, principalInfo.designationEn)}
-              </p>
-              {principalInfo.status === 'draft' && (
-                <p className="text-amber-600 text-xs mt-1 italic">
-                  {t('[খসড়া বার্তা - প্রতিষ্ঠানের অনুমোদন সাপেক্ষে]', '[Draft message - Pending institutional approval]')}
-                </p>
-              )}
-            </div>
-
-            <div className="bg-primary-50 rounded-xl p-6 border border-primary-100 mb-6">
-              <p className="text-neutral-700 leading-relaxed text-sm lg:text-base whitespace-pre-line">
-                {t(principalInfo.messageDraftBn, principalInfo.messageDraftEn)}
-              </p>
-            </div>
-
-            <Link to="/about/principal">
-              <Button variant="outline" icon={<ArrowRight className="w-4 h-4" />}>
-                {t('সম্পূর্ণ বাণী পড়ুন', 'Read Full Message')}
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </Section>
-
-      {/* SECTION 8: TEACHERS */}
+      {/* =========================================================================
+          SECTION G: TEACHERS & FACULTY HIGHLIGHTS
+          ========================================================================= */}
       <Section background="light">
         <div className="flex items-center justify-between mb-8">
           <SectionHeader
-            title={t('আমাদের শিক্ষকবৃন্দ', 'Our Teachers')}
-            subtitle={t(
-              'অভিজ্ঞ ও নিবেদিতপ্রাণ শিক্ষকমণ্ডলী',
-              'Experienced and dedicated teaching faculty'
-            )}
+            title={t('আমাদের সম্মানিত শিক্ষকবৃন্দ', 'Honorable Faculty')}
+            subtitle={t('অভিজ্ঞ ও নিবেদিতপ্রাণ শিক্ষকমণ্ডলী', 'Experienced and dedicated teaching faculty')}
             centered={false}
             className="mb-0"
           />
           <Link
             to="/teachers"
-            className="hidden sm:flex items-center gap-1 text-sm text-primary-700 hover:text-primary-800 font-medium shrink-0"
+            className="hidden sm:flex items-center gap-1 text-sm font-semibold text-primary-700 hover:text-primary-800"
           >
-            {t('সব দেখুন', 'View All')}
+            {t('সকল শিক্ষক দেখুন', 'View All Faculty')}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
           {teachersLoading ? (
-            <div className="col-span-full flex items-center justify-center py-8">
-              <Loader2 className="w-6 h-6 animate-spin text-primary-600" />
+            <div className="col-span-full py-12 flex justify-center">
+              <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
             </div>
-          ) : displayTeachers.length > 0 ? (
+          ) : (
             displayTeachers.map((teacher) => (
-              <Link key={teacher.id} to={`/teachers/${teacher.id}`}>
-                <Card hover padding="none" className="overflow-hidden h-full">
-                  {/* Teacher Photo */}
-                  <div className="aspect-square bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center overflow-hidden">
+              <Link key={teacher.id} to={`/teachers/${teacher.id}`} className="block group">
+                <Card hover padding="none" className="overflow-hidden h-full border-neutral-200">
+                  <div className="aspect-[4/5] bg-neutral-100 flex items-center justify-center overflow-hidden relative">
                     {teacher.photoUrl ? (
                       <SafeImage
                         src={teacher.photoUrl}
-                        alt={t(teacher.name, teacher.nameEn)}
-                        className="w-full h-full object-cover"
+                        alt={teacher.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         loading="lazy"
+                        fallbackText="শিক্ষক"
                       />
                     ) : (
-                      <div className="text-center">
-                        <User className="w-12 h-12 text-primary-400 mx-auto mb-2" />
-                        <p className="text-xs text-primary-500 px-2">
-                          {t('[ছবি - সম্পাদনাযোগ্য]', '[Photo - Editable]')}
-                        </p>
+                      <div className="text-center p-4">
+                        <User className="w-12 h-12 text-primary-400 mx-auto mb-1" />
+                        <span className="text-xs text-neutral-400">ছবি সংরক্ষিত</span>
                       </div>
                     )}
                   </div>
-                  {/* Teacher Info */}
-                  <div className="p-4 text-center">
-                    <h3 className="text-sm font-semibold text-primary-900 truncate font-bengali">
+                  <div className="p-3.5 text-center">
+                    <h4 className="text-sm font-bold text-primary-950 font-bengali truncate group-hover:text-primary-700 transition-colors">
                       {t(teacher.name, teacher.nameEn)}
-                    </h3>
-                    <p className="text-xs text-neutral-600 mt-1 truncate">
+                    </h4>
+                    <p className="text-xs text-gold-600 font-medium truncate mt-0.5">
                       {t(teacher.designation, teacher.designationEn)}
                     </p>
-                    <p className="text-xs text-primary-600 mt-0.5">
+                    <p className="text-[11px] text-neutral-500 truncate mt-0.5">
                       {t(teacher.department, teacher.departmentEn)}
                     </p>
                   </div>
                 </Card>
               </Link>
             ))
-          ) : (
-            <div className="col-span-full text-center py-8 text-neutral-500">
-              {t('কোনো শিক্ষক তথ্য নেই', 'No teacher information available')}
-            </div>
           )}
-        </div>
-
-        {/* Mobile View All */}
-        <div className="mt-6 text-center sm:hidden">
-          <Link to="/teachers">
-            <Button variant="outline" icon={<ArrowRight className="w-4 h-4" />}>
-              {t('সব শিক্ষক দেখুন', 'View All Teachers')}
-            </Button>
-          </Link>
         </div>
       </Section>
 
-      {/* SECTION 9: PHOTO GALLERY */}
+      {/* =========================================================================
+          SECTION H: QUICK SERVICES DIRECTORY
+          ========================================================================= */}
+      <Section background="white">
+        <SectionHeader
+          title={t('দ্রুত সেবাসমূহ', 'Quick Services')}
+          subtitle={t('শিক্ষার্থী, অভিভাবক ও শুভানুধ্যায়ীদের জন্য প্রয়োজনীয় লিংক', 'Essential services and portals in one click')}
+        />
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
+          {quickServices.map((service, index) => (
+            <Link key={index} to={service.href}>
+              <Card hover padding="md" className="text-center h-full group border-neutral-200">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary-100 text-primary-800 mb-2.5 group-hover:bg-primary-700 group-hover:text-white transition-all duration-200">
+                  {serviceIconMap[service.icon] || <Star className="w-5 h-5" />}
+                </div>
+                <h4 className="text-sm font-semibold text-primary-950 group-hover:text-primary-700 transition-colors font-bengali">
+                  {t(service.label, service.labelEn)}
+                </h4>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </Section>
+
+      {/* =========================================================================
+          SECTION I: ORPHANAGE & HIFZKHANA SECTION
+          ========================================================================= */}
+      <Section background="light">
+        <SectionHeader
+          title={t('সেবামূলক কার্যক্রম', 'Humanitarian & Quranic Services')}
+          subtitle={t('সুবিধাবঞ্চিত শিশুদের আশ্রয় ও পবিত্র কুরআন হিফজের পবিত্র অঙ্গন', 'Sanctuary for orphans and noble Quran memorization department')}
+        />
+
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+          {/* Orphanage Card */}
+          <Card hover padding="lg" className="border-primary-100 flex flex-col justify-between h-full bg-white">
+            <div>
+              <div className="flex items-center gap-3.5 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center shrink-0">
+                  <Heart className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-primary-950 font-bengali">
+                    {t(orphanageData.titleBn, orphanageData.titleEn)}
+                  </h3>
+                  <span className="text-xs text-primary-700 font-medium">মানবিক আশ্রয় ও শিক্ষা সহায়তা</span>
+                </div>
+              </div>
+
+              <p className="text-neutral-700 text-sm leading-relaxed font-bengali mb-4">
+                {t(orphanageData.descriptionBn, orphanageData.descriptionEn)}
+              </p>
+
+              <div className="space-y-1.5 mb-6 text-xs text-neutral-600 font-bengali">
+                {orphanageData.objectivesBn.slice(0, 3).map((item, idx) => (
+                  <p key={idx} className="flex items-start gap-2">
+                    <span className="text-primary-600 font-bold">•</span>
+                    <span>{item}</span>
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            <Link to="/orphanage">
+              <Button variant="outline" size="sm" icon={<ArrowRight className="w-4 h-4" />}>
+                {t('এতিমখানা কার্যক্রম বিস্তারিত', 'Learn About Orphanage')}
+              </Button>
+            </Link>
+          </Card>
+
+          {/* Hifzkhana Card */}
+          <Card hover padding="lg" className="border-gold-200 flex flex-col justify-between h-full bg-white">
+            <div>
+              <div className="flex items-center gap-3.5 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-gold-100 text-gold-700 flex items-center justify-center shrink-0">
+                  <BookOpen className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-primary-950 font-bengali">
+                    {t(hifzkhanaData.titleBn, hifzkhanaData.titleEn)}
+                  </h3>
+                  <span className="text-xs text-gold-700 font-medium">সহীহ তাজবিদ ও পূর্ণাঙ্গ হিফজ</span>
+                </div>
+              </div>
+
+              <p className="text-neutral-700 text-sm leading-relaxed font-bengali mb-4">
+                {t(hifzkhanaData.descriptionBn, hifzkhanaData.descriptionEn)}
+              </p>
+
+              <div className="space-y-1.5 mb-6 text-xs text-neutral-600 font-bengali">
+                {hifzkhanaData.featuresBn.map((item, idx) => (
+                  <p key={idx} className="flex items-start gap-2">
+                    <span className="text-gold-600 font-bold">•</span>
+                    <span>{item}</span>
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            <Link to="/hifzkhana">
+              <Button variant="gold" size="sm" icon={<ArrowRight className="w-4 h-4" />}>
+                {t('হেফজখানা কার্যক্রম বিস্তারিত', 'Learn About Hifzkhana')}
+              </Button>
+            </Link>
+          </Card>
+        </div>
+      </Section>
+
+      {/* =========================================================================
+          SECTION J: PHOTO GALLERY PREVIEW
+          ========================================================================= */}
       <Section background="white">
         <div className="flex items-center justify-between mb-8">
           <SectionHeader
             title={t('ফটো গ্যালারি', 'Photo Gallery')}
-            subtitle={t(
-              'আমাদের প্রতিষ্ঠানের মুহূর্তগুলো',
-              'Moments from our institution'
-            )}
+            subtitle={t('মাদরাসার ক্যাম্পাস ও কার্যক্রমের চিত্রমালা', 'Campus glimpses and moments')}
             centered={false}
             className="mb-0"
           />
           <Link
             to="/gallery"
-            className="hidden sm:flex items-center gap-1 text-sm text-primary-700 hover:text-primary-800 font-medium shrink-0"
+            className="hidden sm:flex items-center gap-1 text-sm font-semibold text-primary-700 hover:text-primary-800"
           >
-            {t('সব ছবি দেখুন', 'View All Photos')}
+            {t('সম্পূর্ণ গ্যালারি দেখুন', 'View Full Gallery')}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
         {galleryLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-6 h-6 animate-spin text-primary-600" />
+          <div className="py-12 flex justify-center">
+            <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
           </div>
-        ) : displayGallery.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-            {/* Main large image */}
-            <div className="col-span-2 sm:col-span-2 lg:col-span-2 row-span-2 rounded-xl overflow-hidden shadow-md group cursor-pointer">
-              <div className="relative h-full min-h-[200px] sm:min-h-[280px] lg:min-h-[360px]">
-                <img
-                  src={displayGallery[0].src}
-                  alt={t(displayGallery[0].alt, displayGallery[0].altEn)}
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {normalizedGallery.map((img) => (
+              <div key={img.id} className="relative aspect-[16/10] rounded-xl overflow-hidden shadow-sm group">
+                <SafeImage
+                  src={img.src}
+                  alt={t(img.alt, img.altEn)}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
+                  fallbackText="গ্যালারি"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3 sm:p-4">
-                  <p className="text-white text-xs sm:text-sm font-medium">
-                    {t(displayGallery[0].alt, displayGallery[0].altEn)}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary-950/80 via-transparent to-transparent opacity-90 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                  <p className="text-white text-xs sm:text-sm font-semibold font-bengali">
+                    {t(img.alt, img.altEn)}
                   </p>
                 </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </Section>
+
+      {/* =========================================================================
+          SECTION K: CONTACT & MAP OVERVIEW
+          ========================================================================= */}
+      <section className="bg-gradient-to-r from-primary-950 via-primary-900 to-primary-950 text-white py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-gold-400 mb-2 block">
+                {t('যোগাযোগের ঠিকানা', 'Contact Information')}
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold font-bengali text-white mb-4">
+                {t('যে কোনো প্রয়োজনে আমাদের সাথে যোগাযোগ করুন', 'Get in Touch with Us for Any Inquiries')}
+              </h2>
+              <p className="text-primary-200 text-sm leading-relaxed mb-6 font-bengali">
+                ভর্তি তথ্য, একাডেমিক কার্যক্রম কিংবা এতিমখানা ও হেফজখানা সংক্রান্ত যে কোনো তথ্যের জন্য সরাসরি মাদরাসা কার্যালয়ে যোগাযোগ করতে পারেন অথবা নিচের নম্বরে ফোন করতে পারেন।
+              </p>
+
+              <div className="space-y-3 text-sm">
+                <p className="flex items-center gap-3 text-primary-100">
+                  <MapPin className="w-5 h-5 text-gold-400 shrink-0" />
+                  <span>{institutionIdentity.addressBn}</span>
+                </p>
+                <p className="flex items-center gap-3 text-primary-100">
+                  <Phone className="w-5 h-5 text-gold-400 shrink-0" />
+                  <a href={getContactLinks.phone(institutionIdentity.phonePrimary)} className="hover:text-gold-300 font-latin">
+                    {institutionIdentity.phonePrimary}
+                  </a>
+                </p>
+                <p className="flex items-center gap-3 text-primary-100">
+                  <Mail className="w-5 h-5 text-gold-400 shrink-0" />
+                  <a href={getContactLinks.email(institutionIdentity.email)} className="hover:text-gold-300 font-latin">
+                    {institutionIdentity.email}
+                  </a>
+                </p>
               </div>
             </div>
 
-            {/* Smaller images */}
-            {displayGallery.slice(1, 5).map((image, index) => (
-              <div key={image.id || index} className="rounded-xl overflow-hidden shadow-md group cursor-pointer">
-                <div className="relative aspect-square bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                  {image.src ? (
-                    <img
-                      src={image.src}
-                      alt={t(image.alt, image.altEn)}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="text-center p-2">
-                      <ImageIcon className="w-8 h-8 text-primary-300 mx-auto mb-1" />
-                      <p className="text-xs text-primary-400">
-                        {t('[ছবি - সম্পাদনাযোগ্য]', '[Photo - Editable]')}
-                      </p>
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary-950/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                    <p className="text-white text-xs font-medium">
-                      {t(image.alt, image.altEn)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12 text-neutral-500">
-            {t('কোনো ছবি নেই', 'No images available')}
-          </div>
-        )}
-
-        {/* Mobile View All */}
-        <div className="mt-6 text-center sm:hidden">
-          <Link to="/gallery">
-            <Button variant="outline" icon={<ArrowRight className="w-4 h-4" />}>
-              {t('সব ছবি দেখুন', 'View All Photos')}
-            </Button>
-          </Link>
-        </div>
-      </Section>
-
-      {/* Orphanage & Hifzkhana Section */}
-      <Section background="light">
-        <SectionHeader
-          title={t('সেবা কার্যক্রম', 'Service Activities')}
-          subtitle={t('এতিমখানা ও হেফজখানা', 'Orphanage & Hifzkhana')}
-        />
-        <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-          {/* Orphanage Card */}
-          <Link to="/orphanage">
-            <Card hover padding="lg" className="h-full group">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="shrink-0 w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center group-hover:bg-primary-200 transition-colors">
-                  <User className="w-7 h-7 text-primary-700" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-primary-900 font-bengali group-hover:text-primary-700 transition-colors">
-                    {t('এতিমখানা', 'Orphanage')}
-                  </h3>
-                  <p className="text-xs text-neutral-600 mt-1">
-                    {t('খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া এতিমখানা', 'Khagrachhari Baitush Sharaf Jabbaria Orphanage')}
-                  </p>
-                </div>
-              </div>
-              <p className="text-sm text-neutral-700 leading-relaxed mb-4">
-                {t(
-                  '[এতিমখানার পরিচিতি - যাচাই সাপেক্ষে]',
-                  '[Orphanage introduction - Pending verification]'
-                )}
+            <div className="bg-white/10 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-white/10 text-center flex flex-col items-center justify-center">
+              <MapPin className="w-12 h-12 text-gold-400 mb-3" />
+              <h3 className="text-lg font-bold font-bengali text-white mb-2">
+                গুগল ম্যাপে মাদরাসার অবস্থান
+              </h3>
+              <p className="text-xs text-primary-200 max-w-sm mb-5">
+                বায়তুশ শরফ রোড, আরামবাগ, খাগড়াছড়ি সদর
               </p>
-              <div className="flex items-center text-sm text-primary-600 font-medium">
-                <span>{t('বিস্তারিত দেখুন', 'View Details')}</span>
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </div>
-            </Card>
-          </Link>
-
-          {/* Hifzkhana Card */}
-          <Link to="/hifzkhana">
-            <Card hover padding="lg" className="h-full group">
-              <div className="flex items-start gap-4 mb-4">
-                <div className="shrink-0 w-14 h-14 rounded-xl bg-gold-100 flex items-center justify-center group-hover:bg-gold-200 transition-colors">
-                  <BookOpen className="w-7 h-7 text-gold-700" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-primary-900 font-bengali group-hover:text-primary-700 transition-colors">
-                    {t('হেফজখানা', 'Hifzkhana')}
-                  </h3>
-                  <p className="text-xs text-neutral-600 mt-1">
-                    {t('জব্বারিয়া হেফজখানা', 'Jabbaria Hifzkhana')}
-                  </p>
-                </div>
-              </div>
-              <p className="text-sm text-neutral-700 leading-relaxed mb-4">
-                {t(
-                  '[হেফজখানার পরিচিতি - যাচাই সাপেক্ষে]',
-                  '[Hifzkhana introduction - Pending verification]'
-                )}
-              </p>
-              <div className="flex items-center text-sm text-primary-600 font-medium">
-                <span>{t('বিস্তারিত দেখুন', 'View Details')}</span>
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </div>
-            </Card>
-          </Link>
-        </div>
-      </Section>
-
-      {/* Stats Banner */}
-      <section className="gradient-emerald py-8 sm:py-10 lg:py-14 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pattern-bg" />
-        <div className="relative max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {[
-              { value: '[সংখ্যা]', label: t('শিক্ষার্থী', 'Students'), icon: <User className="w-5 h-5 sm:w-6 sm:h-6" /> },
-              { value: '[সংখ্যা]', label: t('শিক্ষক', 'Teachers'), icon: <Star className="w-5 h-5 sm:w-6 sm:h-6" /> },
-              { value: '৫+', label: t('বিভাগ', 'Departments'), icon: <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" /> },
-              { value: '[বছর]', label: t('বছরের সেবা', 'Years of Service'), icon: <Calendar className="w-5 h-5 sm:w-6 sm:h-6" /> },
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 text-gold-300 mb-2 sm:mb-3">
-                  {stat.icon}
-                </div>
-                <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
-                  {stat.value}
-                </div>
-                <div className="text-xs sm:text-sm text-primary-200 mt-1">{stat.label}</div>
-              </div>
-            ))}
+              <a
+                href={getContactLinks.maps()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gold-500 hover:bg-gold-400 text-primary-950 font-bold text-sm shadow transition-all"
+              >
+                <span>{t('গুগল ম্যাপে দেখুন', 'Open in Google Maps')}</span>
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </div>
       </section>

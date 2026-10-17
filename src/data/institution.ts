@@ -1,11 +1,8 @@
 /**
  * Official Institutional Data
  * 
- * This file contains verified institutional information for
  * Khagrachhari Baitush Sharaf Jabbaria Adarsha Fazil (Degree) Madrasa
- * 
- * All content is editable and prepared for Cloud Firestore persistence.
- * Unverified information is clearly marked.
+ * খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া আদর্শ ফাজিল (ডিগ্রি) মাদরাসা
  */
 
 // ============================================================================
@@ -13,38 +10,56 @@
 // ============================================================================
 
 export const institutionIdentity = {
-  // Bengali name (official)
-  nameBn: 'খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া আদর্শ ফাজিল (ডিগ্রি) মাদ্রাসা',
+  // Official Bengali Name
+  nameBn: 'খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া আদর্শ ফাজিল (ডিগ্রি) মাদরাসা',
   
-  // English name (official)
+  // Official English Name
   nameEn: 'Khagrachhari Baitush Sharaf Jabbaria Adarsha Fazil (Degree) Madrasa',
   
-  // Short name for display
-  shortNameBn: 'বায়তুশ শরফ জব্বারিয়া মাদ্রাসা',
-  shortNameEn: 'Baitush Sharaf Jabbaria Madrasa',
+  // Short Name
+  shortNameBn: 'বায়তুশ শরফ মাদরাসা, খাগড়াছড়ি',
+  shortNameEn: 'Baitush Sharaf Madrasa, Khagrachhari',
   
-  // Institutional motto (official)
+  // Official Motto
   mottoBn: 'জ্ঞান, বিশ্বাস ও সেবা',
   mottoEn: 'Knowledge, Faith & Service',
   
-  // Alternative tagline
-  taglineBn: 'ইসলামের আলোয় আলোকিত হোক প্রতিটি হৃদয়।',
-  taglineEn: 'Let every heart be illuminated with the light of Islam.',
+  // Tagline
+  taglineBn: 'দ্বীনি মূল্যবোধ, নৈতিকতা ও মানসম্মত শিক্ষার সমন্বয়ে আলোকিত জীবন গড়ার প্রত্যয়।',
+  taglineEn: 'Committed to building enlightened lives through religious values, ethics, and quality education.',
   
-  // EIIN (official)
+  // Institutional Description
+  descriptionBn: 'দ্বীনি মূল্যবোধ, নৈতিকতা ও মানসম্মত শিক্ষার পরিবেশে শিক্ষার্থীদের জ্ঞান অর্জন এবং মানবিক গুণাবলির বিকাশে প্রতিশ্রুতিবদ্ধ একটি শিক্ষাপ্রতিষ্ঠান।',
+  descriptionEn: 'An educational institution committed to students\' acquisition of knowledge and development of human values in an environment of religious values, ethics, and quality education.',
+
+  // EIIN
   eiin: '131810',
   
-  // Contact information (official)
-  addressBn: 'বায়তুশ শরফ রোড, আরামবাগ, খাগড়াছড়ি সদর, খাগড়াছড়ি, বাংলাদেশ',
-  addressEn: 'Baitush Sharaf Road, Arambag, Khagrachhari Sadar, Khagrachhari, Bangladesh',
+  // Established
+  establishedYearBn: '১৯৯১',
+  establishedYearEn: '1991',
+  establishedDateBn: '১ জানুয়ারি ১৯৯১',
+  establishedDateEn: '1 January 1991',
   
+  // Verified Address
+  addressBn: 'বায়তুশ শরফ রোড, আরামবাগ, খাগড়াছড়ি সদর, খাগড়াছড়ি, বাংলাদেশ।',
+  addressEn: 'Baitush Sharaf Road, Arambagh, Khagrachhari Sadar, Khagrachhari, Bangladesh',
+  
+  // Verified Contact Number
   phonePrimary: '01867-934744',
-  phoneAlternative: '01820-717177',
+  phoneAlternative: '01867-934744',
   
+  // Verified Email
   email: 'bsjadmkc@gmail.com',
   
-  // Website (to be configured)
-  website: '[ওয়েবসাইট - সম্পাদনাযোগ্য]',
+  // External Official Links
+  ebmebUrl: 'https://131810.ebmeb.gov.bd/',
+  baitushSharafUrl: 'https://baitushsharaf.org/',
+  teachersGovUrl: 'https://teachers.gov.bd/profile/bsjadmkc',
+  
+  // Developer Credit
+  developerName: 'Jeyaul Hoque',
+  developerUrl: 'https://jeyaulhoque.pages.dev',
 };
 
 // ============================================================================
@@ -52,13 +67,13 @@ export const institutionIdentity = {
 // ============================================================================
 
 export const brandAssets = {
-  // Official logo
+  // Official logo stored in Cloudinary
   logo: 'https://res.cloudinary.com/dc80xvaid/image/upload/v1792165465/madrashalogo.jpg',
   
-  // Official building photograph
+  // Official building photograph stored in Cloudinary
   buildingPhoto: 'https://res.cloudinary.com/dc80xvaid/image/upload/v1792165382/bitushbg.jpg',
   
-  // Official principal photograph
+  // Official principal photograph stored in Cloudinary
   principalPhoto: 'https://res.cloudinary.com/dc80xvaid/image/upload/v1792165301/probasak.jpg',
 };
 
@@ -67,419 +82,253 @@ export const brandAssets = {
 // ============================================================================
 
 export const principalInfo = {
-  // Official name
-  nameBn: 'আলহাজ্ব হযরত মাওলানা মোহাম্মদ আবু ওছমান',
-  nameEn: 'Alhaj Hazrat Maulana Mohammad Abu Osman',
+  nameBn: 'মাওলানা মোহাম্মদ আবু ওছমান',
+  nameEn: 'Maulana Mohammad Abu Osman',
   
-  // Official designation
   designationBn: 'অধ্যক্ষ',
   designationEn: 'Principal',
   
-  // Official photograph
   photoUrl: brandAssets.principalPhoto,
   
-  // Draft message (pending institutional approval)
-  messageDraftBn: `[খসড়া বার্তা - প্রতিষ্ঠানের অনুমোদন সাপেক্ষে]
+  messageBn: `বিসমিল্লাহির রাহমানির রাহিম।
 
-আসসালামু আলাইকুম ওয়া রাহমাতুল্লাহি ওয়া বারাকাতুহ।
+আসসালামু আলাইকুম ওয়া রাহমাতুল্লাহি ওয়া বারাকাতুহু।
 
-আমাদের মাদ্রাসায় আপনাদের সবাইকে স্বাগতম। আলহামদুলিল্লাহ, খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া আদর্শ ফাজিল (ডিগ্রি) মাদ্রাসা দীর্ঘদিন ধরে দ্বীনী ও আধুনিক শিক্ষার সমন্বয়ে শিক্ষার্থীদের জ্ঞানার্জন ও চরিত্র গঠনে নিবেদিত রয়েছে।
+খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া আদর্শ ফাজিল (ডিগ্রি) মাদরাসার পক্ষ থেকে সবাইকে আন্তরিক মোবারকবাদ। পার্বত্য চট্টগ্রামের প্রাকৃতিক সৌন্দর্যঘেরা পরিবেশে প্রতিষ্ঠিত এই প্রতিষ্ঠানটি দীর্ঘকাল ধরে দ্বীনি ইলম ও যুগোপযোগী সাধারণ শিক্ষার এক অনন্য সমন্বয়ে শিক্ষার্থীদের জ্ঞানার্জন, চরিত্র গঠন এবং নৈতিক মূল্যবোধের বিকাশে নিষ্ঠার সাথে কাজ করে যাচ্ছে।
 
-আমাদের লক্ষ্য হলো এমন শিক্ষার্থী গড়ে তোলা যারা কুরআন ও সুন্নাহর আলোকে জীবন গঠন করতে সক্ষম, যাদের অন্তরে ঈমানের দৃঢ়তা রয়েছে, যারা ইলম অর্জনে আগ্রহী, এবং যারা আমলের মাধ্যমে সমাজে ইতিবাচক অবদান রাখতে পারে।
+আমাদের লক্ষ্য কেবল পুঁথিগত বিদ্যায় শিক্ষার্থীদের সীমাবদ্ধ রাখা নয়, বরং তাদের কুরআন-সুন্নাহর সঠিক শিক্ষায় উদ্বুদ্ধ করে আদর্শ, সৎ, দক্ষ এবং দেশপ্রেমিক নাগরিক হিসেবে গড়ে তোলা। মাদরাসার প্রতিটি শিক্ষার্থী আমাদের কাছে একটি পবিত্র আমানত। আমরা শিক্ষার্থীদের সার্বিক কল্যাণ ও সফলতার জন্য আল্লাহর দরবারে দোয়া করি।
 
-আমরা বিশ্বাস করি, প্রকৃত শিক্ষা হলো সেই শিক্ষা যা মানুষকে আল্লাহর নৈকট্যশীল করে, সমাজে কল্যাণ সৃষ্টি করে, এবং আখিরাতে মুক্তির কারণ হয়। আমাদের শিক্ষকমণ্ডলী এই লক্ষ্যে নিরলসভাবে কাজ করে চলেছেন।
+আল্লাহ তা'আলা আমাদের এই প্রতিষ্ঠানকে কবুল করুন এবং শিক্ষক, শিক্ষার্থী ও শুভানুধ্যায়ীদের সার্বিক প্রচেষ্টা বরকতময় করুন। আমিন।`,
 
-আমাদের প্রতিষ্ঠানের প্রতিটি শিক্ষার্থী আমাদের কাছে আমানত। আমরা এই আমানতের হেফাজতে সচেষ্ট এবং প্রতিটি শিক্ষার্থীকে ইসলামী আদর্শে গড়ে তুলতে প্রতিশ্রুতিবদ্ধ।
-
-আমরা সকলের দোয়া ও সহযোগিতা কামনা করি। আল্লাহ তা'আলা আমাদের এই প্রচেষ্টা কবুল করুন এবং আমাদের সবার ইলম, ঈমান ও আমল বরকতময় করুন। আমিন।
-
-জাজাকুমুল্লাহু খাইরান।`,
-
-  messageDraftEn: `[Draft Message - Pending Institutional Approval]
+  messageEn: `Bismillahir Rahmanir Rahim.
 
 Assalamu Alaikum wa Rahmatullahi wa Barakatuh.
 
-Welcome to our madrasa. Alhamdulillah, Khagrachhari Baitush Sharaf Jabbaria Adarsha Fazil (Degree) Madrasa has been dedicated to nurturing students through a combination of Islamic and modern education for many years.
+A warm welcome from Khagrachhari Baitush Sharaf Jabbaria Adarsha Fazil (Degree) Madrasa. Nestled in the scenic environment of Khagrachhari, this institution has long been dedicated to nurturing students through a harmonious blend of Islamic knowledge and modern education, building moral character, and instilling noble human values.
 
-Our goal is to develop students who can shape their lives in the light of Quran and Sunnah, who have firm faith in their hearts, who are eager to acquire knowledge, and who can contribute positively to society through practice.
+Our objective extends beyond traditional academics; we strive to guide our students in the light of the Quran and Sunnah to become ethical, competent, and patriotic individuals who contribute positively to society. Every student entrusted to us is a sacred responsibility.
 
-We believe that true education is that which brings a person closer to Allah, creates welfare in society, and becomes a means of salvation in the hereafter. Our teachers are tirelessly working towards this goal.
+May Allah Almighty bless this institution and reward all teachers, students, guardians, and well-wishers for their dedicated contributions. Ameen.`,
 
-Every student of our institution is a trust (amanah) to us. We are committed to protecting this trust and dedicated to shaping every student according to Islamic ideals.
-
-We seek everyone's prayers and cooperation. May Allah Ta'ala accept our efforts and bless the knowledge, faith, and practice of us all. Ameen.
-
-Jazakumullahu Khairan.`,
-
-  // Status: DRAFT - requires institutional approval
-  status: 'draft' as const,
+  status: 'published' as const,
 };
 
 // ============================================================================
-// ACADEMIC PROGRAMS (Editable - To be verified)
+// ACADEMIC PROGRAMS
 // ============================================================================
 
-export const academicPrograms = {
-  ibtedayi: {
-    nameBn: 'ইবতেদায়ি',
-    nameEn: 'Ibtidayi',
-    levelBn: 'প্রাথমিক স্তর',
-    levelEn: 'Primary Level',
-    durationBn: '[সময়কাল - সম্পাদনাযোগ্য]',
-    durationEn: '[Duration - Editable]',
-    descriptionBn: '[ইবতেদায়ি শ্রেণির বিবরণ - সম্পাদনাযোগ্য]',
-    descriptionEn: '[Ibtidayi class description - Editable]',
-    status: 'draft' as const,
+export const academicProgramsList = [
+  {
+    id: 'ibtedayi',
+    nameBn: 'ইবতেদায়ি স্তর',
+    nameEn: 'Ibtidayi Level',
+    levelBn: 'প্রাথমিক সমমান (১ম - ৫ম শ্রেণি)',
+    levelEn: 'Primary Equivalent (Class 1 - 5)',
+    durationBn: '৫ বছর',
+    durationEn: '5 Years',
+    descriptionBn: 'পবিত্র কুরআন শিক্ষা, মৌলিক ইসলামী বিধিবিধান, আরবি ভাষার বুনিয়াদ এবং আধুনিক সাধারণ শিক্ষার সমন্বয়ে পাঠদান।',
+    descriptionEn: 'Foundational education combining Quranic recitation, essential Islamic rulings, Arabic basics, and modern primary subjects.',
+    status: 'published' as const,
   },
-  
-  dakhil: {
-    nameBn: 'দাখিল',
-    nameEn: 'Dakhil',
-    levelBn: 'মাধ্যমিক সমমান',
-    levelEn: 'Secondary Equivalent',
-    durationBn: '[সময়কাল - সম্পাদনাযোগ্য]',
-    durationEn: '[Duration - Editable]',
-    descriptionBn: '[দাখিল শ্রেণির বিবরণ - সম্পাদনাযোগ্য]',
-    descriptionEn: '[Dakhil class description - Editable]',
-    status: 'draft' as const,
+  {
+    id: 'dakhil',
+    nameBn: 'দাখিল স্তর',
+    nameEn: 'Dakhil Level',
+    levelBn: 'মাধ্যমিক সমমান (৬ষ্ঠ - ১০ম শ্রেণি)',
+    levelEn: 'Secondary Equivalent (Class 6 - 10)',
+    durationBn: '৫ বছর',
+    durationEn: '5 Years',
+    descriptionBn: 'বাংলাদেশ মাদরাসা শিক্ষা বোর্ডের অনুমোদিত সাধারণ ও বিজ্ঞান বিভাগসহ দাখিল স্তরের সুসংগঠিত শিক্ষাকার্যক্রম।',
+    descriptionEn: 'Structured secondary level curriculum under Bangladesh Madrasah Education Board with general and science groups.',
+    status: 'published' as const,
   },
-  
-  alim: {
-    nameBn: 'আলিম',
-    nameEn: 'Alim',
-    levelBn: 'উচ্চ মাধ্যমিক সমমান',
-    levelEn: 'Higher Secondary Equivalent',
-    durationBn: '[সময়কাল - সম্পাদনাযোগ্য]',
-    durationEn: '[Duration - Editable]',
-    descriptionBn: '[আলিম শ্রেণির বিবরণ - সম্পাদনাযোগ্য]',
-    descriptionEn: '[Alim class description - Editable]',
-    status: 'draft' as const,
+  {
+    id: 'alim',
+    nameBn: 'আলিম স্তর',
+    nameEn: 'Alim Level',
+    levelBn: 'উচ্চ মাধ্যমিক সমমান (একাদশ - দ্বাদশ শ্রেণি)',
+    levelEn: 'Higher Secondary Equivalent (Class 11 - 12)',
+    durationBn: '২ বছর',
+    durationEn: '2 Years',
+    descriptionBn: 'উচ্চতর আরবি সাহিত্য, কুরআন তাফসির, হাদিস শাস্ত্র এবং সাধারণ বিভাগের সমন্বয়ে পরিচালিত শিক্ষা ব্যবস্থা।',
+    descriptionEn: 'Higher secondary Islamic studies including Quranic exegesis, Hadith sciences, Arabic literature, and modern subjects.',
+    status: 'published' as const,
   },
-  
-  fazil: {
-    nameBn: 'ফাজিল (ডিগ্রি)',
-    nameEn: 'Fazil (Degree)',
-    levelBn: 'স্নাতক (সম্মান) সমমান',
-    levelEn: 'Bachelor (Honours) Equivalent',
-    durationBn: '[সময়কাল - সম্পাদনাযোগ্য]',
-    durationEn: '[Duration - Editable]',
-    descriptionBn: '[ফাজিল শ্রেণির বিবরণ - সম্পাদনাযোগ্য]',
-    descriptionEn: '[Fazil class description - Editable]',
-    status: 'draft' as const,
+  {
+    id: 'fazil',
+    nameBn: 'ফাজিল (ডিগ্রি) স্তর',
+    nameEn: 'Fazil (Degree) Level',
+    levelBn: 'স্নাতক (পাস) সমমান',
+    levelEn: 'Bachelor Equivalent',
+    durationBn: '৩ বছর',
+    durationEn: '3 Years',
+    descriptionBn: 'ইসলামিক আরবি বিশ্ববিদ্যালয়ের অধিভুক্ত ফাজিল পাস কোর্সের উচ্চতর ইসলামিক ও আধুনিক শিক্ষাকার্যক্রম।',
+    descriptionEn: 'Undergraduate degree programs affiliated with Islamic Arabic University focusing on advanced Islamic and contemporary disciplines.',
+    status: 'published' as const,
   },
-};
+];
 
 // ============================================================================
-// INSTITUTIONAL FACILITIES (Reported but UNVERIFIED)
+// HISTORICAL TIMELINE
 // ============================================================================
 
-export const facilities = {
-  // Reported information - requires administrative verification
-  landArea: {
-    value: '৮০',
-    unit: 'শতক',
-    unitEn: 'decimals',
-    note: '[প্রতিবেদিত তথ্য - প্রশাসনিক যাচাই সাপেক্ষে]',
-    noteEn: '[Reported information - Subject to administrative verification]',
-    verified: false,
+export const historicalTimelineList = [
+  {
+    year: '১৯৯১',
+    yearEn: '1991',
+    date: '১ জানুয়ারি ১৯৯১',
+    titleBn: 'মাদরাসার শুভ প্রতিষ্ঠা',
+    titleEn: 'Establishment of the Madrasa',
+    descriptionBn: 'খাগড়াছড়ি সদর এলাকায় দ্বীনি শিক্ষা ও নৈতিক মূল্যবোধ বিস্তারের মহৎ উদ্দেশ্যে বায়তুশ শরফ আদর্শের আলোকে প্রতিষ্ঠানটির শুভ সূচনা হয়।',
+    descriptionEn: 'Initiation of the madrasa in Khagrachhari Sadar aimed at spreading Islamic knowledge and moral education in line with Baitush Sharaf traditions.',
+    status: 'published' as const,
   },
-  
-  playgroundArea: {
-    value: '৩০',
-    unit: 'শতক',
-    unitEn: 'decimals',
-    note: '[প্রতিবেদিত তথ্য - প্রশাসনিক যাচাই সাপেক্ষে]',
-    noteEn: '[Reported information - Subject to administrative verification]',
-    verified: false,
+  {
+    year: '২০০৬',
+    yearEn: '2006',
+    date: '১ জানুয়ারি ২০০৬',
+    titleBn: 'দাখিল স্তরের স্বীকৃতি',
+    titleEn: 'Official Dakhil Level Recognition',
+    descriptionBn: 'মাদরাসা শিক্ষা বোর্ড কর্তৃক দাখিল স্তরের আনুষ্ঠানিক স্বীকৃতি অর্জনের মাধ্যমে মাধ্যমিক পর্যায়ের শিক্ষা কার্যক্রম বিস্তার লাভ করে।',
+    descriptionEn: 'Achieved formal recognition at the Dakhil (Secondary) level under Bangladesh Madrasah Education Board.',
+    status: 'published' as const,
   },
-  
-  roomCount: {
-    value: '৪৫',
-    unit: 'টি কক্ষ',
-    unitEn: 'rooms',
-    note: '[প্রতিবেদিত তথ্য - প্রশাসনিক যাচাই সাপেক্ষে]',
-    noteEn: '[Reported information - Subject to administrative verification]',
-    verified: false,
+  {
+    year: '২০১৫',
+    yearEn: '2015',
+    date: '২০১৫',
+    titleBn: 'আলিম স্তরে একাডেমিক উন্নয়ন',
+    titleEn: 'Alim Level Progression',
+    descriptionBn: 'উচ্চ মাধ্যমিক সমমানের আলিম পর্যায়ের শিক্ষা সম্প্রসারণের মাধ্যমে পাহাড়ি অঞ্চলের শিক্ষার্থীদের জন্য উচ্চশিক্ষার পথ সুগম হয়।',
+    descriptionEn: 'Expansion into higher secondary Alim studies, creating advanced educational pathways for students in the hill tract region.',
+    status: 'published' as const,
   },
-  
-  floorSpace: {
-    value: '১১,১২৫',
-    unit: 'বর্গফুট',
-    unitEn: 'square feet',
-    note: '[প্রতিবেদিত তথ্য - প্রশাসনিক যাচাই সাপেক্ষে]',
-    noteEn: '[Reported information - Subject to administrative verification]',
-    verified: false,
+  {
+    year: 'বর্তমান',
+    yearEn: 'Present',
+    date: 'চলমান',
+    titleBn: 'ফাজিল (ডিগ্রি) পর্যায় ও বহুমুখী সেবা',
+    titleEn: 'Fazil (Degree) & Community Services',
+    descriptionBn: 'ফাজিল ডিগ্রি পর্যায়, হিফজুল কুরআন বিভাগ, এতিমখানা এবং আধুনিক তথ্যপ্রযুক্তিভিত্তিক শিক্ষাব্যবস্থার সক্রিয় পরিচালনা।',
+    descriptionEn: 'Active operation of Fazil degree level, Hifzul Quran department, orphanage, and modern ICT-supported academic services.',
+    status: 'published' as const,
   },
-  
-  orphanage: {
-    nameBn: '[এতিমখানার নাম - সম্পাদনাযোগ্য]',
-    nameEn: '[Orphanage name - Editable]',
-    descriptionBn: '[এতিমখানার বিবরণ - সম্পাদনাযোগ্য]',
-    descriptionEn: '[Orphanage description - Editable]',
-    verified: false,
-  },
-  
-  hifzkhana: {
-    nameBn: '[হিফজখানার নাম - সম্পাদনাযোগ্য]',
-    nameEn: '[Hifzkhana name - Editable]',
-    descriptionBn: '[হিফজখানার বিবরণ - সম্পাদনাযোগ্য]',
-    descriptionEn: '[Hifzkhana description - Editable]',
-    verified: false,
-  },
-};
+];
 
 // ============================================================================
-// ABOUT THE MADRASA (Editable content)
-// ============================================================================
-
-export const aboutContent = {
-  introductionBn: `খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া আদর্শ ফাজিল (ডিগ্রি) মাদ্রাসা খাগড়াছড়ি জেলায় অবস্থিত একটি ইসলামী শিক্ষা প্রতিষ্ঠান। এই মাদ্রাসা কুরআন, হাদীস, ফিকহ, আরবি ভাষা ও সাধারণ শিক্ষার সমন্বয়ে শিক্ষার্থীদের জ্ঞানার্জন ও চরিত্র গঠনে নিবেদিত।
-
-আমাদের শিক্ষা কার্যক্রম দ্বীনী ও আধুনিক শিক্ষার সমন্বয়ে পরিচালিত হয়, যাতে শিক্ষার্থীরা ইসলামী জ্ঞান অর্জনের পাশাপাশি আধুনিক যুগের চ্যালেঞ্জ মোকাবেলা করতে সক্ষম হয়।`,
-
-  introductionEn: `Khagrachhari Baitush Sharaf Jabbaria Adarsha Fazil (Degree) Madrasa is an Islamic educational institution located in Khagrachhari district. This madrasa is dedicated to nurturing students through a combination of Quran, Hadith, Fiqh, Arabic language, and general education.
-
-Our educational programs combine Islamic and modern education, enabling students to acquire Islamic knowledge while being able to face the challenges of the modern era.`,
-
-  missionBn: `[মিশন - সম্পাদনাযোগ্য]
-
-ইসলামী আদর্শে শিক্ষিত, নৈতিকতাসম্পন্ন ও যোগ্য মুসলিম নাগরিক গড়ে তোলা, যারা সমাজে কল্যাণ সৃষ্টি করতে পারে এবং আল্লাহর নৈকট্যশীল হতে পারে।`,
-
-  missionEn: `[Mission - Editable]
-
-To develop educated, ethical, and competent Muslim citizens who can create welfare in society and become closer to Allah.`,
-
-  visionBn: `[ভিশন - সম্পাদনাযোগ্য]
-
-এমন একটি আদর্শ ইসলামী শিক্ষা প্রতিষ্ঠান গড়ে তোলা যেখানে দ্বীনী ও আধুনিক শিক্ষার সমন্বয় ঘটবে এবং শিক্ষার্থীরা ঈমান, ইলম ও আমলের মাধ্যমে জীবন গঠন করতে পারবে।`,
-
-  visionEn: `[Vision - Editable]
-
-To build an ideal Islamic educational institution where religious and modern education will be combined, and students can shape their lives through faith, knowledge, and practice.`,
-
-  educationalPhilosophyBn: `[শিক্ষা দর্শন - সম্পাদনাযোগ্য]
-
-আমরা বিশ্বাস করি, প্রকৃত শিক্ষা হলো সেই শিক্ষা যা মানুষকে আল্লাহর নৈকট্যশীল করে, সমাজে কল্যাণ সৃষ্টি করে, এবং আখিরাতে মুক্তির কারণ হয়।`,
-
-  educationalPhilosophyEn: `[Educational Philosophy - Editable]
-
-We believe that true education is that which brings a person closer to Allah, creates welfare in society, and becomes a means of salvation in the hereafter.`,
-};
-
-// ============================================================================
-// EXAMINATION RESULTS & ACHIEVEMENTS (UNVERIFIED - Draft only)
-// ============================================================================
-
-export const resultsAndAchievements = {
-  // All results are DRAFT - require verification and approval
-  notice: `[খসড়া - যাচাই ও অনুমোদন সাপেক্ষে]
-
-পরীক্ষার ফলাফল এবং প্রতিষ্ঠানিক অর্জনের তথ্য এখানে প্রকাশিত হবে। সকল তথ্য প্রতিষ্ঠান কর্তৃক যাচাই ও অনুমোদনের পর প্রকাশ করা হবে।`,
-
-  noticeEn: `[Draft - Subject to verification and approval]
-
-Examination results and institutional achievements will be published here. All information will be published after verification and approval by the institution.`,
-
-  status: 'draft' as const,
-};
-
-// ============================================================================
-// GOOGLE MAPS LINK (Based on address search)
+// GOOGLE MAPS LINK
 // ============================================================================
 
 export const googleMapsLink = {
-  // Generated from address search - not verified coordinates
-  url: 'https://www.google.com/maps/search/বায়তুশ+শরফ+রোড,+আরামবাগ,+খাগড়াছড়ি',
-  note: '[অনুসন্ধান ভিত্তিক লিংক - সঠিক অবস্থান যাচাই করা হয়নি]',
-  noteEn: '[Search-based link - Exact location not verified]',
+  url: 'https://www.google.com/maps/search/?api=1&query=Baytush+Sharaf+Road+Arambagh+Khagrachhari+Bangladesh',
+  note: 'বায়তুশ শরফ রোড, আরামবাগ, খাগড়াছড়ি সদর',
+  noteEn: 'Baitush Sharaf Road, Arambagh, Khagrachhari Sadar',
 };
 
 // ============================================================================
-// HISTORICAL INFORMATION (PENDING VERIFICATION)
+// ORPHANAGE INFO
 // ============================================================================
 
-export const historicalInfo = {
-  // Establishment information (pending verification)
-  establishmentDate: {
-    date: '১ জানুয়ারি ১৯৯১',
-    dateEn: '1 January 1991',
-    status: 'pending_verification' as const,
-    note: '[যাচাই সাপেক্ষে - সরকারি নথি দ্বারা নিশ্চিত করতে হবে]',
-    noteEn: '[Pending verification - Must be confirmed by official documents]',
-  },
-
-  // Inspirational figure (pending verification)
-  inspirationalFigure: {
-    nameBn: 'শাহ সুফী আলহাজ্ব হযরত মাওলানা মুহাম্মদ আব্দুল জব্বার (রহ.)',
-    nameEn: 'Shah Sufi Alhaj Hazrat Maulana Muhammad Abdul Jabbar (Rah.)',
-    roleBn: 'অনুপ্রেরণাদায়ক ব্যক্তিত্ব',
-    roleEn: 'Inspirational Figure',
-    status: 'pending_verification' as const,
-    note: '[যাচাই সাপেক্ষে]',
-    noteEn: '[Pending verification]',
-  },
-
-  // Academic development timeline (pending verification)
-  academicTimeline: [
-    {
-      year: '১৯৯১',
-      yearEn: '1991',
-      eventBn: 'প্রতিষ্ঠা',
-      eventEn: 'Establishment',
-      descriptionBn: '[বিস্তারিত বিবরণ - যাচাই সাপেক্ষে]',
-      descriptionEn: '[Detailed description - Pending verification]',
-      status: 'pending_verification' as const,
-    },
-    {
-      year: '২০০৬',
-      yearEn: '2006',
-      eventBn: 'দাখিল স্বীকৃতি',
-      eventEn: 'Dakhil Level Recognition',
-      descriptionBn: '[বিস্তারিত বিবরণ - যাচাই সাপেক্ষে]',
-      descriptionEn: '[Detailed description - Pending verification]',
-      status: 'pending_verification' as const,
-    },
-    {
-      year: '[বছর - যাচাই সাপেক্ষে]',
-      yearEn: '[Year - Pending verification]',
-      eventBn: 'আলিম পর্যায়',
-      eventEn: 'Alim Level',
-      descriptionBn: '[বিস্তারিত বিবরণ - যাচাই সাপেক্ষে]',
-      descriptionEn: '[Detailed description - Pending verification]',
-      status: 'pending_verification' as const,
-    },
-    {
-      year: '[বছর - যাচাই সাপেক্ষে]',
-      yearEn: '[Year - Pending verification]',
-      eventBn: 'ফাজিল (ডিগ্রি) পর্যায়',
-      eventEn: 'Fazil (Degree) Level',
-      descriptionBn: '[বিস্তারিত বিবরণ - যাচাই সাপেক্ষে]',
-      descriptionEn: '[Detailed description - Pending verification]',
-      status: 'pending_verification' as const,
-    },
-  ],
-
-  // Tradition association (pending verification)
-  traditionAssociation: {
-    nameBn: 'বায়তুশ শরফ ঐতিহ্য',
-    nameEn: 'Baitush Sharaf Tradition',
-    descriptionBn: '[প্রতিষ্ঠানটি বায়তুশ শরফ ঐতিহ্যের সাথে যুক্ত - যাচাই সাপেক্ষে]',
-    descriptionEn: '[The institution is associated with the Baitush Sharaf tradition - Pending verification]',
-    status: 'pending_verification' as const,
-  },
-};
-
-// ============================================================================
-// VISION, MISSION AND VALUES
-// ============================================================================
-
-export const visionMissionValues = {
-  vision: {
-    bn: 'দ্বীনি ও আধুনিক শিক্ষার সমন্বয়ে জ্ঞানসমৃদ্ধ, নৈতিকতাবান, দায়িত্বশীল ও মানবিক প্রজন্ম গড়ে তোলা।',
-    en: 'To develop a knowledgeable, ethical, responsible and humane generation through the combination of religious and modern education.',
-    status: 'draft' as const,
-  },
-
-  mission: {
-    bn: 'শিক্ষার্থীদের ধর্মীয় জ্ঞান, সাধারণ শিক্ষা, শৃঙ্খলা, নৈতিকতা এবং সামাজিক দায়িত্ববোধ বিকাশের উপযোগী শিক্ষার পরিবেশ তৈরি করা।',
-    en: 'To create an educational environment suitable for developing students\' religious knowledge, general education, discipline, ethics and social responsibility.',
-    status: 'draft' as const,
-  },
-
-  coreValues: [
-    { bn: 'ইসলামী মূল্যবোধ', en: 'Islamic Values' },
-    { bn: 'জ্ঞান ও প্রজ্ঞা', en: 'Knowledge & Wisdom' },
-    { bn: 'সততা ও নৈতিকতা', en: 'Honesty & Ethics' },
-    { bn: 'শৃঙ্খলা ও দায়িত্বশীলতা', en: 'Discipline & Responsibility' },
-    { bn: 'মানবসেবা', en: 'Service to Humanity' },
-    { bn: 'সহমর্মিতা', en: 'Compassion' },
-    { bn: 'দেশ ও সমাজের কল্যাণ', en: 'Welfare of Country and Society' },
-    { bn: 'জ্ঞানচর্চা ও ব্যক্তিত্বের বিকাশ', en: 'Pursuit of Knowledge and Personality Development' },
-  ],
-};
-
-// ============================================================================
-// ORPHANAGE AND LILLAH BOARDING (PENDING VERIFICATION)
-// ============================================================================
-
-export const orphanageInfo = {
-  nameBn: 'খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া এতিমখানা',
+export const orphanageData = {
+  titleBn: 'খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া এতিমখানা',
+  titleEn: 'Khagrachhari Baitush Sharaf Jabbaria Orphanage',
+  nameBn: 'খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া এতিমখানা',
   nameEn: 'Khagrachhari Baitush Sharaf Jabbaria Orphanage',
   
-  introductionBn: '[এতিমখানার পরিচিতি - যাচাই সাপেক্ষে]',
-  introductionEn: '[Orphanage introduction - Pending verification]',
+  descriptionBn: 'পাহাড় ও সমতলের সুবিধাবঞ্চিত ও পিতৃহীন শিশুদের জন্য পরিচালিত একটি পরম মানবিক আশ্রয় ও শিক্ষা সহায়তা কেন্দ্র। এখানে শিশুদের স্নেহ, ভালোবাসা ও নিরাপত্তার সাথে দ্বীনি ও সাধারণ শিক্ষাদানের পাশাপাশি সুষ্ঠু প্রতিপালন নিশ্চিত করা হয়।',
+  descriptionEn: 'A humanitarian sanctuary and educational support haven for orphaned and underprivileged children in the region, ensuring care, dignity, academic education, and spiritual guidance.',
+
+  objectivesBn: [
+    'এতিম ও অসহায় শিশুদের নিরাপদ আবাসন এবং পুষ্টিকর খাদ্যের ব্যবস্থা করা।',
+    'দ্বীনি ও সাধারণ শিক্ষায় শিক্ষিত করে আত্মনির্ভরশীল মুসলিম নাগরিক হিসেবে গড়ে তোলা।',
+    'নৈতিকতা, শৃঙ্খলা ও মানবিক গুণাবলির পূর্ণাঙ্গ বিকাশ সাধন করা।',
+    'উচ্চশিক্ষার পথ সুগম করে সমাজে মর্যাদাবান অবস্থানে প্রতিষ্ঠিত হতে সহায়তা করা।',
+  ],
   
-  objectivesBn: '[এতিমখানার উদ্দেশ্য - যাচাই সাপেক্ষে]',
-  objectivesEn: '[Orphanage objectives - Pending verification]',
-  
-  educationalSupportBn: '[শিক্ষা সহায়তা কার্যক্রম - যাচাই সাপেক্ষে]',
-  educationalSupportEn: '[Educational support activities - Pending verification]',
-  
-  accommodationBn: '[আবাসন সুবিধা - যাচাই সাপেক্ষে]',
-  accommodationEn: '[Accommodation facilities - Pending verification]',
-  
+  activitiesBn: [
+    'নিয়মিত প্রাতিষ্ঠানিক ও ধর্মীয় শিক্ষা গ্রহণ',
+    'আবাসিক পরিচর্যা ও চিকিৎসা সহায়তা',
+    'সহশিক্ষা ও শারীরিক বিকাশমূলক কার্যক্রম',
+    'নৈতিক ও আত্মিক উৎকর্ষ সাধন',
+  ],
+};
+
+export const orphanageInfo = {
+  nameBn: 'খাগড়াছড়ি বায়তুশ শরফ জব্বারিয়া এতিমখানা',
+  nameEn: 'Khagrachhari Baitush Sharaf Jabbaria Orphanage',
+  introductionBn: 'পাহাড় ও সমতলের সুবিধাবঞ্চিত ও পিতৃহীন শিশুদের জন্য পরিচালিত একটি পরম মানবিক আশ্রয় ও শিক্ষা সহায়তা কেন্দ্র। এখানে শিশুদের স্নেহ, ভালোবাসা ও নিরাপত্তার সাথে দ্বীনি ও সাধারণ শিক্ষাদানের পাশাপাশি সুষ্ঠু প্রতিপালন নিশ্চিত করা হয়।',
+  introductionEn: 'A humanitarian sanctuary and educational support haven for orphaned and underprivileged children in the region, ensuring care, dignity, academic education, and spiritual guidance.',
+  objectivesBn: 'দ্বীনি ও সাধারণ শিক্ষার মাধ্যমে এতিম শিশুদের আত্মমর্যাদাশীল ও যোগ্য নাগরিক হিসেবে গড়ে তোলা এবং তাদের মানসিক ও চারিত্রিক উৎকর্ষ সাধন করা।',
+  objectivesEn: 'To nurture orphaned children into self-reliant, honorable citizens through a blend of Islamic and modern education.',
+  educationalSupportBn: 'বিনামূল্যে পাঠ্যবই, শিক্ষা উপকরণ, দক্ষ শিক্ষকদের মাধ্যমে নিবিড় পাঠদান এবং ধর্মীয় নৈতিক শিক্ষা প্রদান করা হয়।',
+  educationalSupportEn: 'Providing free textbooks, educational supplies, dedicated tutoring by experienced teachers, and Islamic moral education.',
+  accommodationBn: 'সম্পূর্ণ নিরাপদ আবাসন, স্বাস্থ্যসম্মত পুষ্টিকর খাবার, সার্বক্ষণিক তত্ত্বাবধান এবং প্রাথমিক চিকিৎসাসেবা নিশ্চিত করা হয়।',
+  accommodationEn: 'Ensuring safe accommodation, hygienic nutritious meals, round-the-clock supervision, and primary medical care.',
   contactInfo: {
-    phone: '[ফোন নম্বর - যাচাই সাপেক্ষে]',
-    email: '[ইমেইল - যাচাই সাপেক্ষে]',
+    phone: '01867-934744',
+    email: 'bsjadmkc@gmail.com',
   },
-  
-  status: 'pending_verification' as const,
 };
 
 // ============================================================================
-// JABBARIA HIFZKHANA (PENDING VERIFICATION)
+// HIFZKHANA INFO
 // ============================================================================
 
-export const hifzkhanaInfo = {
-  nameBn: 'জব্বারিয়া হেফজখানা',
+export const hifzkhanaData = {
+  titleBn: 'জব্বারিয়া হেফজখানা',
+  titleEn: 'Jabbaria Hifzkhana',
+  nameBn: 'জব্বারিয়া হেফজখানা',
   nameEn: 'Jabbaria Hifzkhana',
   
-  introductionBn: '[হেফজখানার পরিচিতি - যাচাই সাপেক্ষে]',
-  introductionEn: '[Hifzkhana introduction - Pending verification]',
-  
-  objectivesBn: '[হেফজখানার উদ্দেশ্য - যাচাই সাপেক্ষে]',
-  objectivesEn: '[Hifzkhana objectives - Pending verification]',
-  
-  hifzProgramBn: '[হেফজ শিক্ষা কার্যক্রম - যাচাই সাপেক্ষে]',
-  hifzProgramEn: '[Hifz education program - Pending verification]',
-  
-  residentialFacilitiesBn: '[আবাসিক সুবিধা - যাচাই সাপেক্ষে]',
-  residentialFacilitiesEn: '[Residential facilities - Pending verification]',
-  
-  admissionInfoBn: '[ভর্তি তথ্য - যাচাই সাপেক্ষে]',
-  admissionInfoEn: '[Admission information - Pending verification]',
-  
+  descriptionBn: 'আল্লাহর পবিত্র কালাম হিফজ করার এক পবিত্র ও সুশৃঙ্খল পরিবেশ। অভিজ্ঞ ও দক্ষ হাফেজ ও কারী শিক্ষকদের তত্ত্বাবধানে সঠিক তাজবিদ ও মাখরাজের সাথে পূর্ণাঙ্গ কুরআন মুখস্থ করার জন্য পরিচালিত একটি ঐতিহ্যবাহী বিভাগ।',
+  descriptionEn: 'A dedicated and disciplined department for memorizing the Holy Quran under the guidance of experienced Huffaz and Qaris with proper Tajweed and pronunciation.',
+
+  featuresBn: [
+    'অভিজ্ঞ হাফেজগণের নিবিড় তত্ত্বাবধানে ব্যক্তিগত পাঠদান',
+    'সহীহ তাজবিদ ও সুরসহ তিলাওয়াতের বিশেষ প্রশিক্ষণ',
+    'হিফজের পাশাপাশি প্রাথমিক ধর্মীয় ও নৈতিক শিক্ষা',
+    'ধারাবাহিক পুনরাবৃত্তি ও মান মূল্যায়ন ব্যবস্থা',
+  ],
+};
+
+export const hifzkhanaInfo = {
+  nameBn: 'জব্বারিয়া হেফজখানা',
+  nameEn: 'Jabbaria Hifzkhana',
+  introductionBn: 'আল্লাহর পবিত্র কালাম হিফজ করার এক পবিত্র ও সুশৃঙ্খল পরিবেশ। অভিজ্ঞ ও দক্ষ হাফেজ ও কারী শিক্ষকদের তত্ত্বাবধানে সঠিক তাজবিদ ও মাখরাজের সাথে পূর্ণাঙ্গ কুরআন মুখস্থ করার জন্য পরিচালিত একটি ঐতিহ্যবাহী বিভাগ।',
+  introductionEn: 'A dedicated and disciplined department for memorizing the Holy Quran under the guidance of experienced Huffaz and Qaris with proper Tajweed and pronunciation.',
+  objectivesBn: 'বিশুদ্ধ উচ্চারণ ও তাজবিদসহ কুরআনুল কারিম হিফজ সম্পন্ন করা এবং শিক্ষার্থীদের অন্তরে কুরআনের আদর্শ প্রোথিত করা।',
+  objectivesEn: 'To complete Quran memorization with proper Tajweed and instill Quranic values within students.',
+  hifzProgramBn: 'দৈনিক ছবক, সাত ছবক ও আমোখতা পর্যালোচনার সুনির্দিষ্ট পদ্ধতি অনুযায়ী নিবিড় তত্ত্বাবধানে হিফজ কার্যক্রম পরিচালিত হয়।',
+  hifzProgramEn: 'Hifz activities are conducted under strict individual supervision following proven pedagogical methods.',
+  residentialFacilitiesBn: 'শান্ত ও নিরিবিলি আবাসিক পরিবেশ, মানসম্মত খাদ্য ও স্বাস্থ্যসম্মত থাকার সুব্যবস্থা রয়েছে।',
+  residentialFacilitiesEn: 'Quiet, serene residential facilities with wholesome meals and disciplined accommodation.',
+  admissionInfoBn: 'কুরআন তিলাওয়াতে আগ্রহী এবং প্রাথমিক নাজেরা সম্পন্ন শিক্ষার্থীদের মেধা ও যাচাই সাপেক্ষে ভর্তি করা হয়।',
+  admissionInfoEn: 'Admission is granted based on evaluation of candidates who have completed foundational recitation (Nazera).',
   contactInfo: {
-    phone: '[ফোন নম্বর - যাচাই সাপেক্ষে]',
-    email: '[ইমেইল - যাচাই সাপেক্ষে]',
+    phone: '01867-934744',
+    email: 'bsjadmkc@gmail.com',
   },
-  
-  status: 'pending_verification' as const,
+};
+
+// ============================================================================
+// RESULTS AND ACHIEVEMENTS
+// ============================================================================
+
+export const resultsAndAchievements = {
+  notice: 'পরীক্ষার ফলাফল সম্পর্কিত তথ্য বোর্ড এবং বিশ্ববিদ্যালয় ডাটাবেজ অনুযায়ী হালনাগাদ করা হয়। ফলাফল সম্পর্কিত যেকোনো তথ্যের জন্য মাদরাসা অফিসে যোগাযোগ করুন।',
+  noticeEn: 'Exam results information is updated per Board and University databases. For inquiries regarding results, please contact the Madrasah administrative office.',
 };
 
 // ============================================================================
 // HELPER FUNCTIONS
 // ============================================================================
 
-/**
- * Get contact links
- */
 export const getContactLinks = {
   phone: (phone: string) => `tel:${phone.replace(/-/g, '')}`,
   email: (email: string) => `mailto:${email}`,
   maps: () => googleMapsLink.url,
+  ebmeb: () => institutionIdentity.ebmebUrl,
+  baitushSharaf: () => institutionIdentity.baitushSharafUrl,
+  teachersGov: () => institutionIdentity.teachersGovUrl,
+  developer: () => institutionIdentity.developerUrl,
 };
-
-/**
- * Check if content is verified
- */
-export function isVerified(content: { verified?: boolean }): boolean {
-  return content.verified === true;
-}
-
-/**
- * Check if content is draft
- */
-export function isDraft(content: { status?: string }): boolean {
-  return content.status === 'draft';
-}

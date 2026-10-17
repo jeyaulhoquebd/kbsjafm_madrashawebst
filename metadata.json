@@ -1,0 +1,8 @@
+{
+  "name": "Khagrachhari Baitush Sharaf Jabbaria Adarsha Fazil Madrasah",
+  "description": "খাগড়াছড়ি বাইতুশ শরফ জাব্বারিয়া আদর্শ ফাজিল মাদ্রাসা - একটি প্রতিষ্ঠিত ইসলামী শিক্ষা প্রতিষ্ঠান",
+  "requestFramePermissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

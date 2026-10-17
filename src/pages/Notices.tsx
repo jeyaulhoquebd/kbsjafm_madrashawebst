@@ -8,6 +8,7 @@ import Notice from '../components/ui/Notice';
 import EmptyState from '../components/ui/EmptyState';
 import Button from '../components/ui/Button';
 import { usePublishedNotices } from '../hooks/useFirestore';
+import { sampleNotices } from '../data/mockData';
 import { Search, Filter, Bell, ArrowDown, Loader2 } from 'lucide-react';
 
 export default function Notices() {
@@ -19,9 +20,10 @@ export default function Notices() {
 
   // Load notices from Firestore
   const { notices: firestoreNotices, loading, error } = usePublishedNotices();
+  const effectiveNotices = firestoreNotices.length > 0 ? firestoreNotices : sampleNotices;
 
   const filteredNotices = useMemo(() => {
-    let filtered = firestoreNotices.filter((notice) => {
+    let filtered = effectiveNotices.filter((notice) => {
       const matchesSearch =
         searchQuery === '' ||
         notice.title.toLowerCase().includes(searchQuery.toLowerCase()) ||

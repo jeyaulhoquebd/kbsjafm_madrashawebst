@@ -36,19 +36,23 @@ import { getFirestore, type Firestore } from 'firebase/firestore';
  */
 export const firebaseConfig = {
   apiKey:
-    import.meta.env.VITE_FIREBASE_API_KEY ??
+    import.meta.env.VITE_FIREBASE_API_KEY ||
     'AIzaSyDsAKi3WN4wcYg6VlqKTezFdZ2MiGXF8nI',
   authDomain:
-    import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ?? 'kbsjafm.firebaseapp.com',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID ?? 'kbsjafm',
+    import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'kbsjafm.firebaseapp.com',
+  databaseURL:
+    import.meta.env.VITE_FIREBASE_DATABASE_URL || 'https://kbsjafm-default-rtdb.firebaseio.com',
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'kbsjafm',
   storageBucket:
-    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET ??
+    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET ||
     'kbsjafm.firebasestorage.app',
   messagingSenderId:
-    import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID ?? '1098656776179',
+    import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '1098656776179',
   appId:
-    import.meta.env.VITE_FIREBASE_APP_ID ??
+    import.meta.env.VITE_FIREBASE_APP_ID ||
     '1:1098656776179:web:fef7c35e90812b1232dc86',
+  measurementId:
+    import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || 'G-YFZSRWPDBX',
 };
 
 // ---------------------------------------------------------------------------
